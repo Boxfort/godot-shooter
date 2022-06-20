@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Assets/Scenes/Weapons/Shotgun/DoubleBarrelShotgun.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/Scenes/Weapons/Shotgun/Shotgun.cs" type="Script" id=2]
+
+[node name="Shotgun" type="Spatial"]
+script = ExtResource( 2 )
+
+[node name="Model" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.013, -0.563, -1.147 )
