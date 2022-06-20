@@ -1,6 +1,6 @@
-[gd_scene load_steps=53 format=2]
+[gd_scene load_steps=63 format=2]
 
-[ext_resource path="res://Assets/Scenes/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/Scenes/Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://explosion/1_31.png" type="Texture" id=2]
 [ext_resource path="res://explosion/1_17.png" type="Texture" id=3]
 [ext_resource path="res://explosion/1_16.png" type="Texture" id=4]
@@ -37,8 +37,14 @@
 [ext_resource path="res://explosion/1_9.png" type="Texture" id=35]
 [ext_resource path="res://Assets/Scenes/MovingPlatform.cs" type="Script" id=36]
 [ext_resource path="res://Assets/Scenes/RotatingPlatform.cs" type="Script" id=37]
-[ext_resource path="res://Assets/Models/DoubleBarrelShotgun/DoubleBarrelShotgun.fbx" type="PackedScene" id=38]
-[ext_resource path="res://Assets/Scenes/Pickup.cs" type="Script" id=39]
+[ext_resource path="res://Assets/Scenes/Pickups/ShotgunPickup.tscn" type="PackedScene" id=38]
+[ext_resource path="res://Assets/Scenes/Pickups/RevolverPickup.tscn" type="PackedScene" id=39]
+[ext_resource path="res://Assets/Scenes/Pickups/HealthPickup.cs" type="Script" id=40]
+[ext_resource path="res://Assets/Scenes/Pickups/WeaponPickup.cs" type="Script" id=41]
+[ext_resource path="res://Assets/Models/HandCannon/Bullet/Bullet.fbx" type="PackedScene" id=42]
+[ext_resource path="res://Assets/Scenes/Pickups/AmmoPickup.cs" type="Script" id=43]
+[ext_resource path="res://Assets/Scenes/Pickups/ArmorPickup.cs" type="Script" id=44]
+[ext_resource path="res://Assets/Scenes/TestZombie.tscn" type="PackedScene" id=45]
 
 [sub_resource type="BoxShape" id=1]
 
@@ -84,7 +90,29 @@ radius = 3.45104
 
 [sub_resource type="SpatialMaterial" id=15]
 flags_transparent = true
-albedo_color = Color( 1, 0, 0, 0.180392 )
+albedo_color = Color( 0.172549, 1, 0, 0.180392 )
+emission_enabled = true
+emission = Color( 0.054902, 0.988235, 0, 1 )
+emission_energy = 0.5
+emission_operator = 0
+emission_on_uv2 = false
+
+[sub_resource type="CubeMesh" id=16]
+
+[sub_resource type="SpatialMaterial" id=17]
+albedo_color = Color( 1, 0, 0, 1 )
+
+[sub_resource type="SpatialMaterial" id=19]
+flags_transparent = true
+albedo_color = Color( 0.12549, 0, 1, 0.180392 )
+emission_enabled = true
+emission = Color( 0.054902, 0.988235, 0, 1 )
+emission_energy = 0.5
+emission_operator = 0
+emission_on_uv2 = false
+
+[sub_resource type="SpatialMaterial" id=18]
+albedo_color = Color( 0, 0.054902, 1, 1 )
 
 [node name="Gym" type="Spatial"]
 
@@ -504,19 +532,157 @@ omni_range = 7.93726
 [node name="Player" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
 
-[node name="ShotgunPickup" type="Area" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 16 )
-script = ExtResource( 39 )
+[node name="ShotgunPickup" parent="." instance=ExtResource( 38 )]
+script = ExtResource( 41 )
+weaponType = 1
+ammo = 10
 
-[node name="CollisionShape" type="CollisionShape" parent="ShotgunPickup"]
+[node name="RevolverPickup" parent="." instance=ExtResource( 39 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2, 16 )
+script = ExtResource( 41 )
+weaponType = 2
+ammo = 30
+
+[node name="HealthPickup" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 2, 16 )
+script = ExtResource( 40 )
+health = 50
+
+[node name="CollisionShape" type="CollisionShape" parent="HealthPickup"]
 shape = SubResource( 13 )
 
-[node name="Model" type="Spatial" parent="ShotgunPickup"]
+[node name="Model" type="Spatial" parent="HealthPickup"]
 
-[node name="DoubleBarrelShotgun" parent="ShotgunPickup/Model" instance=ExtResource( 38 )]
-transform = Transform( 0.36, 0, 0, 0, 0.36, 0, 0, 0, 0.36, 0, 0, 0.363012 )
-
-[node name="MeshInstance" type="MeshInstance" parent="ShotgunPickup/Model"]
+[node name="MeshInstance" type="MeshInstance" parent="HealthPickup/Model"]
 mesh = SubResource( 14 )
 skeleton = NodePath("../..")
 material/0 = SubResource( 15 )
+
+[node name="HealthBox" type="MeshInstance" parent="HealthPickup/Model"]
+transform = Transform( 0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0 )
+mesh = SubResource( 16 )
+material/0 = SubResource( 17 )
+
+[node name="RevolverAmmoPickup" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 2, 16 )
+script = ExtResource( 43 )
+weaponType = 2
+ammo = 30
+
+[node name="CollisionShape" type="CollisionShape" parent="RevolverAmmoPickup"]
+shape = SubResource( 13 )
+
+[node name="Model" type="Spatial" parent="RevolverAmmoPickup"]
+
+[node name="MeshInstance" type="MeshInstance" parent="RevolverAmmoPickup/Model"]
+mesh = SubResource( 14 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 19 )
+
+[node name="Bullet" parent="RevolverAmmoPickup/Model" instance=ExtResource( 42 )]
+transform = Transform( 0.1, 0, 0, 0, 0.0707107, -0.0707107, 0, 0.0707107, 0.0707107, 0, -0.206537, -0.139271 )
+
+[node name="ArmorPickup" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 2, 14 )
+script = ExtResource( 44 )
+armor = 25
+
+[node name="CollisionShape" type="CollisionShape" parent="ArmorPickup"]
+shape = SubResource( 13 )
+
+[node name="Model" type="Spatial" parent="ArmorPickup"]
+
+[node name="MeshInstance" type="MeshInstance" parent="ArmorPickup/Model"]
+mesh = SubResource( 14 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 15 )
+
+[node name="ArmorBox" type="MeshInstance" parent="ArmorPickup/Model"]
+transform = Transform( 0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0 )
+mesh = SubResource( 16 )
+material/0 = SubResource( 18 )
+
+[node name="ArmorPickup2" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 2, 16.2549 )
+script = ExtResource( 44 )
+armor = 25
+
+[node name="CollisionShape" type="CollisionShape" parent="ArmorPickup2"]
+shape = SubResource( 13 )
+
+[node name="Model" type="Spatial" parent="ArmorPickup2"]
+
+[node name="MeshInstance" type="MeshInstance" parent="ArmorPickup2/Model"]
+mesh = SubResource( 14 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 15 )
+
+[node name="ArmorBox" type="MeshInstance" parent="ArmorPickup2/Model"]
+transform = Transform( 0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0 )
+mesh = SubResource( 16 )
+material/0 = SubResource( 18 )
+
+[node name="ArmorPickup3" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 2, 18.4901 )
+script = ExtResource( 44 )
+armor = 25
+
+[node name="CollisionShape" type="CollisionShape" parent="ArmorPickup3"]
+shape = SubResource( 13 )
+
+[node name="Model" type="Spatial" parent="ArmorPickup3"]
+
+[node name="MeshInstance" type="MeshInstance" parent="ArmorPickup3/Model"]
+mesh = SubResource( 14 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 15 )
+
+[node name="ArmorBox" type="MeshInstance" parent="ArmorPickup3/Model"]
+transform = Transform( 0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0 )
+mesh = SubResource( 16 )
+material/0 = SubResource( 18 )
+
+[node name="ArmorPickup4" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 2, 21.346 )
+script = ExtResource( 44 )
+armor = 25
+
+[node name="CollisionShape" type="CollisionShape" parent="ArmorPickup4"]
+shape = SubResource( 13 )
+
+[node name="Model" type="Spatial" parent="ArmorPickup4"]
+
+[node name="MeshInstance" type="MeshInstance" parent="ArmorPickup4/Model"]
+mesh = SubResource( 14 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 15 )
+
+[node name="ArmorBox" type="MeshInstance" parent="ArmorPickup4/Model"]
+transform = Transform( 0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0 )
+mesh = SubResource( 16 )
+material/0 = SubResource( 18 )
+
+[node name="ArmorPickup5" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16.8934, 1.86928, 23.7551 )
+script = ExtResource( 44 )
+armor = 25
+
+[node name="CollisionShape" type="CollisionShape" parent="ArmorPickup5"]
+shape = SubResource( 13 )
+
+[node name="Model" type="Spatial" parent="ArmorPickup5"]
+
+[node name="MeshInstance" type="MeshInstance" parent="ArmorPickup5/Model"]
+mesh = SubResource( 14 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 15 )
+
+[node name="ArmorBox" type="MeshInstance" parent="ArmorPickup5/Model"]
+transform = Transform( 0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0 )
+mesh = SubResource( 16 )
+material/0 = SubResource( 18 )
+
+[node name="TestZombie" parent="." instance=ExtResource( 45 )]
+transform = Transform( 1.49012e-08, 0, -0.35, 0, 0.35, 0, 0.35, 0, 1.49012e-08, 14.2587, 0.276521, 8.65915 )
+
+[node name="ImmediateGeometry" type="ImmediateGeometry" parent="."]

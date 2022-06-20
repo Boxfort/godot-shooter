@@ -24,7 +24,7 @@ public class WeaponManager : Spatial
 
     Dictionary<WeaponType, bool> hasWeapon = new Dictionary<WeaponType, bool> {
         { WeaponType.None, true },
-        { WeaponType.Shotgun, true },
+        { WeaponType.Shotgun, false},
         { WeaponType.Revolvers, true }
     };
 
@@ -80,6 +80,22 @@ public class WeaponManager : Spatial
             .Where(x => x.Value)
             .Select(x => x.Key)
             .ToList();
+    }
+
+    public void PickupWeapon(WeaponType weapon, int ammo) 
+    {
+        hasWeapon[weapon] = true;
+        PickupAmmo(weapon, ammo);
+        EquipWeapon(weapon);
+    }
+
+    public void PickupAmmo(WeaponType weapon, int ammo) 
+    {
+        if (ammoCount[weapon] != -1) 
+        {
+            ammoCount[weapon] += ammo;
+            EmitSignal(nameof(OnAmmoChanged), ammoCount[weapon]);
+        }
     }
 
     public void EquipWeapon(WeaponType weapon) 

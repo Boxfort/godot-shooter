@@ -1,4 +1,5 @@
 using Godot;
+using Godot.Collections;
 using System;
 
 public class Revolvers : Weapon
@@ -8,6 +9,8 @@ public class Revolvers : Weapon
 
     bool fireLeft = false;
     bool canFire = true;
+    float inaccuracy = 1.0f;
+    float range = 100f;
     float fireSpeed = 0.2f;
     float fireTimer = 0;
 
@@ -36,10 +39,14 @@ public class Revolvers : Weapon
             animationPlayerRight.Play("Fire");
             fireLeft = true;
         }
+
+        Dictionary collision = FireRay(inaccuracy, range, true);
     }
 
     public override void _Ready()
     {
+        base._Ready();
+
         Hide();
         animationPlayerLeft = GetNode<AnimationPlayer>("Revolver/AnimationPlayer");
         animationPlayerRight = GetNode<AnimationPlayer>("Revolver2/AnimationPlayer");
