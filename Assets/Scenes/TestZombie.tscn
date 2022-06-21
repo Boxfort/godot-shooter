@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Assets/Models/Personajes terror/Material_011.material" type="Material" id=1]
 [ext_resource path="res://Assets/Scenes/TestZombie.cs" type="Script" id=2]
+[ext_resource path="res://Assets/Scenes/Debug/DebugCollision.tscn" type="PackedScene" id=3]
 
 [sub_resource type="ArrayMesh" id=1]
 resource_name = "Cube.026Mesh"
@@ -250,6 +251,7 @@ height = 1.5
 
 [node name="TestZombie" type="KinematicBody" groups=["Enemy"]]
 script = ExtResource( 2 )
+debugPoint = ExtResource( 3 )
 
 [node name="Skeleton" type="Skeleton" parent="."]
 transform = Transform( 0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0 )
@@ -406,5 +408,5 @@ transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1.5,
 shape = SubResource( 8 )
 
 [node name="NavigationAgent" type="NavigationAgent" parent="."]
-target_desired_distance = 1.5
 agent_height_offset = 0.35
+max_speed = 5.0

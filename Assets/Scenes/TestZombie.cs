@@ -4,15 +4,26 @@ using System.Collections.Generic;
 
 public class TestZombie : KinematicBody, Damageable
 {
-    NavigationAgent navigationAgent;
-    Vector3[] path = new Vector3[0];
-    int pathNode = 0;
+    [Export]
+    PackedScene debugPoint;
 
+    // NAVIGATION
+    NavigationAgent navigationAgent;
+    Vector3 lastTarget;
+    Vector3[] path = new Vector3[0];
+    bool targetReset = true;
+    Dictionary<String, bool> canReachTarget = new Dictionary<String, bool>();
+    float updatePathTime = 1f;
+    float updatePathTimer = 0f;
     Spatial player;
 
-    float moveSpeed = 10;
-
     int health = 25;
+
+    // MOVEMENT
+    float moveSpeed = 5;
+    float rotationSpeed = 5.0f;
+    Vector3 gravityVec = Vector3.Zero;
+    Vector3 snap = Vector3.Zero;
 
     public int Health => health;
 
@@ -21,23 +32,24 @@ public class TestZombie : KinematicBody, Damageable
         GD.Print("Taking damage: " + damage);
     }
 
-    // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
         navigationAgent = GetNode<NavigationAgent>("NavigationAgent");
         player = GetNode<Spatial>("../../Player");
     }
 
-    float updatePathTime = 1f;
-    float updatePathTimer = 0f;
-
-    // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(float delta)
     {
         if (updatePathTimer >= updatePathTime) 
         {
-            navigationAgent.SetTargetLocation(player.GlobalTransform.origin);
+            targetReset = true;
             updatePathTimer = 0;
+
+            navigationAgent.SetTargetLocation(player.GlobalTransform.origin);
+
+            // Call 'GetNextLocation' to ensure the path exists. 
+            navigationAgent.GetNextLocation();
+            path = navigationAgent.GetNavPath();
         } 
         else 
         {
@@ -45,23 +57,91 @@ public class TestZombie : KinematicBody, Damageable
         }
     }
 
-    Vector3 gravityVec = Vector3.Zero;
-    Vector3 snap = Vector3.Zero;
 
     public override void _PhysicsProcess(float delta)
     {
         HandleGravity(delta);
+        var target = navigationAgent.GetNextLocation();
+
+        if (target != lastTarget) 
+        {
+            GD.Print(target);
+            var instance = debugPoint.Instance() as Spatial;
+            GetTree().Root.AddChild(instance);
+            var tf = instance.GlobalTransform;
+            tf.origin = target;
+            instance.GlobalTransform = tf;
+            lastTarget = target;
+        }
+
+        LookAtSmooth(target, delta);
 
         if (!navigationAgent.IsTargetReached()) 
         {
-            var target = navigationAgent.GetNextLocation();
-
-            if (navigationAgent.IsTargetReachable())
+            if (CanReachTarget(player.GlobalTransform.origin, player.GetInstanceId().ToString()))
             {
                 var position = GlobalTransform.origin;
                 var direction = target - GlobalTransform.origin;
                 var velocity = MoveAndSlideWithSnap((direction.Normalized() * moveSpeed) + gravityVec, snap, Vector3.Up);
             }
+            else
+            {
+                LookAtSmooth(player.GlobalTransform.origin, delta);
+            }
+        }
+    }
+
+    private bool CanReachTarget(Vector3 target, String id)
+    {
+        bool canReach;
+
+        // If the target has not been reset, fetch the value from cache, or calculate if doesn't exist. 
+        if (!targetReset) 
+        {
+            if(!canReachTarget.TryGetValue(id, out canReach))
+            {
+                canReach = CanReachTargetInner(target);
+            } 
+        } 
+        else 
+        {
+            // Clear targets to not fill up memory
+            canReachTarget.Clear();
+            targetReset = false;
+
+            canReach = CanReachTargetInner(target);
+        }
+
+        canReachTarget[id] = canReach;
+        return canReach;
+    }
+
+    private bool CanReachTargetInner(Vector3 target)
+    {
+        if (path.Length > 0) 
+        {
+            var lastPathNode = path[path.Length-1];
+            return (lastPathNode.DistanceTo(target) <= navigationAgent.PathMaxDistance);
+        } 
+        else 
+        {
+            return false;
+        }
+    }
+
+    void LookAtSmooth(Vector3 target, float delta, bool lockZ = true) 
+    {
+        Vector3 globalPosition = GlobalTransform.origin;
+        Vector3 originalRotation = RotationDegrees;
+
+        Transform desiredTransform = GlobalTransform.LookingAt(new Vector3(target.x, globalPosition.y, target.z), Vector3.Up).Rotated(Vector3.Up, Mathf.Deg2Rad(180));
+        var desiredRotation = new Quat(GlobalTransform.basis).Slerp(new Quat(desiredTransform.basis).Normalized(), rotationSpeed*delta);
+        GlobalTransform = new Transform(new Basis(desiredRotation), GlobalTransform.origin);
+
+        if (lockZ) {
+            originalRotation.x = RotationDegrees.x;
+            originalRotation.y = RotationDegrees.y;
+            RotationDegrees = originalRotation;
         }
     }
 
