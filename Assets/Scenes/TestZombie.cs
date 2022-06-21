@@ -4,13 +4,13 @@ using System.Collections.Generic;
 
 public class TestZombie : KinematicBody, Damageable
 {
-    Navigation navigation;
+    NavigationAgent navigationAgent;
     Vector3[] path = new Vector3[0];
     int pathNode = 0;
 
     Spatial player;
 
-    float moveSpeed = 3;
+    float moveSpeed = 10;
 
     int health = 25;
 
@@ -24,13 +24,11 @@ public class TestZombie : KinematicBody, Damageable
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        try {
-        navigation = GetParent<Navigation>();
-        } catch (Exception) { }
+        navigationAgent = GetNode<NavigationAgent>("NavigationAgent");
         player = GetNode<Spatial>("../../Player");
     }
 
-    float updatePathTime = 1.0f;
+    float updatePathTime = 1f;
     float updatePathTimer = 0f;
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -38,38 +36,46 @@ public class TestZombie : KinematicBody, Damageable
     {
         if (updatePathTimer >= updatePathTime) 
         {
-            try {
-            MoveTo(player.GlobalTransform.origin);
-            }
-            catch(Exception) {}
+            navigationAgent.SetTargetLocation(player.GlobalTransform.origin);
             updatePathTimer = 0;
         } 
         else 
         {
             updatePathTimer += delta;
         }
-
     }
+
+    Vector3 gravityVec = Vector3.Zero;
+    Vector3 snap = Vector3.Zero;
 
     public override void _PhysicsProcess(float delta)
     {
-        if (pathNode < path.Length) 
+        HandleGravity(delta);
+
+        if (!navigationAgent.IsTargetReached()) 
         {
-            var direction = (path[pathNode]) - GlobalTransform.origin;
-            if (direction.Length() < 0.1)
+            var target = navigationAgent.GetNextLocation();
+
+            if (navigationAgent.IsTargetReachable())
             {
-                pathNode += 1;
-            } 
-            else
-            {
-                MoveAndSlide((direction.Normalized() * moveSpeed), Vector3.Up);
+                var position = GlobalTransform.origin;
+                var direction = target - GlobalTransform.origin;
+                var velocity = MoveAndSlideWithSnap((direction.Normalized() * moveSpeed) + gravityVec, snap, Vector3.Up);
             }
         }
     }
 
-    public void MoveTo(Vector3 targetPosition) 
+    void HandleGravity(float delta) 
     {
-        path = navigation.GetSimplePath(GlobalTransform.origin, targetPosition);
-        pathNode = 0;
+        if (IsOnFloor()) 
+        {
+            snap = -GetFloorNormal();
+            gravityVec = Vector3.Zero;
+        } 
+        else 
+        {
+            snap = Vector3.Down;
+            gravityVec += Vector3.Down * 40.0f * delta;
+        }
     }
 }
