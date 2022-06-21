@@ -1,0 +1,696 @@
+[gd_scene load_steps=64 format=2]
+
+[ext_resource path="res://Assets/Scenes/RotatingPlatform.cs" type="Script" id=2]
+[ext_resource path="res://Assets/Scenes/Pickups/HealthPickup.cs" type="Script" id=3]
+[ext_resource path="res://explosion/1_10.png" type="Texture" id=4]
+[ext_resource path="res://explosion/1_16.png" type="Texture" id=5]
+[ext_resource path="res://explosion/1_17.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Scenes/MovingPlatform.cs" type="Script" id=7]
+[ext_resource path="res://TestExplosion.cs" type="Script" id=8]
+[ext_resource path="res://explosion/1_12.png" type="Texture" id=9]
+[ext_resource path="res://explosion/1_25.png" type="Texture" id=10]
+[ext_resource path="res://explosion/1_20.png" type="Texture" id=11]
+[ext_resource path="res://explosion/1_8.png" type="Texture" id=12]
+[ext_resource path="res://explosion/1_7.png" type="Texture" id=13]
+[ext_resource path="res://explosion/1_2.png" type="Texture" id=14]
+[ext_resource path="res://explosion/1_1.png" type="Texture" id=15]
+[ext_resource path="res://explosion/1_19.png" type="Texture" id=16]
+[ext_resource path="res://explosion/1_23.png" type="Texture" id=17]
+[ext_resource path="res://explosion/1_32.png" type="Texture" id=18]
+[ext_resource path="res://explosion/1_11.png" type="Texture" id=19]
+[ext_resource path="res://explosion/1_18.png" type="Texture" id=20]
+[ext_resource path="res://explosion/1_29.png" type="Texture" id=21]
+[ext_resource path="res://explosion/1_15.png" type="Texture" id=22]
+[ext_resource path="res://explosion/1_0.png" type="Texture" id=23]
+[ext_resource path="res://explosion/1_5.png" type="Texture" id=24]
+[ext_resource path="res://explosion/1_14.png" type="Texture" id=25]
+[ext_resource path="res://explosion/1_4.png" type="Texture" id=26]
+[ext_resource path="res://explosion/1_27.png" type="Texture" id=27]
+[ext_resource path="res://explosion/1_22.png" type="Texture" id=28]
+[ext_resource path="res://explosion/1_3.png" type="Texture" id=29]
+[ext_resource path="res://explosion/1_30.png" type="Texture" id=30]
+[ext_resource path="res://explosion/1_6.png" type="Texture" id=31]
+[ext_resource path="res://explosion/1_13.png" type="Texture" id=32]
+[ext_resource path="res://explosion/1_24.png" type="Texture" id=33]
+[ext_resource path="res://explosion/1_26.png" type="Texture" id=34]
+[ext_resource path="res://explosion/1_21.png" type="Texture" id=35]
+[ext_resource path="res://explosion/1_28.png" type="Texture" id=36]
+[ext_resource path="res://explosion/1_9.png" type="Texture" id=37]
+[ext_resource path="res://Assets/Scenes/Pickups/AmmoPickup.cs" type="Script" id=38]
+[ext_resource path="res://Assets/Scenes/Pickups/ArmorPickup.cs" type="Script" id=39]
+[ext_resource path="res://explosion/1_31.png" type="Texture" id=40]
+[ext_resource path="res://Assets/Scenes/Player/Player.tscn" type="PackedScene" id=41]
+[ext_resource path="res://Assets/Scenes/Pickups/ShotgunPickup.tscn" type="PackedScene" id=42]
+[ext_resource path="res://Assets/Scenes/TestZombie.tscn" type="PackedScene" id=43]
+[ext_resource path="res://Assets/Scenes/Pickups/RevolverPickup.tscn" type="PackedScene" id=44]
+[ext_resource path="res://Assets/Models/HandCannon/Bullet/Bullet.fbx" type="PackedScene" id=45]
+[ext_resource path="res://Assets/Scenes/Props/ExplosiveBarrel/ExplosiveBarrel.tscn" type="PackedScene" id=46]
+
+[sub_resource type="NavigationMesh" id=20]
+vertices = PoolVector3Array( -17.2585, 1.80617, -17.77, -13.0585, 1.80617, -17.77, -11.5585, 1.80617, -21.67, -11.2585, 1.80617, -25.57, -36.7585, 1.80617, -38.77, -36.7585, 1.80617, -31.57, -25.0585, 1.80617, -74.77, -36.7585, 1.80617, -53.17, -36.7585, 1.80617, -45.97, -13.3585, 1.80617, -74.77, -25.0585, 1.80617, -74.77, -36.7585, 1.80617, -74.77, -36.7585, 1.80617, -67.57, -25.0585, 1.80617, -74.77, -36.7585, 1.80617, -67.57, -36.7585, 1.80617, -60.37, -36.7585, 1.80617, -17.17, -17.5585, 1.80617, -17.17, -17.2585, 1.80617, -17.77, -36.7585, 1.80617, -24.37, -1.6585, 1.80617, -74.77, -13.3585, 1.80617, -74.77, -36.7585, 1.80617, -45.97, -36.7585, 1.80617, -31.57, -36.7585, 1.80617, -24.37, -17.2585, 1.80617, -17.77, -25.0585, 1.80617, -74.77, -36.7585, 1.80617, -60.37, -36.7585, 1.80617, -53.17, -36.7585, 1.80617, -45.97, -36.7585, 1.80617, -38.77, -11.2585, 1.80617, -25.57, -0.758503, 1.80617, -25.87, -1.6585, 1.80617, -74.77, -36.7585, 1.80617, -45.97, -0.758503, 1.80617, -25.87, 9.74149, 1.80617, -25.57, 10.0415, 1.80617, -74.77, 36.7415, 1.80617, -68.47, 36.7415, 1.80617, -74.77, 29.8415, 1.80617, -74.77, 36.7415, 1.80617, -62.17, 36.7415, 1.80617, -68.47, 29.8415, 1.80617, -74.77, 36.7415, 1.80617, -62.17, 29.8415, 1.80617, -74.77, 23.2415, 1.80617, -74.77, 36.7415, 1.80617, -55.87, 9.74149, 1.80617, -25.57, 36.7415, 1.80617, -36.67, 36.7415, 1.80617, -42.97, 9.74149, 1.80617, -25.57, 9.74149, 1.80617, -23.77, 36.7415, 1.80617, -23.77, 36.7415, 1.80617, -30.37, 9.74149, 1.80617, -25.57, 36.7415, 1.80617, -42.97, 36.7415, 1.80617, -49.27, 16.6415, 1.80617, -74.77, 10.0415, 1.80617, -74.77, 36.7415, 1.80617, -55.87, 23.2415, 1.80617, -74.77, 16.6415, 1.80617, -74.77, 36.7415, 1.80617, -49.27, 9.74149, 1.80617, -25.57, 36.7415, 1.80617, -30.37, 36.7415, 1.80617, -36.67, 20.5415, 1.80617, 2.33001, 21.4415, 1.80617, 2.63, 21.7415, 1.80617, 2.03001, 20.5415, 1.80617, 1.73001, 36.7415, 1.80617, -23.77, 9.74149, 1.80617, -23.77, 9.74149, 1.80617, -22.27, 20.5415, 1.80617, 1.73001, 36.7415, 1.80617, -17.17, 20.5415, 1.80617, 1.73001, 21.7415, 1.80617, 2.03001, 24.4415, 1.80617, 2.03001, 36.7415, 1.80617, -3.37, 36.7415, 1.80617, -10.27, 24.4415, 1.80617, 2.03001, 24.7415, 1.80617, 3.53001, 36.7415, 1.80617, 3.53001, 36.7415, 1.80617, -3.37, 20.5415, 1.80617, 1.73001, 36.7415, 1.80617, -10.27, 36.7415, 1.80617, -17.17, 18.7415, 1.80617, 0.230011, 20.5415, 1.80617, 1.73001, 9.74149, 1.80617, -22.27, 9.14149, 1.80617, -21.67, -12.4585, 1.80617, -10.27, -14.8585, 1.80617, -9.96999, -14.8585, 1.80617, -8.46999, -11.2585, 1.80617, -8.16999, -12.4585, 1.80617, -17.47, -12.4585, 1.80617, -10.27, -11.2585, 1.80617, -8.16999, -0.758503, 1.80617, -21.07, -11.2585, 1.80617, -21.07, -11.2585, 1.80617, -21.07, -11.5585, 1.80617, -21.67, -13.0585, 1.80617, -17.77, -12.4585, 1.80617, -17.47, -0.758503, 1.80617, -21.07, -11.2585, 1.80617, -8.16999, -11.2585, 1.80617, -1.26999, 18.7415, 1.80617, 0.230011, 9.14149, 1.80617, -21.67, -17.5585, 1.80617, -8.16999, -14.8585, 1.80617, -8.46999, -14.8585, 1.80617, -9.96999, -17.5585, 1.80617, -10.27, -36.7585, 1.80617, 3.83001, -20.2585, 1.80617, 4.13, -19.9585, 1.80617, 2.03001, -36.7585, 1.80617, -6.66999, -15.7585, 1.80617, 2.03001, -15.1585, 1.80617, -0.669991, -17.5585, 1.80617, -0.969994, -19.9585, 1.80617, 2.03001, -19.9585, 1.80617, 2.03001, -17.5585, 1.80617, -10.27, -17.5585, 1.80617, -17.17, -36.7585, 1.80617, -17.17, -36.7585, 1.80617, -6.66999, -19.9585, 1.80617, 2.03001, -17.5585, 1.80617, -0.969994, -17.5585, 1.80617, -8.16999, -19.9585, 1.80617, 2.03001, -17.5585, 1.80617, -8.16999, -17.5585, 1.80617, -10.27, 20.5415, 1.80617, 2.33001, 20.5415, 1.80617, 1.73001, 18.7415, 1.80617, 0.230011, -11.2585, 1.80617, -1.26999, -11.5585, 1.80617, -0.669991, -11.2585, 1.80617, 2.33001, -15.1585, 1.80617, -0.669991, -15.7585, 1.80617, 2.03001, -11.2585, 1.80617, 2.33001, -11.5585, 1.80617, -0.669991, 21.4415, 1.80617, 7.73001, 22.9415, 1.80617, 7.43001, 22.9415, 1.80617, 5.33001, 21.4415, 1.80617, 5.03001, 20.5415, 1.80617, 2.33001, -11.2585, 1.80617, 2.33001, -11.2585, 1.80617, 9.53001, 21.4415, 1.80617, 5.03001, 21.4415, 1.80617, 2.63, 20.5415, 1.80617, 2.33001, 21.4415, 1.80617, 7.73001, 21.4415, 1.80617, 5.03001, 20.5415, 1.80617, 2.33001, 21.4415, 1.80617, 10.13, 21.4415, 1.80617, 7.73001, 20.5415, 1.80617, 2.33001, -11.2585, 1.80617, 9.53001, -11.8585, 1.80617, 9.83001, 22.9415, 1.80617, 5.33001, 22.9415, 1.80617, 7.43001, 24.4415, 1.80617, 7.43001, 24.4415, 1.80617, 5.33001, 24.7415, 1.80617, 3.53001, 24.4415, 1.80617, 5.33001, 24.4415, 1.80617, 7.43001, 24.7415, 1.80617, 9.23001, 36.7415, 1.80617, 9.23001, 36.7415, 1.80617, 3.53001, -14.2585, 1.80617, 10.73, -14.2585, 1.80617, 9.83001, -19.9585, 1.80617, 9.83001, -22.6585, 1.80617, 10.73, -22.6585, 1.80617, 10.73, -20.2585, 1.80617, 4.13, -36.7585, 1.80617, 3.83001, -36.7585, 1.80617, 15.83, -22.6585, 1.80617, 10.73, -19.9585, 1.80617, 9.83001, -20.2585, 1.80617, 4.13, -36.7585, 1.80617, 15.83, -22.9585, 1.80617, 15.83, -22.6585, 1.80617, 10.73, 25.9415, 1.80617, 26.03, 25.9415, 1.80617, 30.83, 36.7415, 1.80617, 30.83, 36.7415, 1.80617, 20.03, 24.4415, 1.80617, 11.03, 22.9415, 1.80617, 11.03, 22.9415, 1.80617, 25.73, 36.7415, 1.80617, 9.23001, 24.7415, 1.80617, 9.23001, 24.4415, 1.80617, 11.03, 22.9415, 1.80617, 25.73, 25.9415, 1.80617, 26.03, 36.7415, 1.80617, 20.03, -14.2585, 1.80617, 9.83001, -14.2585, 1.80617, 10.73, -12.7585, 1.80617, 11.03, -11.8585, 1.80617, 9.83001, 22.9415, 1.80617, 25.73, 21.7415, 1.80617, 11.03, 21.4415, 1.80617, 10.13, -11.8585, 1.80617, 9.83001, -12.7585, 1.80617, 17.93, 13.3415, 1.80617, 25.73, -11.8585, 1.80617, 9.83001, -12.7585, 1.80617, 11.03, -12.7585, 1.80617, 17.93, 22.9415, 1.80617, 25.73, 22.9415, 1.80617, 11.03, 21.7415, 1.80617, 11.03, -20.2585, 3.80617, 11.93, -20.2585, 3.80617, 17.33, -17.5585, 3.80617, 17.33, -17.5585, 3.80617, 11.93, -16.3585, 2.80617, 11.93, -16.3585, 2.80617, 17.33, -13.9585, 2.80617, 17.33, -13.9585, 2.80617, 11.93, -16.9585, 1.80617, 25.73, -14.5585, 1.80617, 25.43, -14.8585, 1.80617, 18.53, -22.6585, 1.80617, 18.53, -22.6585, 1.80617, 18.53, -22.9585, 1.80617, 15.83, -36.7585, 1.80617, 15.83, -36.7585, 1.80617, 23.03, -16.9585, 1.80617, 30.53, -16.9585, 1.80617, 25.73, -22.6585, 1.80617, 18.53, -36.7585, 1.80617, 23.03, -36.7585, 1.80617, 30.53, -13.0585, 1.80617, 18.53, -14.8585, 1.80617, 18.53, -14.5585, 1.80617, 25.43, -10.9585, 1.80617, 25.43, -10.6585, 1.80617, 28.43, 12.7415, 1.80617, 28.43, 12.7415, 1.80617, 26.03, -10.9585, 1.80617, 25.43, -12.7585, 1.80617, 17.93, -13.0585, 1.80617, 18.53, -10.9585, 1.80617, 25.43, 12.7415, 1.80617, 26.03, 13.3415, 1.80617, 25.73, 1.94149, 7.80617, 26.93, 1.94149, 7.80617, 32.33, 7.0415, 7.80617, 32.33, 7.0415, 7.80617, 26.93, 8.24149, 6.80617, 26.93, 8.24149, 6.80617, 32.33, 13.0415, 6.80617, 32.33, 13.0415, 6.80617, 26.93, 14.2415, 5.80617, 26.93, 14.2415, 5.80617, 32.33, 24.7415, 5.80617, 32.33, 24.7415, 5.80617, 26.93, -10.6585, 1.80617, 30.53, 12.7415, 1.80617, 30.53, 12.7415, 1.80617, 28.43, -10.6585, 1.80617, 28.43, -36.7585, 1.80617, 63.83, -36.7585, 1.80617, 74.93, -24.7585, 1.80617, 74.93, -16.6585, 1.80617, 33.23, -16.9585, 1.80617, 30.53, -36.7585, 1.80617, 30.53, -36.7585, 1.80617, 41.63, -36.7585, 1.80617, 63.83, -24.7585, 1.80617, 74.93, -18.7585, 1.80617, 74.93, -36.7585, 1.80617, 63.83, -18.7585, 1.80617, 74.93, -12.4585, 1.80617, 74.93, -12.7585, 1.80617, 33.23, -36.7585, 1.80617, 52.73, -12.7585, 1.80617, 33.23, -16.6585, 1.80617, 33.23, -36.7585, 1.80617, 41.63, -36.7585, 1.80617, 52.73, 12.7415, 1.80617, 30.53, -10.6585, 1.80617, 30.53, -10.6585, 1.80617, 32.93, 12.7415, 1.80617, 33.23, -12.7585, 1.80617, 33.23, -12.4585, 1.80617, 74.93, -5.55851, 1.80617, 74.93, 12.7415, 1.80617, 33.23, -10.6585, 1.80617, 32.93, -12.7585, 1.80617, 33.23, -5.55851, 1.80617, 74.93, 1.3415, 1.80617, 74.93, 15.4415, 1.80617, 33.53, 1.3415, 1.80617, 74.93, 8.24149, 1.80617, 74.93, 15.4415, 1.80617, 33.53, 8.24149, 1.80617, 74.93, 15.4415, 1.80617, 74.93, 15.4415, 1.80617, 33.53, 36.7415, 1.80617, 30.83, 25.9415, 1.80617, 30.83, 25.6415, 1.80617, 33.53, 36.7415, 1.80617, 41.63, 15.4415, 1.80617, 74.93, 25.9415, 1.80617, 74.93, 36.7415, 1.80617, 63.83, 36.7415, 1.80617, 52.73, 25.6415, 1.80617, 33.53, 15.4415, 1.80617, 33.53, 25.9415, 1.80617, 74.93, 36.7415, 1.80617, 74.93, 36.7415, 1.80617, 63.83, 36.7415, 1.80617, 52.73, 36.7415, 1.80617, 41.63, 25.6415, 1.80617, 33.53 )
+polygons = [ PoolIntArray( 1, 0, 2 ), PoolIntArray( 2, 0, 3 ), PoolIntArray( 3, 0, 5 ), PoolIntArray( 3, 5, 4 ), PoolIntArray( 7, 6, 8 ), PoolIntArray( 8, 6, 9 ), PoolIntArray( 12, 11, 10 ), PoolIntArray( 15, 14, 13 ), PoolIntArray( 17, 16, 18 ), PoolIntArray( 18, 16, 19 ), PoolIntArray( 22, 21, 20 ), PoolIntArray( 25, 24, 23 ), PoolIntArray( 26, 28, 27 ), PoolIntArray( 30, 29, 31 ), PoolIntArray( 31, 29, 32 ), PoolIntArray( 35, 34, 36 ), PoolIntArray( 36, 34, 33 ), PoolIntArray( 36, 33, 37 ), PoolIntArray( 40, 39, 38 ), PoolIntArray( 43, 42, 41 ), PoolIntArray( 45, 44, 46 ), PoolIntArray( 46, 44, 47 ), PoolIntArray( 50, 49, 48 ), PoolIntArray( 52, 51, 53 ), PoolIntArray( 53, 51, 54 ), PoolIntArray( 56, 55, 57 ), PoolIntArray( 57, 55, 58 ), PoolIntArray( 58, 55, 59 ), PoolIntArray( 61, 60, 62 ), PoolIntArray( 62, 60, 63 ), PoolIntArray( 66, 65, 64 ), PoolIntArray( 67, 70, 68 ), PoolIntArray( 68, 70, 69 ), PoolIntArray( 73, 72, 74 ), PoolIntArray( 74, 72, 75 ), PoolIntArray( 75, 72, 71 ), PoolIntArray( 77, 76, 78 ), PoolIntArray( 78, 76, 79 ), PoolIntArray( 79, 76, 80 ), PoolIntArray( 82, 81, 83 ), PoolIntArray( 83, 81, 84 ), PoolIntArray( 87, 86, 85 ), PoolIntArray( 91, 90, 88 ), PoolIntArray( 88, 90, 89 ), PoolIntArray( 93, 92, 94 ), PoolIntArray( 94, 92, 95 ), PoolIntArray( 97, 96, 98 ), PoolIntArray( 98, 96, 100 ), PoolIntArray( 98, 100, 99 ), PoolIntArray( 104, 103, 101 ), PoolIntArray( 101, 103, 102 ), PoolIntArray( 106, 105, 107 ), PoolIntArray( 107, 105, 109 ), PoolIntArray( 107, 109, 108 ), PoolIntArray( 112, 111, 113 ), PoolIntArray( 113, 111, 110 ), PoolIntArray( 115, 114, 116 ), PoolIntArray( 116, 114, 117 ), PoolIntArray( 119, 118, 120 ), PoolIntArray( 120, 118, 121 ), PoolIntArray( 123, 122, 124 ), PoolIntArray( 124, 122, 126 ), PoolIntArray( 124, 126, 125 ), PoolIntArray( 129, 128, 127 ), PoolIntArray( 132, 131, 130 ), PoolIntArray( 134, 133, 135 ), PoolIntArray( 135, 133, 138 ), PoolIntArray( 135, 138, 137 ), PoolIntArray( 135, 137, 136 ), PoolIntArray( 139, 142, 140 ), PoolIntArray( 140, 142, 141 ), PoolIntArray( 144, 143, 145 ), PoolIntArray( 145, 143, 146 ), PoolIntArray( 149, 148, 147 ), PoolIntArray( 152, 151, 150 ), PoolIntArray( 155, 154, 153 ), PoolIntArray( 157, 156, 158 ), PoolIntArray( 158, 156, 159 ), PoolIntArray( 159, 156, 160 ), PoolIntArray( 164, 163, 161 ), PoolIntArray( 161, 163, 162 ), PoolIntArray( 166, 165, 167 ), PoolIntArray( 167, 165, 168 ), PoolIntArray( 168, 165, 170 ), PoolIntArray( 168, 170, 169 ), PoolIntArray( 172, 171, 173 ), PoolIntArray( 173, 171, 174 ), PoolIntArray( 176, 175, 177 ), PoolIntArray( 177, 175, 178 ), PoolIntArray( 179, 181, 180 ), PoolIntArray( 184, 183, 182 ), PoolIntArray( 186, 185, 187 ), PoolIntArray( 187, 185, 188 ), PoolIntArray( 191, 190, 189 ), PoolIntArray( 193, 192, 194 ), PoolIntArray( 194, 192, 197 ), PoolIntArray( 194, 197, 196 ), PoolIntArray( 194, 196, 195 ), PoolIntArray( 199, 198, 200 ), PoolIntArray( 200, 198, 201 ), PoolIntArray( 203, 202, 204 ), PoolIntArray( 204, 202, 207 ), PoolIntArray( 204, 207, 206 ), PoolIntArray( 204, 206, 205 ), PoolIntArray( 210, 209, 208 ), PoolIntArray( 213, 212, 211 ), PoolIntArray( 217, 216, 214 ), PoolIntArray( 214, 216, 215 ), PoolIntArray( 221, 220, 218 ), PoolIntArray( 218, 220, 219 ), PoolIntArray( 223, 222, 224 ), PoolIntArray( 224, 222, 225 ), PoolIntArray( 227, 226, 228 ), PoolIntArray( 228, 226, 229 ), PoolIntArray( 231, 230, 232 ), PoolIntArray( 232, 230, 233 ), PoolIntArray( 233, 230, 234 ), PoolIntArray( 236, 235, 237 ), PoolIntArray( 237, 235, 238 ), PoolIntArray( 240, 239, 241 ), PoolIntArray( 241, 239, 242 ), PoolIntArray( 244, 243, 245 ), PoolIntArray( 245, 243, 246 ), PoolIntArray( 246, 243, 247 ), PoolIntArray( 251, 250, 248 ), PoolIntArray( 248, 250, 249 ), PoolIntArray( 255, 254, 252 ), PoolIntArray( 252, 254, 253 ), PoolIntArray( 259, 258, 256 ), PoolIntArray( 256, 258, 257 ), PoolIntArray( 263, 262, 260 ), PoolIntArray( 260, 262, 261 ), PoolIntArray( 266, 265, 264 ), PoolIntArray( 268, 267, 269 ), PoolIntArray( 269, 267, 270 ), PoolIntArray( 273, 272, 271 ), PoolIntArray( 275, 274, 276 ), PoolIntArray( 276, 274, 278 ), PoolIntArray( 276, 278, 277 ), PoolIntArray( 280, 279, 281 ), PoolIntArray( 281, 279, 282 ), PoolIntArray( 284, 283, 285 ), PoolIntArray( 285, 283, 286 ), PoolIntArray( 289, 288, 287 ), PoolIntArray( 291, 290, 292 ), PoolIntArray( 292, 290, 295 ), PoolIntArray( 292, 295, 294 ), PoolIntArray( 292, 294, 293 ), PoolIntArray( 298, 297, 296 ), PoolIntArray( 301, 300, 299 ), PoolIntArray( 303, 302, 304 ), PoolIntArray( 304, 302, 305 ), PoolIntArray( 307, 306, 308 ), PoolIntArray( 308, 306, 309 ), PoolIntArray( 309, 306, 310 ), PoolIntArray( 310, 306, 311 ), PoolIntArray( 314, 313, 312 ), PoolIntArray( 317, 316, 315 ) ]
+cell/height = 1.0
+
+[sub_resource type="BoxShape" id=1]
+
+[sub_resource type="CubeMesh" id=2]
+
+[sub_resource type="CubeMesh" id=7]
+
+[sub_resource type="SpatialMaterial" id=8]
+flags_transparent = true
+albedo_color = Color( 0.882353, 0.839216, 0.670588, 0.717647 )
+
+[sub_resource type="CubeMesh" id=9]
+
+[sub_resource type="SpatialMaterial" id=10]
+albedo_color = Color( 1, 0, 0, 1 )
+
+[sub_resource type="BoxShape" id=12]
+extents = Vector3( 0.9, 0.9, 0.9 )
+
+[sub_resource type="CylinderMesh" id=11]
+radial_segments = 8
+rings = 1
+
+[sub_resource type="SpriteFrames" id=5]
+animations = [ {
+"frames": [  ],
+"loop": true,
+"name": "",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 23 ), ExtResource( 15 ), ExtResource( 14 ), ExtResource( 29 ), ExtResource( 26 ), ExtResource( 24 ), ExtResource( 31 ), ExtResource( 13 ), ExtResource( 12 ), ExtResource( 37 ), ExtResource( 4 ), ExtResource( 19 ), ExtResource( 9 ), ExtResource( 32 ), ExtResource( 25 ), ExtResource( 22 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 20 ), ExtResource( 16 ), ExtResource( 11 ), ExtResource( 35 ), ExtResource( 28 ), ExtResource( 17 ), ExtResource( 33 ), ExtResource( 10 ), ExtResource( 34 ), ExtResource( 27 ), ExtResource( 36 ), ExtResource( 21 ), ExtResource( 30 ), ExtResource( 40 ), ExtResource( 18 ) ],
+"loop": true,
+"name": "Explode",
+"speed": 24.0
+} ]
+
+[sub_resource type="SphereShape" id=6]
+radius = 3.45104
+
+[sub_resource type="SphereShape" id=13]
+
+[sub_resource type="SphereMesh" id=14]
+
+[sub_resource type="SpatialMaterial" id=15]
+flags_transparent = true
+albedo_color = Color( 0.172549, 1, 0, 0.180392 )
+emission_enabled = true
+emission = Color( 0.054902, 0.988235, 0, 1 )
+emission_energy = 0.5
+emission_operator = 0
+emission_on_uv2 = false
+
+[sub_resource type="CubeMesh" id=16]
+
+[sub_resource type="SpatialMaterial" id=17]
+albedo_color = Color( 1, 0, 0, 1 )
+
+[sub_resource type="SpatialMaterial" id=19]
+flags_transparent = true
+albedo_color = Color( 0.12549, 0, 1, 0.180392 )
+emission_enabled = true
+emission = Color( 0.054902, 0.988235, 0, 1 )
+emission_energy = 0.5
+emission_operator = 0
+emission_on_uv2 = false
+
+[sub_resource type="SpatialMaterial" id=18]
+albedo_color = Color( 0, 0.054902, 1, 1 )
+
+[node name="Gym" type="Spatial"]
+
+[node name="Navigation" type="Navigation" parent="."]
+
+[node name="NavigationMeshInstance" type="NavigationMeshInstance" parent="Navigation"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.067112, 0, 0.0250931 )
+navmesh = SubResource( 20 )
+
+[node name="Floor" type="StaticBody" parent="Navigation/NavigationMeshInstance"]
+transform = Transform( 37.2388, 0, 0, 0, 2.27642, 0, 0, 0, 75.3894, 0.0332661, -1.91741, 0.0194006 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Navigation/NavigationMeshInstance/Floor"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/Floor"]
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="BoxCrouchJump" type="StaticBody" parent="Navigation/NavigationMeshInstance"]
+transform = Transform( 1, 0, 0, 0, 2, 0, 0, 0, 1, 23.0999, 2, 9.24776 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Navigation/NavigationMeshInstance/BoxCrouchJump"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/BoxCrouchJump"]
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="BoxJump" type="StaticBody" parent="Navigation/NavigationMeshInstance"]
+transform = Transform( 1, 0, 0, 0, 1.5, 0, 0, 0, 1, 23.094, 1.5, 3.729 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Navigation/NavigationMeshInstance/BoxJump"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/BoxJump"]
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="StairsBig" type="Spatial" parent="Navigation/NavigationMeshInstance"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.04882, 1, -12.791 )
+
+[node name="Stair" type="StaticBody" parent="Navigation/NavigationMeshInstance/StairsBig"]
+transform = Transform( 4.838, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -11.989, -0.550231, -9.50642 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Navigation/NavigationMeshInstance/StairsBig/Stair"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/StairsBig/Stair"]
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="Stair2" type="StaticBody" parent="Navigation/NavigationMeshInstance/StairsBig"]
+transform = Transform( 4.838, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -11.989, 0.449769, -10.5064 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Navigation/NavigationMeshInstance/StairsBig/Stair2"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/StairsBig/Stair2"]
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="Stair3" type="StaticBody" parent="Navigation/NavigationMeshInstance/StairsBig"]
+transform = Transform( 4.838, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -11.989, 1.44977, -11.5064 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Navigation/NavigationMeshInstance/StairsBig/Stair3"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/StairsBig/Stair3"]
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="Stair4" type="StaticBody" parent="Navigation/NavigationMeshInstance/StairsBig"]
+transform = Transform( 4.838, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -11.989, 2.44977, -12.5064 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Navigation/NavigationMeshInstance/StairsBig/Stair4"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/StairsBig/Stair4"]
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="Stair5" type="StaticBody" parent="Navigation/NavigationMeshInstance/StairsBig"]
+transform = Transform( 4.838, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -11.989, 3.44977, -13.5064 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Navigation/NavigationMeshInstance/StairsBig/Stair5"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/StairsBig/Stair5"]
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="StairsSmall" type="Spatial" parent="Navigation/NavigationMeshInstance"]
+transform = Transform( 1, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 16.1589, 0.550339, -17.5292 )
+
+[node name="Stair" type="StaticBody" parent="Navigation/NavigationMeshInstance/StairsSmall"]
+transform = Transform( 4.838, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -11.989, -0.550231, -9.50642 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Navigation/NavigationMeshInstance/StairsSmall/Stair"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/StairsSmall/Stair"]
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="Stair2" type="StaticBody" parent="Navigation/NavigationMeshInstance/StairsSmall"]
+transform = Transform( 4.838, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -11.989, 0.449769, -10.5064 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Navigation/NavigationMeshInstance/StairsSmall/Stair2"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/StairsSmall/Stair2"]
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="Stair3" type="StaticBody" parent="Navigation/NavigationMeshInstance/StairsSmall"]
+transform = Transform( 4.838, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -11.989, 1.44977, -11.5064 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Navigation/NavigationMeshInstance/StairsSmall/Stair3"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/StairsSmall/Stair3"]
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="Stair4" type="StaticBody" parent="Navigation/NavigationMeshInstance/StairsSmall"]
+transform = Transform( 4.838, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -11.989, 2.44977, -12.5064 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Navigation/NavigationMeshInstance/StairsSmall/Stair4"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/StairsSmall/Stair4"]
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="Stair5" type="StaticBody" parent="Navigation/NavigationMeshInstance/StairsSmall"]
+transform = Transform( 4.838, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -11.989, 3.44977, -13.5064 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Navigation/NavigationMeshInstance/StairsSmall/Stair5"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/StairsSmall/Stair5"]
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="Stair6" type="StaticBody" parent="Navigation/NavigationMeshInstance/StairsSmall"]
+transform = Transform( 4.838, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -11.989, 4.44977, -14.5064 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Navigation/NavigationMeshInstance/StairsSmall/Stair6"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/StairsSmall/Stair6"]
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="Stair7" type="StaticBody" parent="Navigation/NavigationMeshInstance/StairsSmall"]
+transform = Transform( 4.838, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -11.989, 5.44977, -15.5064 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Navigation/NavigationMeshInstance/StairsSmall/Stair7"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/StairsSmall/Stair7"]
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="Stair8" type="StaticBody" parent="Navigation/NavigationMeshInstance/StairsSmall"]
+transform = Transform( 4.838, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -11.989, 6.44977, -16.5064 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Navigation/NavigationMeshInstance/StairsSmall/Stair8"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/StairsSmall/Stair8"]
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="Stair9" type="StaticBody" parent="Navigation/NavigationMeshInstance/StairsSmall"]
+transform = Transform( 4.838, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -11.989, 7.44977, -17.5064 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Navigation/NavigationMeshInstance/StairsSmall/Stair9"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/StairsSmall/Stair9"]
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="Stair10" type="StaticBody" parent="Navigation/NavigationMeshInstance/StairsSmall"]
+transform = Transform( 4.838, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -11.989, 8.44977, -18.5064 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Navigation/NavigationMeshInstance/StairsSmall/Stair10"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/StairsSmall/Stair10"]
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="Slope45" type="StaticBody" parent="Navigation/NavigationMeshInstance"]
+transform = Transform( 4.35026, 0.707107, 0, -4.35026, 0.707107, 0, 0, 0, 3.16833, -15.9254, 3.45537, -4.4831 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Navigation/NavigationMeshInstance/Slope45"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/Slope45"]
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="Slope46" type="StaticBody" parent="Navigation/NavigationMeshInstance"]
+transform = Transform( 23.7115, 0.707107, 0, -23.7115, 0.707107, 0, 0, 0, 3.16833, -34.8399, 22.8706, 29.2929 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Navigation/NavigationMeshInstance/Slope46"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/Slope46"]
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="Slope30" type="StaticBody" parent="Navigation/NavigationMeshInstance"]
+transform = Transform( 5.32795, 0.5, 0, -3.0761, 0.866025, 0, 0, 0, 3.16833, -15.9254, 1.87724, 5.85942 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Navigation/NavigationMeshInstance/Slope30"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/Slope30"]
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="Slope15" type="StaticBody" parent="Navigation/NavigationMeshInstance"]
+transform = Transform( 5.94256, 0.258819, 0, -1.5923, 0.965926, 0, 0, 0, 3.16833, -15.9254, 0.437046, 14.603 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Navigation/NavigationMeshInstance/Slope15"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/Slope15"]
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="CrouchBox" type="StaticBody" parent="Navigation/NavigationMeshInstance"]
+transform = Transform( 3, -7.55692e-07, 0, 2.26707e-06, 1, 0, 0, 0, 3.16833, 10.413, 4, 29.603 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Navigation/NavigationMeshInstance/CrouchBox"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/CrouchBox"]
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="CrouchBoxCanStand" type="StaticBody" parent="Navigation/NavigationMeshInstance"]
+transform = Transform( 3, -7.55693e-07, 0, 2.26707e-06, 1, 0, 0, 0, 3.16834, 4.502, 5, 29.603 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Navigation/NavigationMeshInstance/CrouchBoxCanStand"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/CrouchBoxCanStand"]
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="CrouchBoxTooSmall" type="StaticBody" parent="Navigation/NavigationMeshInstance"]
+transform = Transform( 3, -7.55692e-07, 0, 2.26707e-06, 1, 0, 0, 0, 3.16834, 22.3325, 3, 29.6037 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Navigation/NavigationMeshInstance/CrouchBoxTooSmall"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/CrouchBoxTooSmall"]
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="CrouchBoxSmallest" type="StaticBody" parent="Navigation/NavigationMeshInstance"]
+transform = Transform( 3, -7.55691e-07, 0, 2.26707e-06, 1, 0, 0, 0, 3.16834, 16.413, 3.5, 29.603 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Navigation/NavigationMeshInstance/CrouchBoxSmallest"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/CrouchBoxSmallest"]
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="Slope60" type="StaticBody" parent="Navigation/NavigationMeshInstance"]
+transform = Transform( 3.0761, 0.866025, 0, -5.32795, 0.5, 0, 0, 0, 3.16833, -15.9151, 3.45537, -13.742 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Navigation/NavigationMeshInstance/Slope60"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/Slope60"]
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="TestZombie" parent="Navigation" instance=ExtResource( 43 )]
+transform = Transform( 7.54979e-08, 0, -1, 0, 1, 0, 1, 0, 7.54979e-08, 14.2587, 0.276521, 8.65915 )
+
+[node name="Pool" type="Spatial" parent="."]
+transform = Transform( 11.7622, 0, 0, 0, 24.1981, 0, 0, 0, 1, -51.8565, 5.46237, 27.5547 )
+
+[node name="Water" type="Area" parent="Pool" groups=["water"]]
+transform = Transform( 0.876133, 0, 0, 0, 1, 0, 0, 0, 11.293, 0, -0.04234, -11.7108 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Pool/Water"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Pool/Water"]
+transform = Transform( 1.00001, 0, 0, 0, 0.999994, 0, 0, 0, 1.00007, 0, 0, 0 )
+mesh = SubResource( 7 )
+material/0 = SubResource( 8 )
+
+[node name="Box3" type="StaticBody" parent="Pool"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.32831e-10, 0, 1.90735e-06 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Pool/Box3"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Pool/Box3"]
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="Box4" type="StaticBody" parent="Pool"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.09548e-09, 0, -22.9445 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Pool/Box4"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Pool/Box4"]
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="Box5" type="StaticBody" parent="Pool"]
+transform = Transform( -4.37114e-08, 0, -0.0850179, 0, 1, 0, 11.7622, 0, -4.37114e-08, 0.914839, 0, -11.4541 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Pool/Box5"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Pool/Box5"]
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="Box6" type="StaticBody" parent="Pool"]
+transform = Transform( -4.37114e-08, 0, -0.0850179, 0, 1, 0, 11.7622, 0, -4.37114e-08, -0.935197, 0, -10.9318 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Pool/Box6"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Pool/Box6"]
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="MovingPlatform" type="KinematicBody" parent="."]
+transform = Transform( 3, -7.55692e-07, 0, 2.26707e-06, 1, 0, 0, 0, 3.16834, 25, 0, -25 )
+script = ExtResource( 7 )
+start = Vector3( 25, 0, -25 )
+end = Vector3( 25, 0, -35 )
+
+[node name="CollisionShape" type="CollisionShape" parent="MovingPlatform"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="MovingPlatform"]
+transform = Transform( 1, 0, 0, 2.27374e-13, 1, 0, 0, 0, 1, 0, 0, 0 )
+mesh = SubResource( 9 )
+material/0 = SubResource( 10 )
+
+[node name="KillArea" type="Area" parent="MovingPlatform" groups=["killbox"]]
+transform = Transform( 1, 0, 0, 2.27374e-13, 1, 0, 0, 0, 1, 0, 0, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="MovingPlatform/KillArea"]
+transform = Transform( 1, 0, 0, 2.27374e-13, 1, 0, 0, 0, 1, 0, 0, 0 )
+shape = SubResource( 12 )
+
+[node name="MovingPlatform2" type="KinematicBody" parent="."]
+transform = Transform( 3, -7.55692e-07, 0, 8.3996e-07, 0.370505, 0, 0, 0, 3.16834, 16, 0.587416, -25 )
+script = ExtResource( 7 )
+start = Vector3( 16, 0.5, -25 )
+end = Vector3( 16, 10, -25 )
+
+[node name="CollisionShape" type="CollisionShape" parent="MovingPlatform2"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="MovingPlatform2"]
+transform = Transform( 1, 0, 0, 2.27374e-13, 1, 0, 0, 0, 1, 0, 0, 0 )
+mesh = SubResource( 9 )
+material/0 = SubResource( 10 )
+
+[node name="KillArea" type="Area" parent="MovingPlatform2" groups=["killbox"]]
+transform = Transform( 1, 0, 0, 2.27374e-13, 1, 0, 0, 0, 1, 0, 0, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="MovingPlatform2/KillArea"]
+transform = Transform( 1, 0, 0, 2.27374e-13, 1, 0, 0, 0, 1, 0, 0, 0 )
+shape = SubResource( 12 )
+
+[node name="RotatingPlatform" type="KinematicBody" parent="."]
+transform = Transform( 3, -7.55692e-07, 0, 2.26707e-06, 1, 0, 0, 0, 3.16834, 25.3325, 0.0857439, -11.707 )
+script = ExtResource( 2 )
+
+[node name="CollisionShape" type="CollisionShape" parent="RotatingPlatform"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="RotatingPlatform"]
+transform = Transform( 1, 0, 0, 9.09495e-13, 1, 0, 0, 0, 1, 0.00473118, -2.23517e-08, 0.020098 )
+mesh = SubResource( 11 )
+material/0 = SubResource( 10 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.258819, 0.965926, 0, -0.965926, 0.258819, -0.00178862, 29.4504, 0.0104105 )
+layers = 3
+light_energy = 0.25
+shadow_enabled = true
+
+[node name="TestExplosion" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 17.2082, 4.42694, -3 )
+script = ExtResource( 8 )
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="TestExplosion"]
+transform = Transform( 10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0 )
+billboard = 2
+frames = SubResource( 5 )
+animation = "Explode"
+frame = 15
+playing = true
+
+[node name="CollisionShape" type="CollisionShape" parent="TestExplosion"]
+shape = SubResource( 6 )
+
+[node name="ExplosiveBarrel" parent="." instance=ExtResource( 46 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 14.8308, 1.67446, 5.86837 )
+
+[node name="OmniLight" type="OmniLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13.6686, 3.10413, -20.6781 )
+layers = 3
+light_color = Color( 1, 0, 0, 1 )
+light_energy = 16.0
+light_indirect_energy = 3.642
+omni_range = 7.93726
+
+[node name="Player" parent="." instance=ExtResource( 41 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
+
+[node name="ShotgunPickup" parent="." instance=ExtResource( 42 )]
+
+[node name="RevolverPickup" parent="." instance=ExtResource( 44 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2, 16 )
+
+[node name="HealthPickup" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 2, 16 )
+script = ExtResource( 3 )
+health = 50
+
+[node name="CollisionShape" type="CollisionShape" parent="HealthPickup"]
+shape = SubResource( 13 )
+
+[node name="Model" type="Spatial" parent="HealthPickup"]
+
+[node name="MeshInstance" type="MeshInstance" parent="HealthPickup/Model"]
+mesh = SubResource( 14 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 15 )
+
+[node name="HealthBox" type="MeshInstance" parent="HealthPickup/Model"]
+transform = Transform( 0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0 )
+mesh = SubResource( 16 )
+material/0 = SubResource( 17 )
+
+[node name="RevolverAmmoPickup" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 2, 16 )
+script = ExtResource( 38 )
+weaponType = 2
+ammo = 30
+
+[node name="CollisionShape" type="CollisionShape" parent="RevolverAmmoPickup"]
+shape = SubResource( 13 )
+
+[node name="Model" type="Spatial" parent="RevolverAmmoPickup"]
+
+[node name="MeshInstance" type="MeshInstance" parent="RevolverAmmoPickup/Model"]
+mesh = SubResource( 14 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 19 )
+
+[node name="Bullet" parent="RevolverAmmoPickup/Model" instance=ExtResource( 45 )]
+transform = Transform( 0.1, 0, 0, 0, 0.0707107, -0.0707107, 0, 0.0707107, 0.0707107, 0, -0.206537, -0.139271 )
+
+[node name="ArmorPickup" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 2, 14 )
+script = ExtResource( 39 )
+armor = 25
+
+[node name="CollisionShape" type="CollisionShape" parent="ArmorPickup"]
+shape = SubResource( 13 )
+
+[node name="Model" type="Spatial" parent="ArmorPickup"]
+
+[node name="MeshInstance" type="MeshInstance" parent="ArmorPickup/Model"]
+mesh = SubResource( 14 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 15 )
+
+[node name="ArmorBox" type="MeshInstance" parent="ArmorPickup/Model"]
+transform = Transform( 0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0 )
+mesh = SubResource( 16 )
+material/0 = SubResource( 18 )
+
+[node name="ArmorPickup2" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 2, 16.2549 )
+script = ExtResource( 39 )
+armor = 25
+
+[node name="CollisionShape" type="CollisionShape" parent="ArmorPickup2"]
+shape = SubResource( 13 )
+
+[node name="Model" type="Spatial" parent="ArmorPickup2"]
+
+[node name="MeshInstance" type="MeshInstance" parent="ArmorPickup2/Model"]
+mesh = SubResource( 14 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 15 )
+
+[node name="ArmorBox" type="MeshInstance" parent="ArmorPickup2/Model"]
+transform = Transform( 0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0 )
+mesh = SubResource( 16 )
+material/0 = SubResource( 18 )
+
+[node name="ArmorPickup3" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 2, 18.4901 )
+script = ExtResource( 39 )
+armor = 25
+
+[node name="CollisionShape" type="CollisionShape" parent="ArmorPickup3"]
+shape = SubResource( 13 )
+
+[node name="Model" type="Spatial" parent="ArmorPickup3"]
+
+[node name="MeshInstance" type="MeshInstance" parent="ArmorPickup3/Model"]
+mesh = SubResource( 14 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 15 )
+
+[node name="ArmorBox" type="MeshInstance" parent="ArmorPickup3/Model"]
+transform = Transform( 0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0 )
+mesh = SubResource( 16 )
+material/0 = SubResource( 18 )
+
+[node name="ArmorPickup4" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 2, 21.346 )
+script = ExtResource( 39 )
+armor = 25
+
+[node name="CollisionShape" type="CollisionShape" parent="ArmorPickup4"]
+shape = SubResource( 13 )
+
+[node name="Model" type="Spatial" parent="ArmorPickup4"]
+
+[node name="MeshInstance" type="MeshInstance" parent="ArmorPickup4/Model"]
+mesh = SubResource( 14 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 15 )
+
+[node name="ArmorBox" type="MeshInstance" parent="ArmorPickup4/Model"]
+transform = Transform( 0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0 )
+mesh = SubResource( 16 )
+material/0 = SubResource( 18 )
+
+[node name="ArmorPickup5" type="Area" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16.8934, 1.86928, 23.7551 )
+script = ExtResource( 39 )
+armor = 25
+
+[node name="CollisionShape" type="CollisionShape" parent="ArmorPickup5"]
+shape = SubResource( 13 )
+
+[node name="Model" type="Spatial" parent="ArmorPickup5"]
+
+[node name="MeshInstance" type="MeshInstance" parent="ArmorPickup5/Model"]
+mesh = SubResource( 14 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 15 )
+
+[node name="ArmorBox" type="MeshInstance" parent="ArmorPickup5/Model"]
+transform = Transform( 0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0 )
+mesh = SubResource( 16 )
+material/0 = SubResource( 18 )
+
+[node name="ImmediateGeometry" type="ImmediateGeometry" parent="."]

@@ -60,6 +60,13 @@ public class CharacterController : KinematicBody
         camera = head.GetNode<ShakeableCamera>("ShakeableCamera");
         gunCamera = hand.GetNode<Camera>("ViewportContainer/Viewport/GunCamera");
 
+        // TODO: an actual solution for setting world environment
+        var environment = GetNode<WorldEnvironment>("../WorldEnvironment");
+        if (environment != null) {
+            GD.Print("Setting gun camera environment...");
+            gunCamera.Environment = environment.Environment;
+        }
+
         currentAcceleration = groundAcceleration;
 
         Input.SetMouseMode(Input.MouseMode.Captured);

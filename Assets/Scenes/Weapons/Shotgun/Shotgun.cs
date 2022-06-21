@@ -2,11 +2,12 @@ using Godot;
 using Godot.Collections;
 using System;
 
-public class Shotgun : Weapon
+public class Shotgun : WeaponRaycast
 {
     AnimationPlayer animationPlayer;
 
     bool canFire = true;
+    int damage = 2;
     float inaccuracy = 2.0f;
     float range = 60.0f;
     int pellets = 8;
@@ -15,6 +16,10 @@ public class Shotgun : Weapon
 
     public override bool CanFire => canFire;
 
+    protected override float Inaccuracy => inaccuracy;
+    protected override float Range => range;
+
+    protected override int Damage => damage;
 
     public override void Equip()
     {
@@ -30,7 +35,7 @@ public class Shotgun : Weapon
 
         for(int i = 0; i < pellets; i++)
         {
-            Dictionary collision = FireRay(inaccuracy, range, true);
+            Dictionary collision = FireRay(true);
         }
     }
 

@@ -36,8 +36,14 @@ public class PlayerManager : Node
 
     public override void _Ready()
     {
-        areaCollider = GetNode<Area>("../CollisionShape/AreaCollider");
         weaponManager = GetNode<WeaponManager>("../Head/Hand");
+        areaCollider = GetNode<Area>("../CollisionShape/AreaCollider");
+        areaCollider.Connect("OnDamageTaken", this, nameof(TakeDamage));
+    }
+
+    private void TakeDamage(int damage)
+    {
+        Health = Health - damage;
     }
 
     public override void _Process(float delta)
