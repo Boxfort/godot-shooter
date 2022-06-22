@@ -13,9 +13,12 @@ public class TestZombie : KinematicBody, Damageable
     Vector3[] path = new Vector3[0];
     bool targetReset = true;
     Dictionary<String, bool> canReachTarget = new Dictionary<String, bool>();
-    float updatePathTime = 1f;
-    float updatePathTimer = 0f;
+    float updatePathTime = 0.5f;
+    float updatePathTimer = 1.0f;
+    float detectionTickTime = 0.5f; 
+    float detectionTickTimer = 0.5f; 
     Spatial player;
+
 
     int health = 25;
 
@@ -25,31 +28,30 @@ public class TestZombie : KinematicBody, Damageable
     Vector3 gravityVec = Vector3.Zero;
     Vector3 snap = Vector3.Zero;
 
+    Vector3 knockbackVec = Vector3.Zero;
+
+    AnimationTree animationTree;
+
     public int Health => health;
 
     public void TakeDamage(int damage)
     {
         GD.Print("Taking damage: " + damage);
+        
     }
 
     public override void _Ready()
     {
         navigationAgent = GetNode<NavigationAgent>("NavigationAgent");
         player = GetNode<Spatial>("../../Player");
+        animationTree = GetNode<AnimationTree>("AnimationTree");
     }
 
     public override void _Process(float delta)
     {
         if (updatePathTimer >= updatePathTime) 
         {
-            targetReset = true;
-            updatePathTimer = 0;
-
-            navigationAgent.SetTargetLocation(player.GlobalTransform.origin);
-
-            // Call 'GetNextLocation' to ensure the path exists. 
-            navigationAgent.GetNextLocation();
-            path = navigationAgent.GetNavPath();
+            SetTargetLocation(player.GlobalTransform.origin);
         } 
         else 
         {
@@ -57,6 +59,22 @@ public class TestZombie : KinematicBody, Damageable
         }
     }
 
+    private void DetectTarget(float delta)
+    {
+        
+    }
+
+    private void SetTargetLocation(Vector3 position) 
+    {
+        targetReset = true;
+        updatePathTimer = 0;
+
+        navigationAgent.SetTargetLocation(position);
+
+        // Call 'GetNextLocation' to ensure the path exists. 
+        navigationAgent.GetNextLocation();
+        path = navigationAgent.GetNavPath();
+    }
 
     public override void _PhysicsProcess(float delta)
     {
@@ -65,7 +83,6 @@ public class TestZombie : KinematicBody, Damageable
 
         if (target != lastTarget) 
         {
-            GD.Print(target);
             var instance = debugPoint.Instance() as Spatial;
             GetTree().Root.AddChild(instance);
             var tf = instance.GlobalTransform;
@@ -83,16 +100,26 @@ public class TestZombie : KinematicBody, Damageable
                 var position = GlobalTransform.origin;
                 var direction = target - GlobalTransform.origin;
                 var velocity = MoveAndSlideWithSnap((direction.Normalized() * moveSpeed) + gravityVec, snap, Vector3.Up);
+                animationTree.Set("parameters/IsRunning/blend_amount", 1);
             }
             else
             {
+                animationTree.Set("parameters/IsRunning/blend_amount", 0);
                 LookAtSmooth(player.GlobalTransform.origin, delta);
             }
-        }
+        } 
+        else
+        {
+                animationTree.Set("parameters/IsRunning/blend_amount", 0);
+        } 
     }
 
     private bool CanReachTarget(Vector3 target, String id)
     {
+        // We implement our own 'CanReachTarget' because the NavigationAgent implementation does not
+        // conider the target 'reachable' if they are outside of the navigation mesh, but within the 
+        // PathMaxDistance set by the agent. 
+
         bool canReach;
 
         // If the target has not been reset, fetch the value from cache, or calculate if doesn't exist. 
@@ -158,4 +185,5 @@ public class TestZombie : KinematicBody, Damageable
             gravityVec += Vector3.Down * 40.0f * delta;
         }
     }
+
 }

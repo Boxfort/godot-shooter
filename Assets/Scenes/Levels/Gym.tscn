@@ -1,5 +1,6 @@
 [gd_scene load_steps=64 format=2]
 
+[ext_resource path="res://Assets/Models/ZombieAnimated.gltf" type="PackedScene" id=1]
 [ext_resource path="res://Assets/Scenes/RotatingPlatform.cs" type="Script" id=2]
 [ext_resource path="res://Assets/Scenes/Pickups/HealthPickup.cs" type="Script" id=3]
 [ext_resource path="res://explosion/1_10.png" type="Texture" id=4]
@@ -41,7 +42,6 @@
 [ext_resource path="res://explosion/1_31.png" type="Texture" id=40]
 [ext_resource path="res://Assets/Scenes/Player/Player.tscn" type="PackedScene" id=41]
 [ext_resource path="res://Assets/Scenes/Pickups/ShotgunPickup.tscn" type="PackedScene" id=42]
-[ext_resource path="res://Assets/Scenes/TestZombie.tscn" type="PackedScene" id=43]
 [ext_resource path="res://Assets/Scenes/Pickups/RevolverPickup.tscn" type="PackedScene" id=44]
 [ext_resource path="res://Assets/Models/HandCannon/Bullet/Bullet.fbx" type="PackedScene" id=45]
 [ext_resource path="res://Assets/Scenes/Props/ExplosiveBarrel/ExplosiveBarrel.tscn" type="PackedScene" id=46]
@@ -135,7 +135,6 @@ shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/Floor"]
 mesh = SubResource( 2 )
-material/0 = null
 
 [node name="BoxCrouchJump" type="StaticBody" parent="Navigation/NavigationMeshInstance"]
 transform = Transform( 1, 0, 0, 0, 2, 0, 0, 0, 1, 23.0999, 2, 9.24776 )
@@ -145,7 +144,6 @@ shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/BoxCrouchJump"]
 mesh = SubResource( 2 )
-material/0 = null
 
 [node name="BoxJump" type="StaticBody" parent="Navigation/NavigationMeshInstance"]
 transform = Transform( 1, 0, 0, 0, 1.5, 0, 0, 0, 1, 23.094, 1.5, 3.729 )
@@ -155,7 +153,6 @@ shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/BoxJump"]
 mesh = SubResource( 2 )
-material/0 = null
 
 [node name="StairsBig" type="Spatial" parent="Navigation/NavigationMeshInstance"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.04882, 1, -12.791 )
@@ -168,7 +165,6 @@ shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/StairsBig/Stair"]
 mesh = SubResource( 2 )
-material/0 = null
 
 [node name="Stair2" type="StaticBody" parent="Navigation/NavigationMeshInstance/StairsBig"]
 transform = Transform( 4.838, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -11.989, 0.449769, -10.5064 )
@@ -178,7 +174,6 @@ shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/StairsBig/Stair2"]
 mesh = SubResource( 2 )
-material/0 = null
 
 [node name="Stair3" type="StaticBody" parent="Navigation/NavigationMeshInstance/StairsBig"]
 transform = Transform( 4.838, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -11.989, 1.44977, -11.5064 )
@@ -188,7 +183,6 @@ shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/StairsBig/Stair3"]
 mesh = SubResource( 2 )
-material/0 = null
 
 [node name="Stair4" type="StaticBody" parent="Navigation/NavigationMeshInstance/StairsBig"]
 transform = Transform( 4.838, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -11.989, 2.44977, -12.5064 )
@@ -198,7 +192,6 @@ shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/StairsBig/Stair4"]
 mesh = SubResource( 2 )
-material/0 = null
 
 [node name="Stair5" type="StaticBody" parent="Navigation/NavigationMeshInstance/StairsBig"]
 transform = Transform( 4.838, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -11.989, 3.44977, -13.5064 )
@@ -208,7 +201,6 @@ shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/StairsBig/Stair5"]
 mesh = SubResource( 2 )
-material/0 = null
 
 [node name="StairsSmall" type="Spatial" parent="Navigation/NavigationMeshInstance"]
 transform = Transform( 1, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 16.1589, 0.550339, -17.5292 )
@@ -221,7 +213,6 @@ shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/StairsSmall/Stair"]
 mesh = SubResource( 2 )
-material/0 = null
 
 [node name="Stair2" type="StaticBody" parent="Navigation/NavigationMeshInstance/StairsSmall"]
 transform = Transform( 4.838, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -11.989, 0.449769, -10.5064 )
@@ -231,7 +222,6 @@ shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/StairsSmall/Stair2"]
 mesh = SubResource( 2 )
-material/0 = null
 
 [node name="Stair3" type="StaticBody" parent="Navigation/NavigationMeshInstance/StairsSmall"]
 transform = Transform( 4.838, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -11.989, 1.44977, -11.5064 )
@@ -241,7 +231,6 @@ shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/StairsSmall/Stair3"]
 mesh = SubResource( 2 )
-material/0 = null
 
 [node name="Stair4" type="StaticBody" parent="Navigation/NavigationMeshInstance/StairsSmall"]
 transform = Transform( 4.838, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -11.989, 2.44977, -12.5064 )
@@ -251,7 +240,6 @@ shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/StairsSmall/Stair4"]
 mesh = SubResource( 2 )
-material/0 = null
 
 [node name="Stair5" type="StaticBody" parent="Navigation/NavigationMeshInstance/StairsSmall"]
 transform = Transform( 4.838, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -11.989, 3.44977, -13.5064 )
@@ -261,7 +249,6 @@ shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/StairsSmall/Stair5"]
 mesh = SubResource( 2 )
-material/0 = null
 
 [node name="Stair6" type="StaticBody" parent="Navigation/NavigationMeshInstance/StairsSmall"]
 transform = Transform( 4.838, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -11.989, 4.44977, -14.5064 )
@@ -271,7 +258,6 @@ shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/StairsSmall/Stair6"]
 mesh = SubResource( 2 )
-material/0 = null
 
 [node name="Stair7" type="StaticBody" parent="Navigation/NavigationMeshInstance/StairsSmall"]
 transform = Transform( 4.838, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -11.989, 5.44977, -15.5064 )
@@ -281,7 +267,6 @@ shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/StairsSmall/Stair7"]
 mesh = SubResource( 2 )
-material/0 = null
 
 [node name="Stair8" type="StaticBody" parent="Navigation/NavigationMeshInstance/StairsSmall"]
 transform = Transform( 4.838, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -11.989, 6.44977, -16.5064 )
@@ -291,7 +276,6 @@ shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/StairsSmall/Stair8"]
 mesh = SubResource( 2 )
-material/0 = null
 
 [node name="Stair9" type="StaticBody" parent="Navigation/NavigationMeshInstance/StairsSmall"]
 transform = Transform( 4.838, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -11.989, 7.44977, -17.5064 )
@@ -301,7 +285,6 @@ shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/StairsSmall/Stair9"]
 mesh = SubResource( 2 )
-material/0 = null
 
 [node name="Stair10" type="StaticBody" parent="Navigation/NavigationMeshInstance/StairsSmall"]
 transform = Transform( 4.838, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -11.989, 8.44977, -18.5064 )
@@ -311,7 +294,6 @@ shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/StairsSmall/Stair10"]
 mesh = SubResource( 2 )
-material/0 = null
 
 [node name="Slope45" type="StaticBody" parent="Navigation/NavigationMeshInstance"]
 transform = Transform( 4.35026, 0.707107, 0, -4.35026, 0.707107, 0, 0, 0, 3.16833, -15.9254, 3.45537, -4.4831 )
@@ -321,7 +303,6 @@ shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/Slope45"]
 mesh = SubResource( 2 )
-material/0 = null
 
 [node name="Slope46" type="StaticBody" parent="Navigation/NavigationMeshInstance"]
 transform = Transform( 23.7115, 0.707107, 0, -23.7115, 0.707107, 0, 0, 0, 3.16833, -34.8399, 22.8706, 29.2929 )
@@ -331,7 +312,6 @@ shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/Slope46"]
 mesh = SubResource( 2 )
-material/0 = null
 
 [node name="Slope30" type="StaticBody" parent="Navigation/NavigationMeshInstance"]
 transform = Transform( 5.32795, 0.5, 0, -3.0761, 0.866025, 0, 0, 0, 3.16833, -15.9254, 1.87724, 5.85942 )
@@ -341,7 +321,6 @@ shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/Slope30"]
 mesh = SubResource( 2 )
-material/0 = null
 
 [node name="Slope15" type="StaticBody" parent="Navigation/NavigationMeshInstance"]
 transform = Transform( 5.94256, 0.258819, 0, -1.5923, 0.965926, 0, 0, 0, 3.16833, -15.9254, 0.437046, 14.603 )
@@ -351,7 +330,6 @@ shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/Slope15"]
 mesh = SubResource( 2 )
-material/0 = null
 
 [node name="CrouchBox" type="StaticBody" parent="Navigation/NavigationMeshInstance"]
 transform = Transform( 3, -7.55692e-07, 0, 2.26707e-06, 1, 0, 0, 0, 3.16833, 10.413, 4, 29.603 )
@@ -361,7 +339,6 @@ shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/CrouchBox"]
 mesh = SubResource( 2 )
-material/0 = null
 
 [node name="CrouchBoxCanStand" type="StaticBody" parent="Navigation/NavigationMeshInstance"]
 transform = Transform( 3, -7.55693e-07, 0, 2.26707e-06, 1, 0, 0, 0, 3.16834, 4.502, 5, 29.603 )
@@ -371,7 +348,6 @@ shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/CrouchBoxCanStand"]
 mesh = SubResource( 2 )
-material/0 = null
 
 [node name="CrouchBoxTooSmall" type="StaticBody" parent="Navigation/NavigationMeshInstance"]
 transform = Transform( 3, -7.55692e-07, 0, 2.26707e-06, 1, 0, 0, 0, 3.16834, 22.3325, 3, 29.6037 )
@@ -381,7 +357,6 @@ shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/CrouchBoxTooSmall"]
 mesh = SubResource( 2 )
-material/0 = null
 
 [node name="CrouchBoxSmallest" type="StaticBody" parent="Navigation/NavigationMeshInstance"]
 transform = Transform( 3, -7.55691e-07, 0, 2.26707e-06, 1, 0, 0, 0, 3.16834, 16.413, 3.5, 29.603 )
@@ -391,7 +366,6 @@ shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/CrouchBoxSmallest"]
 mesh = SubResource( 2 )
-material/0 = null
 
 [node name="Slope60" type="StaticBody" parent="Navigation/NavigationMeshInstance"]
 transform = Transform( 3.0761, 0.866025, 0, -5.32795, 0.5, 0, 0, 0, 3.16833, -15.9151, 3.45537, -13.742 )
@@ -401,10 +375,6 @@ shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Navigation/NavigationMeshInstance/Slope60"]
 mesh = SubResource( 2 )
-material/0 = null
-
-[node name="TestZombie" parent="Navigation" instance=ExtResource( 43 )]
-transform = Transform( 7.54979e-08, 0, -1, 0, 1, 0, 1, 0, 7.54979e-08, 14.2587, 0.276521, 8.65915 )
 
 [node name="Pool" type="Spatial" parent="."]
 transform = Transform( 11.7622, 0, 0, 0, 24.1981, 0, 0, 0, 1, -51.8565, 5.46237, 27.5547 )
@@ -428,7 +398,6 @@ shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Pool/Box3"]
 mesh = SubResource( 2 )
-material/0 = null
 
 [node name="Box4" type="StaticBody" parent="Pool"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.09548e-09, 0, -22.9445 )
@@ -438,7 +407,6 @@ shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Pool/Box4"]
 mesh = SubResource( 2 )
-material/0 = null
 
 [node name="Box5" type="StaticBody" parent="Pool"]
 transform = Transform( -4.37114e-08, 0, -0.0850179, 0, 1, 0, 11.7622, 0, -4.37114e-08, 0.914839, 0, -11.4541 )
@@ -448,7 +416,6 @@ shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Pool/Box5"]
 mesh = SubResource( 2 )
-material/0 = null
 
 [node name="Box6" type="StaticBody" parent="Pool"]
 transform = Transform( -4.37114e-08, 0, -0.0850179, 0, 1, 0, 11.7622, 0, -4.37114e-08, -0.935197, 0, -10.9318 )
@@ -458,7 +425,6 @@ shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Pool/Box6"]
 mesh = SubResource( 2 )
-material/0 = null
 
 [node name="MovingPlatform" type="KinematicBody" parent="."]
 transform = Transform( 3, -7.55692e-07, 0, 2.26707e-06, 1, 0, 0, 0, 3.16834, 25, 0, -25 )
@@ -529,7 +495,7 @@ transform = Transform( 10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0 )
 billboard = 2
 frames = SubResource( 5 )
 animation = "Explode"
-frame = 15
+frame = 18
 playing = true
 
 [node name="CollisionShape" type="CollisionShape" parent="TestExplosion"]
@@ -694,3 +660,6 @@ mesh = SubResource( 16 )
 material/0 = SubResource( 18 )
 
 [node name="ImmediateGeometry" type="ImmediateGeometry" parent="."]
+
+[node name="ZombieAnimated" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12.8692, 0.359036, -6.9174 )
