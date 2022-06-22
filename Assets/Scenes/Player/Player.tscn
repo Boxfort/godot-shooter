@@ -3,7 +3,7 @@
 [ext_resource path="res://Assets/Scenes/Player/PlayerHUD.cs" type="Script" id=1]
 [ext_resource path="res://Assets/Scenes/Player/CharacterController.cs" type="Script" id=2]
 [ext_resource path="res://ShakeableCamera.cs" type="Script" id=3]
-[ext_resource path="res://Assets/Scenes/WeaponManager.cs" type="Script" id=4]
+[ext_resource path="res://Assets/Scenes/Player/WeaponManager.cs" type="Script" id=4]
 [ext_resource path="res://Assets/Scenes/Player/PlayerManager.cs" type="Script" id=5]
 [ext_resource path="res://Assets/Scenes/Player/PlayerAreaCollider.cs" type="Script" id=6]
 

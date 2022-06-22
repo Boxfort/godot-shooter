@@ -62,19 +62,21 @@ public class CharacterController : KinematicBody
 
         // TODO: an actual solution for setting world environment
         var environment = GetNode<WorldEnvironment>("../WorldEnvironment");
-        if (environment != null) {
+        if (environment != null)
+        {
             GD.Print("Setting gun camera environment...");
             gunCamera.Environment = environment.Environment;
         }
 
         currentAcceleration = groundAcceleration;
 
-        Input.SetMouseMode(Input.MouseMode.Captured);
+        Input.MouseMode = Input.MouseModeEnum.Captured;
     }
 
     public override void _Input(InputEvent @event)
     {
-        if (@event is InputEventMouseMotion mouseMotion) {
+        if (@event is InputEventMouseMotion mouseMotion)
+        {
             float xMovement = -mouseMotion.Relative.x * mouseSensitivity;
             float yMovement = -mouseMotion.Relative.y * mouseSensitivity;
             mouseMovement = new Vector2(xMovement, yMovement);
@@ -104,18 +106,18 @@ public class CharacterController : KinematicBody
     public override void _PhysicsProcess(float delta)
     {
         float horizontalRotation = GlobalTransform.basis.GetEuler().y;
-	    float forwardInput = Input.GetActionStrength("move_backward") - Input.GetActionStrength("move_forward");
-	    float strafeInput = Input.GetActionStrength("move_right") - Input.GetActionStrength("move_left");
-	    inputDirection = new Vector3(strafeInput, 0, forwardInput).Rotated(Vector3.Up, horizontalRotation).Normalized();
+        float forwardInput = Input.GetActionStrength("move_backward") - Input.GetActionStrength("move_forward");
+        float strafeInput = Input.GetActionStrength("move_right") - Input.GetActionStrength("move_left");
+        inputDirection = new Vector3(strafeInput, 0, forwardInput).Rotated(Vector3.Up, horizontalRotation).Normalized();
 
         CheckCollisions();
         QueueJump();
         Crouch();
 
-        if (inWater) 
+        if (inWater)
         {
             HandleWaterMovement(delta);
-        } 
+        }
         else
         {
             HandleMovement(delta);
@@ -127,27 +129,27 @@ public class CharacterController : KinematicBody
 
     private void HandleMovement(float delta)
     {
-        if (IsOnFloor() && !inWater) 
+        if (IsOnFloor() && !inWater)
         {
             snap = -GetFloorNormal();
             currentAcceleration = groundAcceleration;
             gravityVec = Vector3.Zero;
 
-            if (fallTime > 0) 
+            if (fallTime > 0)
             {
                 camera.AddTrauma(NormalizedInRange(fallTime, 0.5f, maxFallTraumaTime, 0, 2.0f));
                 fallTime = 0.0f;
-            } 
-        } 
-        else 
+            }
+        }
+        else
         {
-            if (IsOnCeiling()) 
+            if (IsOnCeiling())
             {
                 // If we bonk our head, start going down.
                 gravityVec = Vector3.Zero;
                 velocity.y = 0;
-            } 
-            else 
+            }
+            else
             {
                 gravityVec += Vector3.Down * gravity * delta;
             }
@@ -157,7 +159,8 @@ public class CharacterController : KinematicBody
             fallTime += delta;
         }
 
-        if (jumpQueued && IsOnFloor()) {
+        if (jumpQueued && IsOnFloor())
+        {
             snap = Vector3.Zero;
             gravityVec.y = jumpVelocity;
 
@@ -173,9 +176,12 @@ public class CharacterController : KinematicBody
         currentAcceleration = airAcceleration;
 
         // If we hit the water going quickly we want to slow gradually.
-        if (gravityVec.y < -waterTerminalVelocity) {
-            gravityVec.y += (gravity*2) * delta;
-        } else {
+        if (gravityVec.y < -waterTerminalVelocity)
+        {
+            gravityVec.y += (gravity * 2) * delta;
+        }
+        else
+        {
             gravityVec += Vector3.Down * (gravity / 3) * delta;
             gravityVec.y = Mathf.Clamp(gravityVec.y, -waterTerminalVelocity, waterTerminalVelocity);
         }
@@ -185,32 +191,32 @@ public class CharacterController : KinematicBody
         inputDirection = inputDirection.Rotated(headTransform.basis.x.Normalized(), headTransform.basis.GetEuler().x);
 
         // Let the player go up and down using jump/crouch
-        if (Input.IsActionPressed("jump")) 
+        if (Input.IsActionPressed("jump"))
         {
             inputDirection.y = 1;
         }
-        else if (Input.IsActionPressed("crouch")) 
+        else if (Input.IsActionPressed("crouch"))
         {
             inputDirection.y = -0.5f;
         }
     }
 
-    private void MovePlayer(float delta) 
+    private void MovePlayer(float delta)
     {
         velocity = velocity.LinearInterpolate(inputDirection * moveSpeed, currentAcceleration * delta);
         gravityVec.y = Mathf.Clamp(gravityVec.y, -terminalVelocity, terminalVelocity);
-	    movement = velocity + gravityVec;
-	    currentVelocity = MoveAndSlideWithSnap(movement, snap, Vector3.Up);
+        movement = velocity + gravityVec;
+        currentVelocity = MoveAndSlideWithSnap(movement, snap, Vector3.Up);
     }
 
-    private void CheckCollisions() 
+    private void CheckCollisions()
     {
         inWater = false;
 
         var areas = areaCollider.GetOverlappingAreas();
-        foreach (Area area in areas) 
+        foreach (Area area in areas)
         {
-            if (area.IsInGroup("water")) 
+            if (area.IsInGroup("water"))
             {
                 inWater = true;
             }
@@ -221,7 +227,7 @@ public class CharacterController : KinematicBody
         }
     }
 
-    private void RollHead(float horizontalRotation, float delta) 
+    private void RollHead(float horizontalRotation, float delta)
     {
         Vector3 camRotDeg = head.RotationDegrees;
         var normalizedRotation = NormalizedInRange(-currentVelocity.Rotated(Vector3.Down, horizontalRotation).x, -moveSpeed, moveSpeed, -headRollDegreesMax, headRollDegreesMax);
@@ -231,17 +237,17 @@ public class CharacterController : KinematicBody
         head.RotationDegrees = camRotDeg;
     }
 
-    private void Crouch() 
+    private void Crouch()
     {
-        if(Input.IsActionPressed("crouch")) 
+        if (Input.IsActionPressed("crouch"))
         {
             ((CapsuleShape)collisionShape.Shape).Height = 0.01f;
             ((CapsuleShape)areaCollisionShape.Shape).Height = 0.01f;
             var transform = collisionShape.Transform;
             transform.origin.y = 0.5f;
             collisionShape.Transform = transform;
-        } 
-        else if(!canStand.IsColliding())
+        }
+        else if (!canStand.IsColliding())
         {
             ((CapsuleShape)collisionShape.Shape).Height = 1.0f;
             ((CapsuleShape)areaCollisionShape.Shape).Height = 1.0f;
@@ -251,13 +257,13 @@ public class CharacterController : KinematicBody
         }
     }
 
-    private void QueueJump() 
+    private void QueueJump()
     {
-        if (autoJump) 
+        if (autoJump)
         {
             jumpQueued = Input.IsActionPressed("jump");
         }
-        else 
+        else
         {
             jumpQueued = Input.IsActionJustPressed("jump") && !Input.IsActionJustReleased("jump");
         }
