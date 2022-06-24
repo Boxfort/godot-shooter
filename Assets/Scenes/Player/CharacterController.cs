@@ -149,7 +149,6 @@ public class CharacterController : KinematicBody
             {
                 currentKnockback = 0;
             }
-            GD.Print("current knockback " + currentKnockback);
         }
     }
 

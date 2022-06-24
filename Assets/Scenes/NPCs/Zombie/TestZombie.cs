@@ -99,7 +99,6 @@ public class TestZombie : GroundAgent, Damageable
     bool attacking = false;
     bool attackHit = false;
 
-    int c = 0;
     private void HandleAttacking(float delta)
     {
         if (target != null && GlobalTransform.origin.DistanceTo(target.GlobalTransform.origin) < 3.5f)
@@ -120,8 +119,6 @@ public class TestZombie : GroundAgent, Damageable
                     {
                         if (!attackHit)
                         {
-                            c++;
-                            GD.Print("Attacking player " + c);
                             playerArea.TakeDamage(0, 20.0f, GlobalTransform.origin);
                             attackHit = true;
                         }
