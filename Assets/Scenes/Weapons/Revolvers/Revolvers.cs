@@ -18,12 +18,10 @@ public class Revolvers : WeaponRaycast
     float fireTimer = 0;
 
     public override bool CanFire => canFire;
-
     protected override float Inaccuracy => inaccuracy;
-
     protected override float Range => range;
-
     protected override int Damage => damage;
+    protected override float Knockback => 8.0f;
 
     public override void Equip()
     {
@@ -36,13 +34,13 @@ public class Revolvers : WeaponRaycast
     {
         canFire = false;
 
-        if (fireLeft) 
+        if (fireLeft)
         {
             animationPlayerLeft.Stop(true);
             animationPlayerLeft.Play("Fire");
             fireLeft = false;
             muzzleFlashLeft.Flash();
-        } 
+        }
         else
         {
             animationPlayerRight.Stop(true);
@@ -69,20 +67,21 @@ public class Revolvers : WeaponRaycast
         animationPlayerRight.Connect("animation_finished", this, nameof(OnAnimationFinished));
     }
 
-    private void OnAnimationFinished(String animationName) 
+    private void OnAnimationFinished(String animationName)
     {
         //GD.Print("Animation Finished: " + animationName);
     }
 
     public override void _Process(float delta)
     {
-        if (!canFire) 
+        if (!canFire)
         {
-           fireTimer += delta;
-           if(fireTimer >= fireSpeed) {
-               fireTimer = 0;
-               canFire = true;
-           }
+            fireTimer += delta;
+            if (fireTimer >= fireSpeed)
+            {
+                fireTimer = 0;
+                canFire = true;
+            }
         }
     }
 }

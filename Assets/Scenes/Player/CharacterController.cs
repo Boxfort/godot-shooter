@@ -9,7 +9,7 @@ public class CharacterController : KinematicBody
     Camera gunCamera;
     CollisionShape collisionShape;
     CollisionShape areaCollisionShape;
-    Area areaCollider;
+    PlayerAreaCollider areaCollider;
     RayCast canStand;
 
     float headRollDegreesMax = 5;
@@ -19,6 +19,9 @@ public class CharacterController : KinematicBody
     float airAcceleration = 3f;
     float moveSpeed = 14f;
     float mouseSensitivity = 0.1f;
+
+    float currentKnockback = 0.0f;
+    Vector3 knockbackDirection = Vector3.Zero;
 
     const float maxFallTraumaTime = 1.5f; // The time after which the camera trauma will be at its max when landing.
     float fallTime = 0.0f;
@@ -54,11 +57,13 @@ public class CharacterController : KinematicBody
         head = GetNode<Spatial>("Head");
         hand = GetNode<Spatial>("Head/Hand");
         collisionShape = GetNode<CollisionShape>("CollisionShape");
-        areaCollider = collisionShape.GetNode<Area>("AreaCollider");
+        areaCollider = collisionShape.GetNode<PlayerAreaCollider>("AreaCollider");
         areaCollisionShape = areaCollider.GetNode<CollisionShape>("CollisionShape");
         canStand = collisionShape.GetNode<RayCast>("CanStand");
         camera = head.GetNode<ShakeableCamera>("ShakeableCamera");
         gunCamera = hand.GetNode<Camera>("ViewportContainer/Viewport/GunCamera");
+
+        areaCollider.Connect("OnKnockback", this, nameof(Knockback));
 
         // TODO: an actual solution for setting world environment
         var environment = GetNode<WorldEnvironment>("../WorldEnvironment");
@@ -123,8 +128,29 @@ public class CharacterController : KinematicBody
             HandleMovement(delta);
         }
 
+        HandleKnockback(delta);
         MovePlayer(delta);
         RollHead(horizontalRotation, delta);
+    }
+
+    public void Knockback(float knockback, Vector3 fromPosition)
+    {
+        knockbackDirection = -GlobalTransform.origin.DirectionTo(fromPosition);
+        currentKnockback += knockback;
+    }
+
+    private void HandleKnockback(float delta)
+    {
+        if (currentKnockback > 0)
+        {
+            currentKnockback -= (gravity * 4) * delta;
+
+            if (currentKnockback <= 0)
+            {
+                currentKnockback = 0;
+            }
+            GD.Print("current knockback " + currentKnockback);
+        }
     }
 
     private void HandleMovement(float delta)
@@ -205,7 +231,7 @@ public class CharacterController : KinematicBody
     {
         velocity = velocity.LinearInterpolate(inputDirection * moveSpeed, currentAcceleration * delta);
         gravityVec.y = Mathf.Clamp(gravityVec.y, -terminalVelocity, terminalVelocity);
-        movement = velocity + gravityVec;
+        movement = velocity + gravityVec + (currentKnockback * knockbackDirection);
         currentVelocity = MoveAndSlideWithSnap(movement, snap, Vector3.Up);
     }
 

@@ -7,6 +7,7 @@ public class Explosion : TraumaCauser
 
     int damage = 15;
     float radius = 3.5f;
+    float knockback = 15.0f;
 
     public int Damage { get => damage; set => damage = value; }
     public float Radius { get => radius; set => SetRadius(value); }
@@ -32,14 +33,15 @@ public class Explosion : TraumaCauser
     {
         // We need to wait for the physics engine so we can actually check
         // for overlapping bodies after creating the object.
-        if (shouldExplode) 
+        if (shouldExplode)
         {
-            if (explosionDelayTimer >= explosionDelay) 
+            if (explosionDelayTimer >= explosionDelay)
             {
                 DoExplosion();
                 shouldExplode = false;
             }
-            else {
+            else
+            {
                 explosionDelayTimer += delta;
             }
         }
@@ -62,20 +64,21 @@ public class Explosion : TraumaCauser
         GD.Print(areaCollisions);
         GD.Print(bodyCollisions);
 
-        foreach(CollisionObject area in areaCollisions) {
+        foreach (CollisionObject area in areaCollisions)
+        {
             bodyCollisions.Add(area);
         }
 
-        foreach (Node collision in bodyCollisions) 
+        foreach (Node collision in bodyCollisions)
         {
-            if(collision is Damageable damageable)
+            if (collision is Damageable damageable)
             {
-                damageable.TakeDamage(Damage);
+                damageable.TakeDamage(Damage, knockback, GlobalTransform.origin);
             }
         }
     }
 
-    private void SetRadius(float value) 
+    private void SetRadius(float value)
     {
         ((SphereShape)collisionShape.Shape).Radius = value;
         radius = value;
