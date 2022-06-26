@@ -11,21 +11,23 @@ public abstract class WeaponMelee : Weapon
     public override bool CanFire => canFire;
     protected abstract int Damage { get; }
     protected abstract float Knockback { get; }
+    protected abstract float AttackTime { get; }
+    protected abstract float AttackHitStartTime { get; }
+    protected abstract float AttackHitEndTime { get; }
+    protected bool attacking = false;
+    protected float attackTimer = 0.0f;
+    protected Dictionary<Damageable, bool> attackHit = new Dictionary<Damageable, bool>() { };
 
     public override void Equip()
     {
-        // TODO
+        Show();
+        animationPlayer.Play("Equip");
     }
 
-    float attackTime = 0.4f;
-    float attackTimer = 0.0f;
-    float attackHitStartTime = 0.1f;
-    float attackHitEndTime = 0.2f;
-    bool attacking = false;
-    Dictionary<Damageable, bool> attackHit = new Dictionary<Damageable, bool>() { };
 
     public override void Fire()
     {
+        Show();
         animationPlayer.Stop(true);
         animationPlayer.Play("Attack");
 
@@ -35,6 +37,7 @@ public abstract class WeaponMelee : Weapon
 
     public override void _Ready()
     {
+        Hide();
         hitbox = GetNode<Area>("Hitbox");
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
     }
@@ -47,11 +50,11 @@ public abstract class WeaponMelee : Weapon
 
     private void HandleAttack(float delta)
     {
-        if (attacking && attackTimer < attackTime)
+        if (attacking && attackTimer < AttackTime)
         {
-            if (attackTimer >= attackHitStartTime && attackTimer < attackHitEndTime)
+            if (attackTimer >= AttackHitStartTime && attackTimer < AttackHitEndTime)
             {
-                foreach (PhysicsBody area in hitbox.GetOverlappingBodies())
+                foreach (Node area in hitbox.GetOverlappingBodies())
                 {
                     if (area is Damageable damageable)
                     {
@@ -60,7 +63,6 @@ public abstract class WeaponMelee : Weapon
 
                         if (!hasHit)
                         {
-                            GD.Print("HIT: " + area.Name);
                             damageable.TakeDamage(Damage, Knockback, GlobalTransform.origin);
                             attackHit[damageable] = true;
                         }
@@ -71,7 +73,7 @@ public abstract class WeaponMelee : Weapon
             attackTimer += delta;
         }
 
-        if (attackTimer >= attackTime)
+        if (attackTimer >= AttackTime)
         {
             attackTimer = 0.0f;
             attacking = false;

@@ -7,7 +7,8 @@ public enum WeaponType
     None,
     Shotgun,
     Revolvers,
-    BaseballBat
+    BaseballBat,
+    GrenadeLauncher
 }
 
 public class WeaponManager : Spatial
@@ -26,9 +27,10 @@ public class WeaponManager : Spatial
 
     Dictionary<WeaponType, bool> hasWeapon = new Dictionary<WeaponType, bool> {
         { WeaponType.None, true },
-        { WeaponType.Shotgun, false},
+        { WeaponType.Shotgun, true},
         { WeaponType.Revolvers, true },
-        { WeaponType.BaseballBat, true }
+        { WeaponType.BaseballBat, true },
+        { WeaponType.GrenadeLauncher, true }
     };
 
     Dictionary<WeaponType, int> ammoCount = new Dictionary<WeaponType, int> {
@@ -36,6 +38,7 @@ public class WeaponManager : Spatial
         { WeaponType.Shotgun, 10 },
         { WeaponType.Revolvers, 10 },
         { WeaponType.BaseballBat, -1 },
+        { WeaponType.GrenadeLauncher, 100 },
     };
 
     public override void _Ready()
@@ -45,6 +48,7 @@ public class WeaponManager : Spatial
         weapons.Add(WeaponType.Shotgun, GD.Load<PackedScene>("res://Assets/Scenes/Weapons/Shotgun/Shotgun.tscn"));
         weapons.Add(WeaponType.Revolvers, GD.Load<PackedScene>("res://Assets/Scenes/Weapons/Revolvers/Revolvers.tscn"));
         weapons.Add(WeaponType.BaseballBat, GD.Load<PackedScene>("res://Assets/Scenes/Weapons/BaseballBat/BaseballBat.tscn"));
+        weapons.Add(WeaponType.GrenadeLauncher, GD.Load<PackedScene>("res://Assets/Scenes/Weapons/GrenadeLauncher/GrenadeLauncher.tscn"));
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -61,6 +65,10 @@ public class WeaponManager : Spatial
         if (Input.IsActionJustPressed("weapon3"))
         {
             EquipWeapon(WeaponType.Shotgun);
+        }
+        if (Input.IsActionJustPressed("weapon4"))
+        {
+            EquipWeapon(WeaponType.GrenadeLauncher);
         }
 
         if (Input.IsActionPressed("fire"))

@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Assets/Scenes/NPCs/Zombie/ZombieAnimated.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/Scenes/Props/ExplosiveBarrel/ExplosiveBarrel.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Assets/Scenes/Player/Player.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Assets/Scenes/Pickups/ShotgunPickup.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Assets/Scenes/Pickups/RevolverPickup.tscn" type="PackedScene" id=9]
@@ -61,14 +62,17 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 13.3781 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0604014, -0.029814, 0.0297585 )
 navmesh = SubResource( 3 )
 
-[node name="Plane2" type="MeshInstance" parent="Navigation/NavigationMeshInstance"]
+[node name="LevelGeometry" type="MeshInstance" parent="Navigation/NavigationMeshInstance"]
 transform = Transform( 20, 0, 0, 0, 20, 0, 0, 0, 20, -1, 0, 0 )
 mesh = SubResource( 5 )
 
-[node name="static_collision" type="StaticBody" parent="Navigation/NavigationMeshInstance/Plane2"]
+[node name="static_collision_level" type="StaticBody" parent="Navigation/NavigationMeshInstance/LevelGeometry"]
 
-[node name="shape0" type="CollisionShape" parent="Navigation/NavigationMeshInstance/Plane2/static_collision"]
+[node name="shape0" type="CollisionShape" parent="Navigation/NavigationMeshInstance/LevelGeometry/static_collision_level"]
 shape = SubResource( 6 )
+
+[node name="ExplosiveBarrel" parent="Navigation/NavigationMeshInstance" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.14744, 1.18461, 9.53873 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 0.866087, -0.432912, 0.24996, -9.7854e-05, 0.49988, 0.866094, -0.499893, -0.750138, 0.432898, 0, 9.2764, 0 )

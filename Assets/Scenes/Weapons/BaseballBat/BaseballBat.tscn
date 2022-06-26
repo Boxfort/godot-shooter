@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Assets/Models/BaseballBat/BaseballBat_Raw_Grime.material" type="Material" id=1]
 [ext_resource path="res://Assets/Scenes/Weapons/BaseballBat/BaseballBat.cs" type="Script" id=2]
@@ -50,6 +50,34 @@ tracks/1/keys = {
 "values": [ Vector3( 15, 30, 0 ), Vector3( -50.7614, 175.225, -146.018 ), Vector3( 15, 30, 0 ) ]
 }
 
+[sub_resource type="Animation" id=5]
+resource_name = "Equip"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("RootNode:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 0.217638, 1 ),
+"update": 0,
+"values": [ Vector3( 0.429567, -1.95465, -1.5 ), Vector3( 0.429567, -1.1, -1.5 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("RootNode:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 0.217638, 1 ),
+"update": 0,
+"values": [ Vector3( -165, 30, 0 ), Vector3( 15, 30, 0 ) ]
+}
+
 [sub_resource type="Animation" id=4]
 resource_name = "Idle"
 tracks/0/type = "value"
@@ -81,7 +109,7 @@ tracks/1/keys = {
 script = ExtResource( 2 )
 
 [node name="RootNode" type="Spatial" parent="."]
-transform = Transform( 1.73205, 0.258819, 0.965926, 0, 1.93185, -0.517638, -1, 0.448288, 1.67303, 0.429567, -1.1, -1.5 )
+transform = Transform( 1.73205, -0.258819, -0.965926, 0, -1.93185, 0.517638, -1, -0.448287, -1.67303, 0.429567, -1.95465, -1.5 )
 
 [node name="BaseballBat_Raw_Wood(Grime)" type="MeshInstance" parent="RootNode"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
@@ -97,4 +125,5 @@ shape = SubResource( 2 )
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 reset_on_save = false
 anims/Attack = SubResource( 3 )
+anims/Equip = SubResource( 5 )
 anims/Idle = SubResource( 4 )
