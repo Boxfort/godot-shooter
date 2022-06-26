@@ -3,6 +3,8 @@ using System;
 
 public class GrenadeLauncherProjectile : KinematicBody
 {
+    PackedScene explosion;
+
     float initialVelocity = 30.0f;
     float velocityDecay = 10.0f;
     float gravity = 1.0f;
@@ -22,6 +24,7 @@ public class GrenadeLauncherProjectile : KinematicBody
     public override void _Ready()
     {
         velocity = initialVelocity;
+        explosion = (PackedScene)GD.Load("res://Assets/Scenes/Explosion.tscn");
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -34,6 +37,11 @@ public class GrenadeLauncherProjectile : KinematicBody
 
         if (collision != null)
         {
+            if (collision.Collider is Damageable damageable)
+            {
+                Explode();
+            }
+
             var reflect = collision.Remainder.Bounce(collision.Normal);
             direction = movement.Bounce(collision.Normal).Normalized();
             MoveAndCollide(reflect);
@@ -55,12 +63,25 @@ public class GrenadeLauncherProjectile : KinematicBody
 
         if (explosionTimer >= explosionTime)
         {
-            // TODO: Boom
-            QueueFree();
+            Explode();
         }
         else
         {
             explosionTimer += delta;
         }
+    }
+
+    private void Explode()
+    {
+        Explosion instance = (Explosion)explosion.Instance();
+
+        instance.Knockback = 40.0f;
+
+        var transform = GlobalTransform;
+        transform.origin += Vector3.Up * 1.5f;
+        instance.GlobalTransform = transform;
+        GetTree().Root.AddChild(instance);
+        instance.Explode();
+        QueueFree();
     }
 }

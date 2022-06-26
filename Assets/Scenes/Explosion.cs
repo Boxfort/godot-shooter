@@ -10,6 +10,7 @@ public class Explosion : TraumaCauser
     float knockback = 15.0f;
 
     public int Damage { get => damage; set => damage = value; }
+    public float Knockback { get => knockback; set => knockback = value; }
     public float Radius { get => radius; set => SetRadius(value); }
 
     // Called when the node enters the scene tree for the first time.

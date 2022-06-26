@@ -39,6 +39,7 @@ public class GrenadeLauncher : WeaponProjectile
         var transform = instance.GlobalTransform;
         transform.origin = GlobalTransform.origin - (GlobalTransform.basis.z * 3);
         instance.GlobalTransform = transform;
+
         GetTree().Root.AddChild(instance);
     }
 
