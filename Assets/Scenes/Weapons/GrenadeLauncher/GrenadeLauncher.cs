@@ -31,8 +31,8 @@ public class GrenadeLauncher : WeaponProjectile
     public override void Fire()
     {
         canFire = false;
-        //animationPlayer.Play("Stop");
-        //animationPlayer.Play("Fire");
+        animationPlayer.Stop();
+        animationPlayer.Play("Fire");
 
         GrenadeLauncherProjectile instance = (GrenadeLauncherProjectile)projectile.Instance();
         instance.Direction = -GlobalTransform.basis.z;

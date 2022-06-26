@@ -62,9 +62,6 @@ public class Explosion : TraumaCauser
         areaCollisions = GetOverlappingAreas();
         bodyCollisions = GetOverlappingBodies();
 
-        GD.Print(areaCollisions);
-        GD.Print(bodyCollisions);
-
         foreach (CollisionObject area in areaCollisions)
         {
             bodyCollisions.Add(area);

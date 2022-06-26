@@ -31,7 +31,7 @@ public class GrenadeLauncherProjectile : KinematicBody
     public override void _PhysicsProcess(float delta)
     {
         gravityVec += Vector3.Down * gravity * delta;
-        //RotationDegrees += (rotationVec * rotationSpeed) * delta;
+        RotationDegrees += (rotationVec * rotationSpeed) * delta;
         var movement = (direction * velocity * delta) + gravityVec;
         var collision = MoveAndCollide(movement);
 
@@ -48,18 +48,14 @@ public class GrenadeLauncherProjectile : KinematicBody
 
             float dotProduct = Vector3.Up.Dot(collision.Normal);
 
-            GD.Print(((Node)collision.Collider).Name);
-
             if (dotProduct > 0)
             {
                 gravityVec *= 1 - dotProduct;
-                //GD.Print("BOUNCE UP");
             }
         }
 
 
         velocity = Mathf.Max(velocity - (velocityDecay * delta), 0);
-        GD.Print(velocity);
 
         if (explosionTimer >= explosionTime)
         {
