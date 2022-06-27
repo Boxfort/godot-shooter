@@ -4,23 +4,18 @@ using System.Collections.Generic;
 
 public abstract class GroundAgent : KinematicBody
 {
-    [Export]
-    private PackedScene debugPoint;
-
     protected NavigationAgent navigationAgent;
     protected Area detectionArea;
     protected Spatial target;
-
-    protected Vector3 lastTarget;
     protected Vector3[] currentPath = new Vector3[0];
     private Dictionary<String, bool> canReachTarget = new Dictionary<String, bool>();
 
     protected bool targetPositionReset = false;
-    protected bool debug = false;
 
     // MOVEMENT
-    protected abstract float MoveSpeed { get; set; }
-    protected abstract float RotationSpeed { get; set; }
+    protected abstract float MoveSpeed { get; }
+    protected abstract float RotationSpeed { get; }
+    protected abstract float Gravity { get; }
     protected Vector3 currentVelocity = Vector3.Zero;
     protected Vector3 gravityVec = Vector3.Zero;
     protected Vector3 snap = Vector3.Zero;
@@ -59,51 +54,12 @@ public abstract class GroundAgent : KinematicBody
         currentPath = navigationAgent.GetNavPath();
     }
 
-    public override void _PhysicsProcess(float delta)
-    {
-        currentVelocity = Vector3.Zero;
-        HandleGravity(delta);
-
-        if (target != null)
-        {
-            GotToTarget(delta);
-        }
-    }
-
-    protected void GotToTarget(float delta)
+    protected Vector3 GetMovementToTarget()
     {
         Vector3 targetLocation = navigationAgent.GetNextLocation();
-
-        if (targetLocation != lastTarget)
-        {
-            if (debug)
-            {
-                InstantiateDebugPoint(targetLocation);
-            }
-            lastTarget = targetLocation;
-        }
-
-        LookAtSmooth(targetLocation, delta);
-
-        if (!navigationAgent.IsTargetReached())
-        {
-            if (CanReachTarget(target.GlobalTransform.origin, target.GetInstanceId().ToString()))
-            {
-                var position = GlobalTransform.origin;
-                var direction = targetLocation - GlobalTransform.origin;
-                currentVelocity = MoveAndSlideWithSnap((direction.Normalized() * MoveSpeed) + gravityVec, snap, Vector3.Up);
-            }
-        }
-    }
-
-    private void InstantiateDebugPoint(Vector3 position)
-    {
-        var instance = debugPoint.Instance() as Spatial;
-        GetTree().Root.AddChild(instance);
-        var debugTransform = instance.GlobalTransform;
-        debugTransform.origin = position;
-        instance.GlobalTransform = debugTransform;
-        lastTarget = position;
+        var position = GlobalTransform.origin;
+        var direction = targetLocation - GlobalTransform.origin;
+        return (direction.Normalized() * MoveSpeed);
     }
 
     protected bool CanReachTarget(Vector3 target, String id)
@@ -175,7 +131,7 @@ public abstract class GroundAgent : KinematicBody
         else
         {
             snap = Vector3.Down;
-            gravityVec += Vector3.Down * 40.0f * delta;
+            gravityVec += Vector3.Down * Gravity * delta;
         }
     }
 

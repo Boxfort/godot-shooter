@@ -18,8 +18,8 @@ public class Shotgun : WeaponRaycast
 
     protected override float Inaccuracy => inaccuracy;
     protected override float Range => range;
-
     protected override int Damage => damage;
+    protected override float Knockback => 3f;
 
     public override void Equip()
     {
@@ -33,7 +33,7 @@ public class Shotgun : WeaponRaycast
         animationPlayer.Stop(true);
         animationPlayer.Play("Fire");
 
-        for(int i = 0; i < pellets; i++)
+        for (int i = 0; i < pellets; i++)
         {
             Dictionary collision = FireRay(true);
         }
@@ -49,13 +49,14 @@ public class Shotgun : WeaponRaycast
 
     public override void _Process(float delta)
     {
-        if (!canFire) 
+        if (!canFire)
         {
-           fireTimer += delta;
-           if(fireTimer >= fireSpeed) {
-               fireTimer = 0;
-               canFire = true;
-           }
+            fireTimer += delta;
+            if (fireTimer >= fireSpeed)
+            {
+                fireTimer = 0;
+                canFire = true;
+            }
         }
     }
 }

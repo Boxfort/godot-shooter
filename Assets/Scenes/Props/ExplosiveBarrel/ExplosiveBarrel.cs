@@ -13,7 +13,7 @@ public class ExplosiveBarrel : Spatial, Damageable
         explosion = GD.Load("res://Assets/Scenes/Explosion.tscn") as PackedScene;
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, float knockback, Vector3 fromPosition)
     {
         health -= damage;
 
@@ -23,7 +23,7 @@ public class ExplosiveBarrel : Spatial, Damageable
         }
     }
 
-    private void Explode() 
+    private void Explode()
     {
         Explosion instance = explosion.Instance() as Explosion;
         GetTree().Root.AddChild(instance);
