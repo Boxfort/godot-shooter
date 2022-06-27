@@ -24,13 +24,13 @@ public class PlayerManager : Node
 
     private void SetArmor(int value)
     {
-        armor = Mathf.Clamp(value, 0, maxArmor); 
+        armor = Mathf.Clamp(value, 0, maxArmor);
         EmitSignal(nameof(OnArmorChanged), Armor);
     }
 
     private void SetHealth(int value)
     {
-        health = Mathf.Clamp(value, 0, maxHealth); 
+        health = Mathf.Clamp(value, 0, maxHealth);
         EmitSignal(nameof(OnHealthChanged), Health);
     }
 
@@ -43,6 +43,7 @@ public class PlayerManager : Node
 
     private void TakeDamage(int damage)
     {
+        GD.Print("Player took damage: " + damage);
         Health = Health - damage;
     }
 
@@ -56,12 +57,12 @@ public class PlayerManager : Node
         CheckCollisions();
     }
 
-    private void CheckCollisions() 
+    private void CheckCollisions()
     {
         var areas = areaCollider.GetOverlappingAreas();
-        foreach (Area area in areas) 
+        foreach (Area area in areas)
         {
-            if (area is Pickup) 
+            if (area is Pickup)
             {
                 if (area is WeaponPickup weaponPickup)
                 {
@@ -73,7 +74,7 @@ public class PlayerManager : Node
                 }
                 else if (area is HealthPickup healthPickup)
                 {
-                    if(Health >= maxHealth)
+                    if (Health >= maxHealth)
                     {
                         return;
                     }
@@ -81,7 +82,7 @@ public class PlayerManager : Node
                 }
                 else if (area is ArmorPickup armorPickup)
                 {
-                    if(Armor >= maxArmor)
+                    if (Armor >= maxArmor)
                     {
                         return;
                     }

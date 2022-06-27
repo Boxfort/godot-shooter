@@ -35,7 +35,7 @@ tracks/0/keys = {
 [node name="DoubleBarrelShotgun" instance=ExtResource( 1 )]
 
 [node name="Base" parent="RootNode" index="0"]
-transform = Transform( 13.4361, 0, 0, 0, -9.61023e-06, 26.8721, 0, -26.8721, -9.61023e-06, 0, 0, 0 )
+transform = Transform( 8.14772, -16.9749, -12.9778, 0, -16.3211, 21.3479, -10.6838, -12.9455, -9.89719, -2, -1, 0 )
 layers = 2
 
 [node name="Barrel" parent="RootNode/Base" index="0"]

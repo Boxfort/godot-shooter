@@ -6,7 +6,7 @@ public enum WeaponType
 {
     None,
     Shotgun,
-    Revolvers,
+    Pistols,
     BaseballBat,
     GrenadeLauncher
 }
@@ -19,6 +19,8 @@ public class WeaponManager : Spatial
     [Signal]
     delegate void OnWeaponEquipped(WeaponType weaponType, int ammoCount);
 
+    PlayerLeg playerLeg;
+
     Spatial weaponSlot;
     WeaponType equippedWeaponType = WeaponType.None;
     Weapon equippedWeapon;
@@ -28,7 +30,7 @@ public class WeaponManager : Spatial
     Dictionary<WeaponType, bool> hasWeapon = new Dictionary<WeaponType, bool> {
         { WeaponType.None, true },
         { WeaponType.Shotgun, true},
-        { WeaponType.Revolvers, true },
+        { WeaponType.Pistols, true },
         { WeaponType.BaseballBat, true },
         { WeaponType.GrenadeLauncher, true }
     };
@@ -36,7 +38,7 @@ public class WeaponManager : Spatial
     Dictionary<WeaponType, int> ammoCount = new Dictionary<WeaponType, int> {
         { WeaponType.None, -1 },
         { WeaponType.Shotgun, 10 },
-        { WeaponType.Revolvers, 10 },
+        { WeaponType.Pistols, 10 },
         { WeaponType.BaseballBat, -1 },
         { WeaponType.GrenadeLauncher, 100 },
     };
@@ -44,9 +46,10 @@ public class WeaponManager : Spatial
     public override void _Ready()
     {
         weaponSlot = GetNode<Spatial>("WeaponSlot");
+        playerLeg = GetNode<PlayerLeg>("Leg");
 
         weapons.Add(WeaponType.Shotgun, GD.Load<PackedScene>("res://Assets/Scenes/Weapons/Shotgun/Shotgun.tscn"));
-        weapons.Add(WeaponType.Revolvers, GD.Load<PackedScene>("res://Assets/Scenes/Weapons/Revolvers/Revolvers.tscn"));
+        weapons.Add(WeaponType.Pistols, GD.Load<PackedScene>("res://Assets/Scenes/Weapons/Pistols/Pistols.tscn"));
         weapons.Add(WeaponType.BaseballBat, GD.Load<PackedScene>("res://Assets/Scenes/Weapons/BaseballBat/BaseballBat.tscn"));
         weapons.Add(WeaponType.GrenadeLauncher, GD.Load<PackedScene>("res://Assets/Scenes/Weapons/GrenadeLauncher/GrenadeLauncher.tscn"));
     }
@@ -60,7 +63,7 @@ public class WeaponManager : Spatial
         }
         if (Input.IsActionJustPressed("weapon2"))
         {
-            EquipWeapon(WeaponType.Revolvers);
+            EquipWeapon(WeaponType.Pistols);
         }
         if (Input.IsActionJustPressed("weapon3"))
         {
@@ -69,6 +72,11 @@ public class WeaponManager : Spatial
         if (Input.IsActionJustPressed("weapon4"))
         {
             EquipWeapon(WeaponType.GrenadeLauncher);
+        }
+
+        if (Input.IsActionPressed("kick") && !playerLeg.Kicking)
+        {
+            playerLeg.Kick();
         }
 
         if (Input.IsActionPressed("fire"))
@@ -125,10 +133,11 @@ public class WeaponManager : Spatial
         if (hasWeapon[weapon] && equippedWeaponType != weapon)
         {
             // Remove the active weapon before equipping
-            Node activeWeapon = weaponSlot.GetChildOrNull<Node>(0);
-            if (activeWeapon != null)
+            var children = weaponSlot.GetChildren();
+
+            foreach (Node child in children)
             {
-                activeWeapon.QueueFree();
+                child.QueueFree();
             }
 
             // Equip the weapon

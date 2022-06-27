@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Assets/Models/Leg/leg.gltf" type="PackedScene" id=1]
+[ext_resource path="res://Assets/Models/Leg/Body_.material" type="Material" id=2]
+[ext_resource path="res://Assets/Scenes/Player/PlayerLeg.cs" type="Script" id=3]
+
+[node name="Leg" instance=ExtResource( 1 )]
+script = ExtResource( 3 )
+
+[node name="PoliceOfficer" parent="Armature/Skeleton" index="0"]
+layers = 2
+material/0 = ExtResource( 2 )
+
+[node name="AnimationPlayer" parent="." index="1"]
+playback_speed = 4.0

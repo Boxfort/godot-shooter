@@ -2,7 +2,7 @@ using Godot;
 using Godot.Collections;
 using System;
 
-public class Revolvers : WeaponRaycast
+public class Pistols : WeaponRaycast
 {
     AnimationPlayer animationPlayerLeft;
     AnimationPlayer animationPlayerRight;
@@ -21,7 +21,7 @@ public class Revolvers : WeaponRaycast
     protected override float Inaccuracy => inaccuracy;
     protected override float Range => range;
     protected override int Damage => damage;
-    protected override float Knockback => 8.0f;
+    protected override float Knockback => 0.0f;
 
     public override void Equip()
     {
@@ -57,11 +57,11 @@ public class Revolvers : WeaponRaycast
         base._Ready();
 
         Hide();
-        animationPlayerLeft = GetNode<AnimationPlayer>("Revolver/AnimationPlayer");
-        animationPlayerRight = GetNode<AnimationPlayer>("Revolver2/AnimationPlayer");
+        animationPlayerLeft = GetNode<AnimationPlayer>("Pistol/AnimationPlayer");
+        animationPlayerRight = GetNode<AnimationPlayer>("Pistol2/AnimationPlayer");
 
-        muzzleFlashLeft = GetNode<MuzzleFlash>("Revolver/RootNode/Cube011/MuzzleFlash");
-        muzzleFlashRight = GetNode<MuzzleFlash>("Revolver2/RootNode/Cube011/MuzzleFlash");
+        muzzleFlashLeft = GetNode<MuzzleFlash>("Pistol/RootNode/MuzzleFlash");
+        muzzleFlashRight = GetNode<MuzzleFlash>("Pistol2/RootNode/MuzzleFlash");
 
         animationPlayerLeft.Connect("animation_finished", this, nameof(OnAnimationFinished));
         animationPlayerRight.Connect("animation_finished", this, nameof(OnAnimationFinished));

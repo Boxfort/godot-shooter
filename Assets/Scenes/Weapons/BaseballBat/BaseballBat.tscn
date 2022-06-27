@@ -109,10 +109,9 @@ tracks/1/keys = {
 script = ExtResource( 2 )
 
 [node name="RootNode" type="Spatial" parent="."]
-transform = Transform( 1.73205, -0.258819, -0.965926, 0, -1.93185, 0.517638, -1, -0.448287, -1.67303, 0.429567, -1.95465, -1.5 )
+transform = Transform( 1.73205, -0.258819, -0.965925, 0, -1.93185, 0.517637, -1, -0.448287, -1.67303, 0.429567, -1.95465, -1.5 )
 
 [node name="BaseballBat_Raw_Wood(Grime)" type="MeshInstance" parent="RootNode"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 layers = 2
 mesh = SubResource( 1 )
 
@@ -123,7 +122,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.8255 )
 shape = SubResource( 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-reset_on_save = false
 anims/Attack = SubResource( 3 )
 anims/Equip = SubResource( 5 )
 anims/Idle = SubResource( 4 )

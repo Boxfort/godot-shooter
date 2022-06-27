@@ -5,6 +5,7 @@ public class CharacterController : KinematicBody
 {
     Spatial head;
     Spatial hand;
+    PlayerLeg leg;
     ShakeableCamera camera;
     Camera gunCamera;
     CollisionShape collisionShape;
@@ -48,7 +49,7 @@ public class CharacterController : KinematicBody
     float handSwayMaxX = 0.1f;
     float handSwayMaxY = 0.05f;
     float handSwaySmoothing = 6f;
-    float maxHeadPitch = 89;
+    float maxHeadPitch = 88;
 
     float currentAcceleration;
 

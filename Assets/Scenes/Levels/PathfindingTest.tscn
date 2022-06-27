@@ -86,4 +86,4 @@ environment = SubResource( 4 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0160084, 3.16969, 7.73415 )
 
 [node name="ShotgunPickup" parent="." instance=ExtResource( 8 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1042, -19.1766 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.42059, 8.5541, -2.43796 )

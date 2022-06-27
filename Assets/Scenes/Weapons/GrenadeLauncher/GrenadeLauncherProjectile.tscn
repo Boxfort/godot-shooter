@@ -3,7 +3,7 @@
 [ext_resource path="res://Assets/Scenes/Weapons/GrenadeLauncher/GrenadeLauncherProjectile.cs" type="Script" id=1]
 
 [sub_resource type="BoxShape" id=2]
-extents = Vector3( 0.2, 0.3, 0.2 )
+extents = Vector3( 0.2, 0.183313, 0.309661 )
 
 [sub_resource type="CylinderMesh" id=1]
 radial_segments = 6
@@ -18,7 +18,7 @@ script = ExtResource( 1 )
 shape = SubResource( 2 )
 
 [node name="MeshInstance" type="MeshInstance" parent="CollisionShape"]
-transform = Transform( 0.2, 0, 0, 0, 0.3, 0, 0, 0, 0.2, 0, 0, 0 )
+transform = Transform( 3.82137e-16, 1.31134e-08, 0.2, 0.2, -1.31134e-08, 0, 8.74228e-09, 0.3, -8.74228e-09, 0, 0, 0 )
 mesh = SubResource( 1 )
 skeleton = NodePath("../..")
 material/0 = SubResource( 3 )
