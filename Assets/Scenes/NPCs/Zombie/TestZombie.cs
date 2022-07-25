@@ -21,6 +21,8 @@ public class TestZombie : GroundAgent, Damageable
     float currentKnockback = 0.0f;
     Vector3 knockbackDirection = Vector3.Zero;
 
+    bool canMove = true;
+
     override protected float MoveSpeed => moveSpeed;
     override protected float RotationSpeed => rotationSpeed;
     override protected float Gravity => gravity;
@@ -32,6 +34,7 @@ public class TestZombie : GroundAgent, Damageable
     {
         knockbackDirection = -GlobalTransform.origin.DirectionTo(fromPosition);
         currentKnockback += knockback;
+        canMove = false;
     }
 
     public override void _Ready()
@@ -142,7 +145,7 @@ public class TestZombie : GroundAgent, Damageable
     {
         Vector3 movement = Vector3.Zero;
 
-        if (target != null && !navigationAgent.IsTargetReached() && !pausePathfinding)
+        if (target != null && !navigationAgent.IsTargetReached() && !pausePathfinding && canMove)
         {
             if (CanReachTarget(target.GlobalTransform.origin, target.GetInstanceId().ToString()))
             {
@@ -164,6 +167,10 @@ public class TestZombie : GroundAgent, Damageable
                 currentKnockback = 0;
                 UpdateTargetPosition();
             }
+        }
+        else
+        {
+            canMove = true;
         }
     }
 }

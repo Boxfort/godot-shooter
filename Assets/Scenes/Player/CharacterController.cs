@@ -1,8 +1,11 @@
 using Godot;
+using System;
 using System.Collections.Generic;
 
 public class CharacterController : KinematicBody
 {
+    Random rng = new Random();
+
     Spatial head;
     Spatial hand;
     PlayerLeg leg;
@@ -13,13 +16,20 @@ public class CharacterController : KinematicBody
     PlayerAreaCollider areaCollider;
     RayCast canStand;
 
+    AudioStreamPlayer jumpAudio;
+    AudioStreamPlayer stepAudioPlayer;
+    List<AudioStream> stepSounds = new List<AudioStream>();
+
+    const float footstepTime = 0.5f;
+    float footstepTimer = 0;
+
     float headRollDegreesMax = 5;
     float headRollSpeed = 7.5f;
 
     float groundAcceleration = 7f;
     float airAcceleration = 3f;
     float moveSpeed = 14f;
-    float mouseSensitivity = 0.1f;
+    float mouseSensitivity = 0.2f;
 
     float currentKnockback = 0.0f;
     Vector3 knockbackDirection = Vector3.Zero;
@@ -63,6 +73,17 @@ public class CharacterController : KinematicBody
         canStand = collisionShape.GetNode<RayCast>("CanStand");
         camera = head.GetNode<ShakeableCamera>("ShakeableCamera");
         gunCamera = hand.GetNode<Camera>("ViewportContainer/Viewport/GunCamera");
+
+        jumpAudio = GetNode<AudioStreamPlayer>("JumpSound");
+        stepAudioPlayer = GetNode<AudioStreamPlayer>("StepSound");
+
+        // TODO: Don't hardcode sounds somehow?
+        stepSounds.Add(GD.Load<AudioStream>("res://Assets/Sounds/footstep01.wav"));
+        stepSounds.Add(GD.Load<AudioStream>("res://Assets/Sounds/footstep02.wav"));
+        stepSounds.Add(GD.Load<AudioStream>("res://Assets/Sounds/footstep03.wav"));
+        stepSounds.Add(GD.Load<AudioStream>("res://Assets/Sounds/footstep04.wav"));
+        stepSounds.Add(GD.Load<AudioStream>("res://Assets/Sounds/footstep05.wav"));
+        stepSounds.Add(GD.Load<AudioStream>("res://Assets/Sounds/footstep06.wav"));
 
         areaCollider.Connect("OnKnockback", this, nameof(Knockback));
 
@@ -129,9 +150,24 @@ public class CharacterController : KinematicBody
             HandleMovement(delta);
         }
 
+        HandleFootsteps(delta);
         HandleKnockback(delta);
         MovePlayer(delta);
         RollHead(horizontalRotation, delta);
+    }
+
+    private void HandleFootsteps(float delta)
+    {
+        if (IsOnFloor() && !inWater && inputDirection.Length() > 0.1)
+        {
+            footstepTimer -= delta;
+            if (footstepTimer <= 0)
+            {
+                stepAudioPlayer.Stream = stepSounds[rng.Next(0, stepSounds.Count)];
+                stepAudioPlayer.Play();
+                footstepTimer = footstepTime;
+            }
+        }
     }
 
     public void Knockback(float knockback, Vector3 fromPosition)
@@ -192,6 +228,11 @@ public class CharacterController : KinematicBody
 
             // Maintain velocity from moving platforms.
             gravityVec += GetFloorVelocity();
+
+            if (!jumpAudio.Playing)
+            {
+                jumpAudio.Play();
+            }
         }
     }
 

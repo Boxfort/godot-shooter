@@ -3,7 +3,7 @@ using System;
 
 public class ExplosiveBarrel : Spatial, Damageable
 {
-    int health = 15;
+    int health = 1;
     public int Health => health;
 
     PackedScene explosion;

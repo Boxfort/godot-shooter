@@ -1,6 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Assets/Scenes/Weapons/GrenadeLauncher/GrenadeLauncherProjectile.cs" type="Script" id=1]
+[ext_resource path="res://Assets/Shaders/psx_lit.shader" type="Shader" id=2]
+[ext_resource path="res://Assets/Sounds/grenade_bounce.wav" type="AudioStream" id=3]
 
 [sub_resource type="BoxShape" id=2]
 extents = Vector3( 0.2, 0.183313, 0.309661 )
@@ -8,8 +10,13 @@ extents = Vector3( 0.2, 0.183313, 0.309661 )
 [sub_resource type="CylinderMesh" id=1]
 radial_segments = 6
 
-[sub_resource type="SpatialMaterial" id=3]
-albedo_color = Color( 0.992157, 0, 1, 1 )
+[sub_resource type="ShaderMaterial" id=3]
+shader = ExtResource( 2 )
+shader_param/precision_multiplier = 1.0
+shader_param/modulate_color = Color( 0.517647, 0.639216, 0.568627, 1 )
+shader_param/uv_scale = Vector2( 1, 1 )
+shader_param/uv_offset = Vector2( 0, 0 )
+shader_param/uv_pan_velocity = Vector2( 0, 0 )
 
 [node name="GrenadeLauncherProjectile" type="KinematicBody"]
 script = ExtResource( 1 )
@@ -22,3 +29,8 @@ transform = Transform( 3.82137e-16, 1.31134e-08, 0.2, 0.2, -1.31134e-08, 0, 8.74
 mesh = SubResource( 1 )
 skeleton = NodePath("../..")
 material/0 = SubResource( 3 )
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 3 )
+unit_size = 2.0
+pitch_scale = 0.75

@@ -13,3 +13,5 @@ material/0 = ExtResource( 2 )
 
 [node name="AnimationPlayer" parent="." index="1"]
 playback_speed = 4.0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="2"]

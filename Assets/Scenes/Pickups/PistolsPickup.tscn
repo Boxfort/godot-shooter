@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Assets/Scenes/Pickups/WeaponPickup.cs" type="Script" id=1]
+[ext_resource path="res://Assets/Models/Makarov/Makarov_Final.fbx" type="PackedScene" id=2]
+
+[sub_resource type="SphereShape" id=13]
+
+[sub_resource type="SphereMesh" id=14]
+
+[sub_resource type="SpatialMaterial" id=15]
+flags_transparent = true
+albedo_color = Color( 1, 0, 0, 0.180392 )
+
+[node name="PistolsPickup" type="Area"]
+script = ExtResource( 1 )
+weaponType = 2
+ammo = 30
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 13 )
+
+[node name="Model" type="Spatial" parent="."]
+
+[node name="MeshInstance" type="MeshInstance" parent="Model"]
+mesh = SubResource( 14 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 15 )
+
+[node name="Makarov_Final" parent="Model" instance=ExtResource( 2 )]
+transform = Transform( 5, 0, 0, 0, 5, 0, 0, 0, 5, -0.5, 0, 0 )
+
+[node name="Makarov_Final2" parent="Model" instance=ExtResource( 2 )]
+transform = Transform( 5, 0, 0, 0, 5, 0, 0, 0, 5, 0.5, 0, 0 )

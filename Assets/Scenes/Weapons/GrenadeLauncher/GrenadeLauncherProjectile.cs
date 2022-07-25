@@ -5,6 +5,7 @@ public class GrenadeLauncherProjectile : KinematicBody
 {
     PackedScene explosion;
     Random rng = new Random();
+    AudioStreamPlayer3D bounceAudio;
 
     float initialVelocity = 40.0f;
     float velocityDecay = 10.0f;
@@ -27,6 +28,7 @@ public class GrenadeLauncherProjectile : KinematicBody
     {
         velocity = initialVelocity;
         explosion = (PackedScene)GD.Load("res://Assets/Scenes/Explosion.tscn");
+        bounceAudio = GetNode<AudioStreamPlayer3D>("AudioStreamPlayer3D");
 
         // Check right away for a collision if we've shot at our feet, otherwise it'll just bounce off us.
         var collision = MoveAndCollide(Vector3.Zero, testOnly: true);
@@ -47,6 +49,8 @@ public class GrenadeLauncherProjectile : KinematicBody
         if (collision != null)
         {
             ShouldExplode(collision);
+
+            PlayBounceAudio();
 
             rotationVec = new Vector3(
                 ((float)rng.NextDouble() * 360) - 180,
@@ -77,6 +81,14 @@ public class GrenadeLauncherProjectile : KinematicBody
             explosionTimer += delta;
         }
 
+    }
+
+    private void PlayBounceAudio()
+    {
+        float pitch = (float)((rng.NextDouble() * 15) + 70) / 100;
+        bounceAudio.PitchScale = pitch;
+        bounceAudio.Stop();
+        bounceAudio.Play();
     }
 
     private void ShouldExplode(KinematicCollision collision)

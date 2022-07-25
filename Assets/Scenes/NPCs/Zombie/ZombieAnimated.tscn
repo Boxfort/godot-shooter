@@ -1,7 +1,18 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=31 format=2]
 
-[ext_resource path="res://Assets/Models/Material_011.material" type="Material" id=1]
+[ext_resource path="res://Assets/Models/Personajes terror/Pe11.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Scenes/NPCs/Zombie/TestZombie.cs" type="Script" id=2]
+[ext_resource path="res://Assets/Shaders/psx_lit.shader" type="Shader" id=3]
+
+[sub_resource type="ShaderMaterial" id=22]
+resource_name = "Material.011"
+shader = ExtResource( 3 )
+shader_param/precision_multiplier = 1.0
+shader_param/modulate_color = Color( 1, 1, 1, 1 )
+shader_param/uv_scale = Vector2( 1, 1 )
+shader_param/uv_offset = Vector2( 0, 0 )
+shader_param/uv_pan_velocity = Vector2( 0, 0 )
+shader_param/albedoTex = ExtResource( 1 )
 
 [sub_resource type="ArrayMesh" id=1]
 resource_name = "ZombieAnimated_Cube026"
@@ -12,7 +23,7 @@ surfaces/0 = {
 "blend_shape_data": [  ],
 "format": 2194903,
 "index_count": 687,
-"material": ExtResource( 1 ),
+"material": SubResource( 22 ),
 "primitive": 4,
 "skeleton_aabb": [ AABB( -0.47014, 3.29417, -1.10368, 1.24601, 2.04484, 2.05856 ), AABB( -0.60724, 4.80802, -1.0062, 1.38311, 1.31184, 1.8636 ), AABB( -0.913107, 5.32776, -1.12861, 1.80597, 1.85492, 2.10843 ), AABB( -0.967831, 6.1056, -1.60921, 1.8607, 1.90725, 3.18532 ), AABB( -0.718981, 7.51774, -0.470192, 1.28276, 0.659681, 0.791588 ), AABB( -0.308802, 7.89583, -0.412342, 0.648118, 0.281591, 0.675887 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( -0.722292, 6.62679, -1.60921, 1.33431, 1.23196, 1.13902 ), AABB( -0.722292, 7.00111, -1.60921, 0.880504, 0.724791, 0.643777 ), AABB( -0.593376, 7.00111, -1.60921, 0.556449, 0.553262, 0.111012 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( -0.722291, 6.62679, 0.321396, 1.33431, 1.23196, 1.25471 ), AABB( -0.722291, 6.97334, 0.701205, 1.14614, 0.885397, 0.874903 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( -0.464848, 3.29417, -1.10368, 1.23468, 1.2547, 1.02929 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( -0.464848, 3.29417, -0.0743991, 1.23468, 1.25471, 1.02928 ) ],
 "vertex_count": 185
@@ -97,6 +108,16 @@ bind/24/name = "mixamorig_RightToe_End"
 bind/24/bone = -1
 bind/24/pose = Transform( -17.7231, -26.2401, 94.857, 98.34, -0.88815, 18.1325, -3.91412, 96.4918, 25.9631, -29.0527, -142.118, -18.625 )
 
+[sub_resource type="ShaderMaterial" id=23]
+resource_name = "Material.011"
+shader = ExtResource( 3 )
+shader_param/precision_multiplier = 1.0
+shader_param/modulate_color = Color( 1, 1, 1, 1 )
+shader_param/uv_scale = Vector2( 1, 1 )
+shader_param/uv_offset = Vector2( 0, 0 )
+shader_param/uv_pan_velocity = Vector2( 0, 0 )
+shader_param/albedoTex = ExtResource( 1 )
+
 [sub_resource type="ArrayMesh" id=3]
 resource_name = "ZombieAnimated_Cube041"
 surfaces/0 = {
@@ -106,11 +127,21 @@ surfaces/0 = {
 "blend_shape_data": [  ],
 "format": 2194903,
 "index_count": 408,
-"material": ExtResource( 1 ),
+"material": SubResource( 23 ),
 "primitive": 4,
 "skeleton_aabb": [ AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( -0.294652, 7.86803, -0.412641, 0.674827, 0.18841, 0.676484 ), AABB( -0.471565, 7.84532, -0.610006, 1.48114, 1.61088, 1.07121 ), AABB( -0.471565, 7.84532, -0.610006, 1.48114, 1.61088, 1.07121 ) ],
 "vertex_count": 116
 }
+
+[sub_resource type="ShaderMaterial" id=24]
+resource_name = "Material.011"
+shader = ExtResource( 3 )
+shader_param/precision_multiplier = 1.0
+shader_param/modulate_color = Color( 1, 1, 1, 1 )
+shader_param/uv_scale = Vector2( 1, 1 )
+shader_param/uv_offset = Vector2( 0, 0 )
+shader_param/uv_pan_velocity = Vector2( 0, 0 )
+shader_param/albedoTex = ExtResource( 1 )
 
 [sub_resource type="ArrayMesh" id=4]
 resource_name = "ZombieAnimated_Cube065"
@@ -121,11 +152,21 @@ surfaces/0 = {
 "blend_shape_data": [  ],
 "format": 2194903,
 "index_count": 201,
-"material": ExtResource( 1 ),
+"material": SubResource( 24 ),
 "primitive": 4,
 "skeleton_aabb": [ AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( -0.55359, 6.61387, 1.40828, 0.614901, 0.900464, 0.753053 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( -0.55359, 6.61387, 1.40828, 0.614901, 0.900464, 0.753053 ), AABB( -0.55359, 5.2687, 1.40828, 1.24708, 2.24563, 2.35039 ), AABB( -0.398643, 5.2687, 1.83434, 1.09214, 1.79618, 1.92433 ), AABB( -0.281674, 4.76017, 2.48059, 1.0025, 1.81624, 2.05709 ) ],
 "vertex_count": 58
 }
+
+[sub_resource type="ShaderMaterial" id=25]
+resource_name = "Material.011"
+shader = ExtResource( 3 )
+shader_param/precision_multiplier = 1.0
+shader_param/modulate_color = Color( 1, 1, 1, 1 )
+shader_param/uv_scale = Vector2( 1, 1 )
+shader_param/uv_offset = Vector2( 0, 0 )
+shader_param/uv_pan_velocity = Vector2( 0, 0 )
+shader_param/albedoTex = ExtResource( 1 )
 
 [sub_resource type="ArrayMesh" id=5]
 resource_name = "ZombieAnimated_Cube066"
@@ -136,11 +177,21 @@ surfaces/0 = {
 "blend_shape_data": [  ],
 "format": 2194903,
 "index_count": 228,
-"material": ExtResource( 1 ),
+"material": SubResource( 25 ),
 "primitive": 4,
 "skeleton_aabb": [ AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( -0.350918, 7.53253, -1.55554, 1.00136e-05, 1.00136e-05, 1.00136e-05 ), AABB( -0.580536, 6.11662, -2.97659, 0.777121, 1.41591, 1.52953 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( -0.580536, 6.11662, -2.97659, 0.777121, 1.41591, 1.52953 ), AABB( -0.580536, 5.94152, -3.17882, 0.878012, 1.59101, 1.73176 ), AABB( -0.580536, 5.24711, -3.91518, 1.27402, 2.21459, 2.46812 ), AABB( -0.281679, 4.73858, -4.69419, 1.0025, 1.73982, 1.9426 ) ],
 "vertex_count": 64
 }
+
+[sub_resource type="ShaderMaterial" id=26]
+resource_name = "Material.011"
+shader = ExtResource( 3 )
+shader_param/precision_multiplier = 1.0
+shader_param/modulate_color = Color( 1, 1, 1, 1 )
+shader_param/uv_scale = Vector2( 1, 1 )
+shader_param/uv_offset = Vector2( 0, 0 )
+shader_param/uv_pan_velocity = Vector2( 0, 0 )
+shader_param/albedoTex = ExtResource( 1 )
 
 [sub_resource type="ArrayMesh" id=6]
 resource_name = "ZombieAnimated_Cube077"
@@ -151,11 +202,21 @@ surfaces/0 = {
 "blend_shape_data": [  ],
 "format": 2194903,
 "index_count": 240,
-"material": ExtResource( 1 ),
+"material": SubResource( 26 ),
 "primitive": 4,
 "skeleton_aabb": [ AABB( -0.375441, 2.4787, 0.144962, 1.05749, 0.914144, 0.773148 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( -0.375441, 0.514962, 0.144962, 1.05749, 2.87788, 0.773148 ), AABB( -0.368254, 0.0561855, 0.151686, 1.04178, 2.50391, 0.763083 ), AABB( -0.119185, 0.0561855, 0.151686, 0.792709, 2.06507, 0.763093 ), AABB( -0.119185, 0.0561855, 0.264056, 1.48962, 0.54194, 0.650539 ) ],
 "vertex_count": 72
 }
+
+[sub_resource type="ShaderMaterial" id=27]
+resource_name = "Material.011"
+shader = ExtResource( 3 )
+shader_param/precision_multiplier = 1.0
+shader_param/modulate_color = Color( 1, 1, 1, 1 )
+shader_param/uv_scale = Vector2( 1, 1 )
+shader_param/uv_offset = Vector2( 0, 0 )
+shader_param/uv_pan_velocity = Vector2( 0, 0 )
+shader_param/albedoTex = ExtResource( 1 )
 
 [sub_resource type="ArrayMesh" id=7]
 resource_name = "ZombieAnimated_Cube082"
@@ -166,7 +227,7 @@ surfaces/0 = {
 "blend_shape_data": [  ],
 "format": 2194903,
 "index_count": 240,
-"material": ExtResource( 1 ),
+"material": SubResource( 27 ),
 "primitive": 4,
 "skeleton_aabb": [ AABB( -0.37544, 3.39284, -1.06691, 1.05749, 1.00136e-05, 0.773148 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( -0.37544, 0.514962, -1.06691, 1.05749, 2.87788, 0.773148 ), AABB( -0.368254, 0.0561854, -1.06357, 1.04178, 2.50391, 0.763083 ), AABB( -0.119184, 0.0561854, -0.971888, 0.79271, 1.96039, 0.671415 ), AABB( -0.119184, 0.0561854, -1.06339, 1.48962, 0.54193, 0.65054 ) ],
 "vertex_count": 72
@@ -746,7 +807,7 @@ nodes/TimeScale/position = Vector2( -100, 40 )
 "nodes/TimeScale 2/node" = SubResource( 20 )
 "nodes/TimeScale 2/position" = Vector2( 280, 100 )
 nodes/output/position = Vector2( 740, -40 )
-node_connections = [ "output", 0, "DoAttack", "DoAttack", 0, "IsRunning", "DoAttack", 1, "TimeScale 2", "IsRunning", 0, "Idle", "IsRunning", 1, "TimeScale", "TimeScale 2", 0, "Attack", "TimeScale", 0, "Run" ]
+node_connections = [ "output", 0, "DoAttack", "DoAttack", 0, "IsRunning", "DoAttack", 1, "TimeScale 2", "IsRunning", 0, "Idle", "IsRunning", 1, "TimeScale", "TimeScale", 0, "Run", "TimeScale 2", 0, "Attack" ]
 
 [sub_resource type="CapsuleShape" id=17]
 radius = 0.753318
@@ -761,7 +822,7 @@ radius = 30.0
 script = ExtResource( 2 )
 
 [node name="Zombie" type="Spatial" parent="."]
-transform = Transform( -3.27835e-09, 0.075, -3.27835e-09, 0, -3.27835e-09, -0.075, -0.075, -3.27835e-09, 1.43301e-16, 0, 0, 0 )
+transform = Transform( -2.62268e-09, 0.06, -2.62268e-09, 0, -2.62268e-09, -0.06, -0.06, -2.62268e-09, 1.14641e-16, 0, 0, 0 )
 
 [node name="Skeleton" type="Skeleton" parent="Zombie"]
 transform = Transform( 0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0, 0, 0 )

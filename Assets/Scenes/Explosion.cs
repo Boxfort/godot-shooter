@@ -4,6 +4,7 @@ public class Explosion : TraumaCauser
 {
     AnimatedSprite3D sprite;
     CollisionShape collisionShape;
+    AudioStreamPlayer3D explosionAudio;
 
     int damage = 15;
     float radius = 3.5f;
@@ -19,6 +20,7 @@ public class Explosion : TraumaCauser
         collisionShape = GetNode<CollisionShape>("CollisionShape");
         sprite = GetNode<AnimatedSprite3D>("AnimatedSprite3D");
         sprite.Connect("animation_finished", this, nameof(OnAnimationFinished));
+        explosionAudio = GetNode<AudioStreamPlayer3D>("AudioStreamPlayer3D");
     }
 
     private void OnAnimationFinished()
@@ -56,6 +58,7 @@ public class Explosion : TraumaCauser
     public void DoExplosion()
     {
         sprite.Play("Explode");
+        explosionAudio.Play();
         CauseTrauma(1.5f);
         var areaCollisions = GetOverlappingAreas();
         var bodyCollisions = GetOverlappingBodies();

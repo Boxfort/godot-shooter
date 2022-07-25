@@ -4,6 +4,8 @@ using System;
 
 public class Pistols : WeaponRaycast
 {
+    PolyphonicAudioStreamPlayer fireAudio;
+    AudioStreamPlayer equipAudio;
     AnimationPlayer animationPlayerLeft;
     AnimationPlayer animationPlayerRight;
     MuzzleFlash muzzleFlashLeft;
@@ -25,6 +27,7 @@ public class Pistols : WeaponRaycast
 
     public override void Equip()
     {
+        equipAudio.Play();
         animationPlayerLeft.Play("Equip");
         animationPlayerRight.Play("Equip");
         Show();
@@ -33,6 +36,8 @@ public class Pistols : WeaponRaycast
     public override void Fire()
     {
         canFire = false;
+
+        fireAudio.Play();
 
         if (fireLeft)
         {
@@ -57,6 +62,9 @@ public class Pistols : WeaponRaycast
         base._Ready();
 
         Hide();
+        fireAudio = GetNode<PolyphonicAudioStreamPlayer>("FireAudio");
+        equipAudio = GetNode<AudioStreamPlayer>("EquipAudio");
+
         animationPlayerLeft = GetNode<AnimationPlayer>("Pistol/AnimationPlayer");
         animationPlayerRight = GetNode<AnimationPlayer>("Pistol2/AnimationPlayer");
 

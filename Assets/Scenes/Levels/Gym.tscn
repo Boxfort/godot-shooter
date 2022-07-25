@@ -41,7 +41,7 @@
 [ext_resource path="res://explosion/1_31.png" type="Texture" id=40]
 [ext_resource path="res://Assets/Scenes/Player/Player.tscn" type="PackedScene" id=41]
 [ext_resource path="res://Assets/Scenes/Pickups/ShotgunPickup.tscn" type="PackedScene" id=42]
-[ext_resource path="res://Assets/Scenes/Pickups/RevolverPickup.tscn" type="PackedScene" id=44]
+[ext_resource path="res://Assets/Scenes/Pickups/PistolsPickup.tscn" type="PackedScene" id=44]
 [ext_resource path="res://Assets/Models/HandCannon/Bullet/Bullet.fbx" type="PackedScene" id=45]
 [ext_resource path="res://Assets/Scenes/Props/ExplosiveBarrel/ExplosiveBarrel.tscn" type="PackedScene" id=46]
 

@@ -4,6 +4,7 @@ using System;
 public class GrenadeLauncher : WeaponProjectile
 {
     RayCast raycast;
+    AudioStreamPlayer shootAudio;
 
     float fireRate = 0.75f;
     float fireTimer = 0.0f;
@@ -15,6 +16,7 @@ public class GrenadeLauncher : WeaponProjectile
         base._Ready();
         canFire = true;
         raycast = GetNode<RayCast>("RayCast");
+        shootAudio = GetNode<AudioStreamPlayer>("AudioStreamPlayer");
     }
 
     public override void _Process(float delta)
@@ -38,6 +40,7 @@ public class GrenadeLauncher : WeaponProjectile
         canFire = false;
         animationPlayer.Stop();
         animationPlayer.Play("Fire");
+        shootAudio.Play();
 
         GrenadeLauncherProjectile instance = (GrenadeLauncherProjectile)projectile.Instance();
         GetTree().Root.AddChild(instance);

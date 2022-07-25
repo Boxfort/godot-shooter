@@ -24,6 +24,10 @@ public abstract class WeaponMelee : Weapon
         animationPlayer.Play("Equip");
     }
 
+    protected virtual void OnAttackHit()
+    {
+        // no-op
+    }
 
     public override void Fire()
     {
@@ -65,6 +69,7 @@ public abstract class WeaponMelee : Weapon
                         {
                             damageable.TakeDamage(Damage, Knockback, GlobalTransform.origin);
                             attackHit[damageable] = true;
+                            OnAttackHit();
                         }
                     }
                 }

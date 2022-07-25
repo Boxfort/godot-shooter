@@ -13,6 +13,8 @@ public class PlayerManager : Node
     Area areaCollider;
     WeaponManager weaponManager;
 
+    AudioStreamPlayer hurtSound;
+
     const int maxHealth = 100;
     const int maxArmor = 100;
 
@@ -37,6 +39,7 @@ public class PlayerManager : Node
     public override void _Ready()
     {
         weaponManager = GetNode<WeaponManager>("../Head/Hand");
+        hurtSound = GetNode<AudioStreamPlayer>("HurtSound");
         areaCollider = GetNode<Area>("../CollisionShape/AreaCollider");
         areaCollider.Connect("OnDamageTaken", this, nameof(TakeDamage));
     }
@@ -45,6 +48,8 @@ public class PlayerManager : Node
     {
         GD.Print("Player took damage: " + damage);
         Health = Health - damage;
+        hurtSound.Stop();
+        hurtSound.Play();
     }
 
     public override void _Process(float delta)
