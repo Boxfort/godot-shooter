@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class PlayerLeg : Spatial
 {
     AnimationPlayer animationPlayer;
-    AudioStreamPlayer kickAudioPlayer;
+    ImprovedAudioStreamPlayer kickAudioPlayer;
 
     float kickTime = 0.5f;
     float kickImpactTime = 0.15f;
@@ -19,7 +19,7 @@ public class PlayerLeg : Spatial
     public override void _Ready()
     {
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-        kickAudioPlayer = GetNode<AudioStreamPlayer>("AudioStreamPlayer");
+        kickAudioPlayer = GetNode<ImprovedAudioStreamPlayer>("AudioStreamPlayer");
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -49,7 +49,6 @@ public class PlayerLeg : Spatial
         kickTimer = 0;
         animationPlayer.Stop();
         animationPlayer.Play("Kick");
-
         kickAudioPlayer.Play();
     }
 

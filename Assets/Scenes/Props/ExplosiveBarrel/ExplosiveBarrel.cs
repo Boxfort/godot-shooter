@@ -1,10 +1,13 @@
 using Godot;
 using System;
 
-public class ExplosiveBarrel : Spatial, Damageable
+public class ExplosiveBarrel : Carryable, Damageable
 {
+    bool hasExploded = false;
     int health = 1;
     public int Health => health;
+
+    public override string InteractString => "PICK UP BARREL";
 
     PackedScene explosion;
 
@@ -15,16 +18,23 @@ public class ExplosiveBarrel : Spatial, Damageable
 
     public void TakeDamage(int damage, float knockback, Vector3 fromPosition)
     {
+        if (hasExploded)
+            return;
+
         health -= damage;
 
         if (health <= 0)
         {
             Explode();
+            hasExploded = true;
         }
     }
 
     private void Explode()
     {
+        if (hasExploded)
+            return;
+
         Explosion instance = explosion.Instance() as Explosion;
         GetTree().Root.AddChild(instance);
         var transform = GlobalTransform;
@@ -32,5 +42,11 @@ public class ExplosiveBarrel : Spatial, Damageable
         instance.GlobalTransform = transform;
         instance.Explode();
         QueueFree();
+    }
+
+    public override void OnCarry()
+    {
+        // no-op
+        GD.Print("I'm being carried!");
     }
 }

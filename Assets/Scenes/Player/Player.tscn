@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://Assets/Scenes/Player/PlayerHUD.cs" type="Script" id=1]
 [ext_resource path="res://Assets/Scenes/Player/CharacterController.cs" type="Script" id=2]
@@ -20,6 +20,7 @@
 [ext_resource path="res://Assets/Sounds/footstep02.wav" type="AudioStream" id=18]
 [ext_resource path="res://Assets/Sounds/footstep03.wav" type="AudioStream" id=19]
 [ext_resource path="res://Assets/Sounds/footstep06.wav" type="AudioStream" id=20]
+[ext_resource path="res://Assets/Scenes/Player/InteractRayCast.cs" type="Script" id=21]
 
 [sub_resource type="SphereShape" id=4]
 
@@ -91,6 +92,12 @@ light_energy = 0.5
 spot_range = 30.0
 spot_attenuation = 5.27803
 spot_angle = 26.7187
+
+[node name="InteractRayCast" type="RayCast" parent="Head/Hand"]
+enabled = true
+cast_to = Vector3( 0, 0, -4 )
+collision_mask = 7
+script = ExtResource( 21 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
@@ -245,15 +252,23 @@ margin_right = -9.0
 margin_bottom = -8.0
 texture = ExtResource( 14 )
 
-[node name="Test" type="Label" parent="CanvasLayer/UI"]
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -101.0
-margin_top = 36.0
-margin_right = 101.0
-margin_bottom = 50.0
+[node name="NotificationMessage" type="Label" parent="CanvasLayer/UI"]
+visible = false
+anchor_right = 1.0
+margin_bottom = 25.0
 custom_fonts/font = SubResource( 7 )
-text = "This is a test message on the screen."
+text = "SECRET FOUND"
+align = 1
+valign = 2
+
+[node name="InteractText" type="Label" parent="CanvasLayer/UI"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -113.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 7 )
+align = 1
 
 [node name="Crosshair" type="Control" parent="CanvasLayer/UI"]
 anchor_left = 0.5

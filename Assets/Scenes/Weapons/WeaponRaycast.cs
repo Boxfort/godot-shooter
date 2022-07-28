@@ -32,8 +32,15 @@ public abstract class WeaponRaycast : Weapon
         target += up * inaccuracyY;
 
         var directState = GetWorld().DirectSpaceState;
-        var collision = directState.IntersectRay(origin, target, collisionMask: 7);
+        var collisionBody = directState.IntersectRay(origin, target, collisionMask: 7);
 
+        HandleRayCollision(collisionBody, debugCollisions);
+
+        return collisionBody;
+    }
+
+    protected void HandleRayCollision(Dictionary collision, bool debugCollisions)
+    {
         if (debugCollisions)
         {
             if (collision.Contains("position"))
@@ -44,18 +51,16 @@ public abstract class WeaponRaycast : Weapon
                 gt.origin = (Vector3)collision["position"];
                 instance.GlobalTransform = gt;
             }
-
-            if (collision.Contains("collider"))
-            {
-                Node collider = (Node)collision["collider"];
-
-                if (collider is Damageable damageable)
-                {
-                    damageable.TakeDamage(Damage, Knockback, GlobalTransform.origin);
-                }
-            }
         }
 
-        return collision;
+        if (collision.Contains("collider"))
+        {
+            Node collider = (Node)collision["collider"];
+
+            if (collider is Damageable damageable)
+            {
+                damageable.TakeDamage(Damage, Knockback, GlobalTransform.origin);
+            }
+        }
     }
 }

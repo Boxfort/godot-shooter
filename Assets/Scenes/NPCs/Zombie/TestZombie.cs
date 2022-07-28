@@ -32,7 +32,16 @@ public class TestZombie : GroundAgent, Damageable
     int health = 25;
     public int Health => health;
 
+    const float attackDistance = 3.5f;
+    const float attackTime = 0.9f;
+    float attackTimer = 0.0f;
+    const float attackHitTime = 0.55f;
+    bool attacking = false;
+    bool attackHit = false;
+
     bool isDead = false;
+    bool deathHandled = false;
+    float deathVelocity = 0;
 
     public void TakeDamage(int damage, float knockback, Vector3 fromPosition)
     {
@@ -111,9 +120,6 @@ public class TestZombie : GroundAgent, Damageable
             return;
         }
 
-        // Why?
-        //currentVelocity = Vector3.Zero;
-
         HandleGravity(delta);
         HandleMovement(delta);
         HandleKnockback(delta);
@@ -131,8 +137,6 @@ public class TestZombie : GroundAgent, Damageable
         animationTree.Set("parameters/IsRunning/blend_amount", Mathf.Abs(currentVelocity.x) + Mathf.Abs(currentVelocity.z) > 0);
     }
 
-    bool deathHandled = false;
-    float deathVelocity = 0;
 
     private void HandleDead(float delta)
     {
@@ -167,13 +171,6 @@ public class TestZombie : GroundAgent, Damageable
             deathVelocity = 0;
         }
     }
-
-    const float attackDistance = 3.5f;
-    const float attackTime = 0.9f;
-    float attackTimer = 0.0f;
-    const float attackHitTime = 0.55f;
-    bool attacking = false;
-    bool attackHit = false;
 
     private void HandleAttacking(float delta)
     {
@@ -227,12 +224,7 @@ public class TestZombie : GroundAgent, Damageable
             }
         }
 
-        //var transform = GlobalTransform;
-        //currentVelocity = MoveAndSlideWithSnap(movement + gravityVec + (knockbackDirection * currentKnockback), snap, Vector3.Up);
         var velocity = MoveAndSlideWithSnap(movement, snap, Vector3.Up, maxSlides: 0);
-
-        //GlobalTransform = transform;
-
         navigationAgent.SetVelocity(velocity);
     }
 
@@ -240,7 +232,7 @@ public class TestZombie : GroundAgent, Damageable
     {
         if (!pausePathfinding)
         {
-            currentVelocity = MoveAndSlideWithSnap(safeVelocity + gravityVec + (knockbackDirection * currentKnockback), snap, Vector3.Up);
+            currentVelocity = MoveAndSlideWithSnap(safeVelocity + gravityVec /*+ (knockbackDirection * currentKnockback)*/, snap, Vector3.Up);
         }
     }
 

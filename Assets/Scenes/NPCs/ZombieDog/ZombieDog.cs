@@ -4,6 +4,9 @@ using System;
 public class ZombieDog : GroundAgent, Damageable
 {
     AnimationTree animationTree;
+    ImprovedAudioStreamPlayer3D hitAudio;
+    AudioStreamPlayer3D attackAudio;
+    AudioStreamPlayer3D deathAudio;
 
     protected override float MoveSpeed => 10.0f;
 
@@ -15,9 +18,51 @@ public class ZombieDog : GroundAgent, Damageable
     float updatePathTimer = 1.0f;
     bool pausePathfinding = false;
 
+    int health = 15;
+    public int Health => health;
+
+    float currentKnockback = 0.0f;
+    Vector3 knockbackDirection = Vector3.Zero;
+
+    bool beingKnockedBack = true;
+
+    const float attackDamageCooldown = 1.0f;
+    float attackDamageCooldownTimer = 1.0f;
+    const int attackDamage = 10;
+    const int attackKnockback = 10;
+    const float attackDistance = 9.0f;
+    const float initialLeapVelocity = 20;
+    const float attackCooldown = 2.0f;
+    float attackCooldownTimer = 2.0f;
+
+    float leapVelocity = 0;
+    bool attacking = false;
+    bool hasLeaped = false;
+
+    bool isDead = false;
+
     public void TakeDamage(int damage, float knockback, Vector3 fromPosition)
     {
-        GD.Print("Dog hit");
+        if (isDead)
+            return;
+
+
+        knockbackDirection = -GlobalTransform.origin.DirectionTo(fromPosition);
+        currentKnockback += knockback;
+
+        beingKnockedBack = true;
+
+        health -= damage;
+        animationTree.Set("parameters/HitReaction/active", true);
+
+        if (health <= 0)
+        {
+            isDead = true;
+        }
+        else
+        {
+            hitAudio.Play();
+        }
     }
 
     // Called when the node enters the scene tree for the first time.
@@ -25,6 +70,11 @@ public class ZombieDog : GroundAgent, Damageable
     {
         base._Ready();
         animationTree = GetNode<AnimationTree>("AnimationTree");
+        hitAudio = GetNode<ImprovedAudioStreamPlayer3D>("AudioHit");
+        attackAudio = GetNode<AudioStreamPlayer3D>("AudioAttack");
+        deathAudio = GetNode<AudioStreamPlayer3D>("AudioDeath");
+
+        navigationAgent.Connect("velocity_computed", this, nameof(OnVelocityComputed));
     }
 
     protected override void OnBodyEnteredDectection(PhysicsBody body)
@@ -61,9 +111,16 @@ public class ZombieDog : GroundAgent, Damageable
 
     public override void _PhysicsProcess(float delta)
     {
+        if (isDead)
+        {
+            HandleDead(delta);
+            return;
+        }
+
         HandleGravity(delta);
         HandleAttacking(delta);
         HandleDamage(delta);
+        HandleKnockback(delta);
 
         // TODO: something better than this shitty guard statement
         if (attacking)
@@ -83,8 +140,43 @@ public class ZombieDog : GroundAgent, Damageable
         animationTree.Set("parameters/RunningBlend/blend_amount", Mathf.Abs(currentVelocity.x) + Mathf.Abs(currentVelocity.z) > 0);
     }
 
-    const float attackDamageCooldown = 1.0f;
-    float attackDamageCooldownTimer = 1.0f;
+    bool deathHandled = false;
+    float deathVelocity = 0;
+
+    private void HandleDead(float delta)
+    {
+        HandleGravity(delta);
+
+        if (!deathHandled)
+        {
+            deathHandled = true;
+
+            // Only collide with the level.
+            CollisionLayer = 8;
+            CollisionMask = 1;
+
+            animationTree.Set("parameters/DeadBlend/blend_amount", 1);
+            deathAudio.Play();
+
+            // Death Knockback
+            gravityVec = Vector3.Up * 15;
+            snap = Vector3.Zero;
+            deathVelocity = 15;
+        }
+
+        currentVelocity = MoveAndSlideWithSnap((knockbackDirection * deathVelocity) + gravityVec, snap, Vector3.Up);
+
+
+        if (deathVelocity > 0)
+        {
+            deathVelocity -= delta * 15;
+        }
+        else
+        {
+            deathVelocity = 0;
+        }
+    }
+
     private void HandleDamage(float delta)
     {
 
@@ -103,7 +195,7 @@ public class ZombieDog : GroundAgent, Damageable
 
                 if (node.IsInGroup("player") || node is Damageable)
                 {
-                    ((Damageable)node).TakeDamage(15, 10, GlobalTransform.origin);
+                    ((Damageable)node).TakeDamage(attackDamage, attackKnockback, GlobalTransform.origin);
                     attackDamageCooldownTimer = 0f;
                 }
             }
@@ -126,17 +218,18 @@ public class ZombieDog : GroundAgent, Damageable
             }
         }
 
-        currentVelocity = MoveAndSlideWithSnap(movement + gravityVec, snap, Vector3.Up); // + (knockbackDirection * currentKnockback), snap, Vector3.Up);
+        //currentVelocity = MoveAndSlideWithSnap(movement + gravityVec, snap, Vector3.Up); // + (knockbackDirection * currentKnockback), snap, Vector3.Up);
+        var velocity = MoveAndSlideWithSnap(movement, snap, Vector3.Up, maxSlides: 0);
+        navigationAgent.SetVelocity(velocity);
     }
 
-    const float attackDistance = 9.0f;
-    const float initialLeapVelocity = 20;
-    const float attackCooldown = 2.0f;
-    float attackCooldownTimer = 2.0f;
-
-    float leapVelocity = 0;
-    bool attacking = false;
-    bool hasLeaped = false;
+    void OnVelocityComputed(Vector3 safeVelocity)
+    {
+        if (!attacking)
+        {
+            currentVelocity = MoveAndSlideWithSnap(safeVelocity + gravityVec + (knockbackDirection * currentKnockback), snap, Vector3.Up);
+        }
+    }
 
     private void HandleAttacking(float delta)
     {
@@ -151,6 +244,7 @@ public class ZombieDog : GroundAgent, Damageable
                 gravityVec = Vector3.Up * 12;
                 snap = Vector3.Zero;
                 leapVelocity = initialLeapVelocity;
+                attackAudio.Play();
             }
             else
             {
@@ -186,6 +280,24 @@ public class ZombieDog : GroundAgent, Damageable
             {
                 attackCooldownTimer += delta;
             }
+        }
+    }
+
+    private void HandleKnockback(float delta)
+    {
+        if (currentKnockback > 0)
+        {
+            currentKnockback -= (Gravity * 4) * delta;
+
+            if (currentKnockback <= 0)
+            {
+                currentKnockback = 0;
+                UpdateTargetPosition();
+            }
+        }
+        else
+        {
+            beingKnockedBack = false;
         }
     }
 }

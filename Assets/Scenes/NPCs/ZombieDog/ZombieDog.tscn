@@ -1,7 +1,11 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://Assets/Models/ZombieDog/Dog.material" type="Material" id=1]
 [ext_resource path="res://Assets/Scenes/NPCs/ZombieDog/ZombieDog.cs" type="Script" id=2]
+[ext_resource path="res://Assets/Sounds/zombiedog_hit.wav" type="AudioStream" id=3]
+[ext_resource path="res://Assets/Scripts/ImprovedAudioStreamPlayer3D.cs" type="Script" id=4]
+[ext_resource path="res://Assets/Sounds/zombiedog_death.wav" type="AudioStream" id=5]
+[ext_resource path="res://Assets/Sounds/zombiedog_attack.wav" type="AudioStream" id=6]
 
 [sub_resource type="ArrayMesh" id=16]
 resource_name = "ZombieDog_Mesh001"
@@ -123,7 +127,7 @@ filters = [ "Armature/Skeleton:Head", "Armature/Skeleton:Neck" ]
 [sub_resource type="AnimationNodeBlend2" id=12]
 
 [sub_resource type="AnimationNodeBlendTree" id=13]
-graph_offset = Vector2( -235.064, -71.3706 )
+graph_offset = Vector2( 256.663, 56.2061 )
 nodes/Animation/node = SubResource( 11 )
 nodes/Animation/position = Vector2( -260, 220 )
 "nodes/Animation 2/node" = SubResource( 9 )
@@ -143,7 +147,7 @@ nodes/HitBlend/position = Vector2( 740, 160 )
 nodes/RunningBlend/node = SubResource( 12 )
 nodes/RunningBlend/position = Vector2( 160, 80 )
 nodes/output/position = Vector2( 1360, 200 )
-node_connections = [ "output", 0, "DeadBlend", "AttackBlend", 0, "RunningBlend", "AttackBlend", 1, "Animation 2", "RunningBlend", 0, "Animation 3", "RunningBlend", 1, "Animation", "HitBlend", 0, "AttackBlend", "HitBlend", 1, "Animation 4", "DeadBlend", 0, "HitBlend", "DeadBlend", 1, "Animation 5" ]
+node_connections = [ "output", 0, "DeadBlend", "AttackBlend", 0, "RunningBlend", "AttackBlend", 1, "Animation 2", "DeadBlend", 0, "HitBlend", "DeadBlend", 1, "Animation 5", "HitBlend", 0, "AttackBlend", "HitBlend", 1, "Animation 4", "RunningBlend", 0, "Animation 3", "RunningBlend", 1, "Animation" ]
 
 [sub_resource type="Animation" id=22]
 resource_name = "Attack"
@@ -1052,9 +1056,6 @@ points = PoolVector3Array( -0.819535, 0.00352982, 3.85301, 0.819248, 0.00352982,
 [sub_resource type="SphereShape" id=8]
 radius = 30.0
 
-[sub_resource type="BoxShape" id=15]
-extents = Vector3( 0.322719, 1, 1.14081 )
-
 [node name="ZombieDog" type="KinematicBody"]
 collision_layer = 4
 collision_mask = 3
@@ -1219,9 +1220,8 @@ transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1.07
 shape = SubResource( 1 )
 
 [node name="DamageCollision" type="CollisionShape" parent="."]
-transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
+transform = Transform( 0.2, 0, 0, 0, 0.155567, 0, 0, 0, 0.2, 0, 0.401191, 0 )
 shape = SubResource( 2 )
-disabled = true
 
 [node name="DetectionArea" type="Area" parent="."]
 
@@ -1230,17 +1230,20 @@ shape = SubResource( 8 )
 
 [node name="NavigationAgent" type="NavigationAgent" parent="."]
 agent_height_offset = 0.35
+avoidance_enabled = true
 
-[node name="DamageArea" type="Area" parent="."]
-collision_layer = 4
-collision_mask = 2
+[node name="AudioHit" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 3 )
+unit_size = 3.0
+script = ExtResource( 4 )
+randomPitch = true
+sounds = [ ExtResource( 3 ) ]
 
-[node name="CollisionShape" type="CollisionShape" parent="DamageArea"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0117441, 0.998497, 0.196989 )
-shape = SubResource( 15 )
+[node name="AudioAttack" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 6 )
+unit_size = 3.0
+pitch_scale = 0.7
 
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
-
-[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="."]
-
-[node name="AudioStreamPlayer3D3" type="AudioStreamPlayer3D" parent="."]
+[node name="AudioDeath" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 5 )
+unit_db = 5.0

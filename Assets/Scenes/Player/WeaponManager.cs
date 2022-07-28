@@ -21,6 +21,7 @@ public class WeaponManager : Spatial
     delegate void OnWeaponEquipped(WeaponType weaponType, int ammoCount);
 
     PlayerLeg playerLeg;
+    InteractRayCast interactRayCast;
 
     Spatial weaponSlot;
     WeaponType equippedWeaponType = WeaponType.None;
@@ -50,6 +51,9 @@ public class WeaponManager : Spatial
     {
         weaponSlot = GetNode<Spatial>("WeaponSlot");
         playerLeg = GetNode<PlayerLeg>("Leg");
+        interactRayCast = GetNode<InteractRayCast>("InteractRayCast");
+        interactRayCast.Connect("OnBeginCarry", this, nameof(HideWeapon));
+        interactRayCast.Connect("OnEndCarry", this, nameof(ShowWeapon));
 
         weapons.Add(WeaponType.Shotgun, GD.Load<PackedScene>("res://Assets/Scenes/Weapons/Shotgun/Shotgun.tscn"));
         weapons.Add(WeaponType.Pistols, GD.Load<PackedScene>("res://Assets/Scenes/Weapons/Pistols/Pistols.tscn"));
@@ -61,34 +65,48 @@ public class WeaponManager : Spatial
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(float delta)
     {
-        if (Input.IsActionJustPressed("weapon1"))
+        if (!interactRayCast.IsCarrying)
         {
-            EquipWeapon(WeaponType.BaseballBat);
-        }
-        if (Input.IsActionJustPressed("weapon2"))
-        {
-            EquipWeapon(WeaponType.Pistols);
-        }
-        if (Input.IsActionJustPressed("weapon3"))
-        {
-            EquipWeapon(WeaponType.Shotgun);
-        }
-        if (Input.IsActionJustPressed("weapon4"))
-        {
-            EquipWeapon(WeaponType.AssaultRifle);
-        }
-        if (Input.IsActionJustPressed("weapon5"))
-        {
-            EquipWeapon(WeaponType.GrenadeLauncher);
+            if (Input.IsActionJustPressed("weapon1"))
+            {
+                EquipWeapon(WeaponType.BaseballBat);
+            }
+            if (Input.IsActionJustPressed("weapon2"))
+            {
+                EquipWeapon(WeaponType.Pistols);
+            }
+            if (Input.IsActionJustPressed("weapon3"))
+            {
+                EquipWeapon(WeaponType.Shotgun);
+            }
+            if (Input.IsActionJustPressed("weapon4"))
+            {
+                EquipWeapon(WeaponType.AssaultRifle);
+            }
+            if (Input.IsActionJustPressed("weapon5"))
+            {
+                EquipWeapon(WeaponType.GrenadeLauncher);
+            }
+
+            if (Input.IsActionPressed("kick") && !playerLeg.Kicking)
+            {
+                playerLeg.Kick();
+            }
         }
 
-        if (Input.IsActionPressed("kick") && !playerLeg.Kicking)
+        if (Input.IsActionJustPressed("interact"))
         {
-            playerLeg.Kick();
+            interactRayCast.DoInteract();
         }
 
         if (Input.IsActionPressed("fire"))
         {
+            if (interactRayCast.IsCarrying)
+            {
+                interactRayCast.DoThrow();
+                return;
+            }
+
             if (equippedWeapon != null && equippedWeapon.CanFire && EquippedWeaponHasAmmo())
             {
                 equippedWeapon.Fire();
@@ -98,6 +116,23 @@ public class WeaponManager : Spatial
                 }
                 EmitSignal(nameof(OnAmmoChanged), ammoCount[equippedWeaponType]);
             }
+        }
+    }
+
+    private void HideWeapon()
+    {
+        if (equippedWeapon != null)
+        {
+            equippedWeapon.Hide();
+        }
+    }
+
+    private void ShowWeapon()
+    {
+        if (equippedWeapon != null)
+        {
+            equippedWeapon.Show();
+            equippedWeapon.Equip();
         }
     }
 
