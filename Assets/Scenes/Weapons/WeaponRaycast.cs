@@ -32,7 +32,7 @@ public abstract class WeaponRaycast : Weapon
         target += up * inaccuracyY;
 
         var directState = GetWorld().DirectSpaceState;
-        var collision = directState.IntersectRay(origin, target);
+        var collision = directState.IntersectRay(origin, target, collisionMask: 7);
 
         if (debugCollisions)
         {

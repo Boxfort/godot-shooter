@@ -7,12 +7,14 @@ public class TestZombie : GroundAgent, Damageable
     AnimationTree animationTree;
     Area attackHitbox;
 
+    ImprovedAudioStreamPlayer3D moanAudio;
+    ImprovedAudioStreamPlayer3D hitAudio;
+    AudioStreamPlayer3D deathAudio;
+
     float updatePathTime = 0.5f;
     float updatePathTimer = 1.0f;
-    float detectionTickTime = 0.5f;
-    float detectionTickTimer = 0.5f;
 
-    float moveSpeed = 5;
+    float moveSpeed = 7.5f;
     float rotationSpeed = 5.0f;
     float gravity = 40.0f;
 
@@ -21,7 +23,7 @@ public class TestZombie : GroundAgent, Damageable
     float currentKnockback = 0.0f;
     Vector3 knockbackDirection = Vector3.Zero;
 
-    bool canMove = true;
+    bool beingKnockedBack = true;
 
     override protected float MoveSpeed => moveSpeed;
     override protected float RotationSpeed => rotationSpeed;
@@ -30,11 +32,29 @@ public class TestZombie : GroundAgent, Damageable
     int health = 25;
     public int Health => health;
 
+    bool isDead = false;
+
     public void TakeDamage(int damage, float knockback, Vector3 fromPosition)
     {
+        if (isDead)
+            return;
+
         knockbackDirection = -GlobalTransform.origin.DirectionTo(fromPosition);
         currentKnockback += knockback;
-        canMove = false;
+
+        beingKnockedBack = true;
+
+        health -= damage;
+        animationTree.Set("parameters/HitReaction/active", true);
+
+        if (health <= 0)
+        {
+            isDead = true;
+        }
+        else
+        {
+            hitAudio.Play();
+        }
     }
 
     public override void _Ready()
@@ -42,6 +62,12 @@ public class TestZombie : GroundAgent, Damageable
         base._Ready();
         animationTree = GetNode<AnimationTree>("AnimationTree");
         attackHitbox = GetNode<Area>("AttackHitbox");
+        moanAudio = GetNode<ImprovedAudioStreamPlayer3D>("AudioMoan");
+        hitAudio = GetNode<ImprovedAudioStreamPlayer3D>("AudioHit");
+        deathAudio = GetNode<AudioStreamPlayer3D>("AudioDeath");
+        navigationAgent = GetNode<NavigationAgent>("NavigationAgent");
+
+        navigationAgent.Connect("velocity_computed", this, nameof(OnVelocityComputed));
     }
 
     protected override void OnBodyEnteredDectection(PhysicsBody body)
@@ -49,6 +75,7 @@ public class TestZombie : GroundAgent, Damageable
         if (body is CharacterController)
         {
             SetTarget(body as Spatial);
+            moanAudio.Play();
         }
     }
 
@@ -78,7 +105,15 @@ public class TestZombie : GroundAgent, Damageable
 
     public override void _PhysicsProcess(float delta)
     {
-        currentVelocity = Vector3.Zero;
+        if (isDead)
+        {
+            HandleDead(delta);
+            return;
+        }
+
+        // Why?
+        //currentVelocity = Vector3.Zero;
+
         HandleGravity(delta);
         HandleMovement(delta);
         HandleKnockback(delta);
@@ -96,15 +131,53 @@ public class TestZombie : GroundAgent, Damageable
         animationTree.Set("parameters/IsRunning/blend_amount", Mathf.Abs(currentVelocity.x) + Mathf.Abs(currentVelocity.z) > 0);
     }
 
-    float attackTime = 0.9f;
+    bool deathHandled = false;
+    float deathVelocity = 0;
+
+    private void HandleDead(float delta)
+    {
+        HandleGravity(delta);
+
+        if (!deathHandled)
+        {
+            deathHandled = true;
+
+            // Only collide with the level.
+            CollisionLayer = 8;
+            CollisionMask = 1;
+
+            animationTree.Set("parameters/IsDead/blend_amount", 1);
+            deathAudio.Play();
+
+            // Death Knockback
+            gravityVec = Vector3.Up * 15;
+            snap = Vector3.Zero;
+            deathVelocity = 15;
+        }
+
+        currentVelocity = MoveAndSlideWithSnap((knockbackDirection * deathVelocity) + gravityVec, snap, Vector3.Up);
+
+
+        if (deathVelocity > 0)
+        {
+            deathVelocity -= delta * 15;
+        }
+        else
+        {
+            deathVelocity = 0;
+        }
+    }
+
+    const float attackDistance = 3.5f;
+    const float attackTime = 0.9f;
     float attackTimer = 0.0f;
-    float attackHitTime = 0.55f;
+    const float attackHitTime = 0.55f;
     bool attacking = false;
     bool attackHit = false;
 
     private void HandleAttacking(float delta)
     {
-        if (target != null && GlobalTransform.origin.DistanceTo(target.GlobalTransform.origin) < 3.5f)
+        if (target != null && GlobalTransform.origin.DistanceTo(target.GlobalTransform.origin) < attackDistance)
         {
             animationTree.Set("parameters/DoAttack/active", true);
             attacking = true;
@@ -115,14 +188,15 @@ public class TestZombie : GroundAgent, Damageable
         {
             if (attackTimer >= attackHitTime && !attackHit)
             {
-
-                foreach (Area area in attackHitbox.GetOverlappingAreas())
+                foreach (PhysicsBody body in attackHitbox.GetOverlappingBodies())
                 {
-                    if (area is PlayerAreaCollider playerArea)
+                    GD.Print(body.Name);
+
+                    if (body is Damageable damageable)
                     {
                         if (!attackHit)
                         {
-                            playerArea.TakeDamage(0, 20.0f, GlobalTransform.origin);
+                            damageable.TakeDamage(10, 20.0f, GlobalTransform.origin);
                             attackHit = true;
                         }
                     }
@@ -145,7 +219,7 @@ public class TestZombie : GroundAgent, Damageable
     {
         Vector3 movement = Vector3.Zero;
 
-        if (target != null && !navigationAgent.IsTargetReached() && !pausePathfinding && canMove)
+        if (target != null && !navigationAgent.IsTargetReached() && !pausePathfinding && !beingKnockedBack)
         {
             if (CanReachTarget(target.GlobalTransform.origin, target.GetInstanceId().ToString()))
             {
@@ -153,7 +227,21 @@ public class TestZombie : GroundAgent, Damageable
             }
         }
 
-        currentVelocity = MoveAndSlideWithSnap(movement + gravityVec + (knockbackDirection * currentKnockback), snap, Vector3.Up);
+        //var transform = GlobalTransform;
+        //currentVelocity = MoveAndSlideWithSnap(movement + gravityVec + (knockbackDirection * currentKnockback), snap, Vector3.Up);
+        var velocity = MoveAndSlideWithSnap(movement, snap, Vector3.Up, maxSlides: 0);
+
+        //GlobalTransform = transform;
+
+        navigationAgent.SetVelocity(velocity);
+    }
+
+    void OnVelocityComputed(Vector3 safeVelocity)
+    {
+        if (!pausePathfinding)
+        {
+            currentVelocity = MoveAndSlideWithSnap(safeVelocity + gravityVec + (knockbackDirection * currentKnockback), snap, Vector3.Up);
+        }
     }
 
     private void HandleKnockback(float delta)
@@ -170,7 +258,7 @@ public class TestZombie : GroundAgent, Damageable
         }
         else
         {
-            canMove = true;
+            beingKnockedBack = false;
         }
     }
 }

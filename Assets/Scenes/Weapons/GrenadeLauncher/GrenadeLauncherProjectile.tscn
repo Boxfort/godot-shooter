@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Assets/Scenes/Weapons/GrenadeLauncher/GrenadeLauncherProjectile.cs" type="Script" id=1]
 [ext_resource path="res://Assets/Shaders/psx_lit.shader" type="Shader" id=2]
 [ext_resource path="res://Assets/Sounds/grenade_bounce.wav" type="AudioStream" id=3]
+[ext_resource path="res://Assets/Scripts/ImprovedAudioStreamPlayer3D.cs" type="Script" id=4]
 
 [sub_resource type="BoxShape" id=2]
 extents = Vector3( 0.2, 0.183313, 0.309661 )
@@ -19,6 +20,8 @@ shader_param/uv_offset = Vector2( 0, 0 )
 shader_param/uv_pan_velocity = Vector2( 0, 0 )
 
 [node name="GrenadeLauncherProjectile" type="KinematicBody"]
+collision_layer = 2
+collision_mask = 7
 script = ExtResource( 1 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
@@ -34,3 +37,7 @@ material/0 = SubResource( 3 )
 stream = ExtResource( 3 )
 unit_size = 2.0
 pitch_scale = 0.75
+script = ExtResource( 4 )
+randomPitch = true
+pitchMin = 0.7
+pitchMax = 0.95

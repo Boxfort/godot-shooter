@@ -1,7 +1,6 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Assets/Models/Makarov/makarov_psx.tres" type="Material" id=1]
-[ext_resource path="res://Assets/Scenes/Weapons/MuzzleFlash.cs" type="Script" id=2]
 [ext_resource path="res://Assets/Scenes/Weapons/MuzzleFlash.tscn" type="PackedScene" id=3]
 
 [sub_resource type="ArrayMesh" id=1]
@@ -102,10 +101,12 @@ mesh = SubResource( 1 )
 layers = 2
 mesh = SubResource( 2 )
 
-[node name="MuzzleFlash" parent="RootNode" instance=ExtResource( 3 )]
-transform = Transform( -8.74228e-10, 0, 0.02, 0, 0.02, 0, -0.02, 0, -8.74228e-10, 0, 0.00231476, 0.0984901 )
+[node name="FlashContainer" type="Spatial" parent="RootNode"]
+transform = Transform( -1.74846e-09, 0, 0.04, 0, 0.04, 0, -0.04, 0, -1.74846e-09, -0.0024887, 0.00447965, 0.116655 )
+
+[node name="MuzzleFlash" parent="RootNode/FlashContainer" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00231476, 0.0984901 )
 visible = false
-script = ExtResource( 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Equip = SubResource( 3 )

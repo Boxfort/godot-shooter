@@ -14,9 +14,9 @@ public class PlayerHUD : CanvasLayer
     public override void _Ready()
     {
         weapon = GetNode<Label>("DebugPanel/Weapon");
-        ammo = GetNode<Label>("DebugPanel/Ammo");
-        health = GetNode<Label>("DebugPanel/Health");
-        armor = GetNode<Label>("DebugPanel/Armor");
+        ammo = GetNode<Label>("UI/Ammo/AmmoCount");
+        health = GetNode<Label>("UI/Health/HealthCount");
+        armor = GetNode<Label>("UI/Armor/ArmorCount");
 
         weaponManager = GetNode<WeaponManager>("../Head/Hand");
         playerManager = GetNode<PlayerManager>("../PlayerManager");
@@ -31,12 +31,12 @@ public class PlayerHUD : CanvasLayer
     }
 
 
-    private void OnAmmoChanged(int ammoCount) 
+    private void OnAmmoChanged(int ammoCount)
     {
         ammo.Text = ammoCount.ToString();
     }
-    
-    private void OnWeaponEquipped(WeaponType weaponType, int ammoCount) 
+
+    private void OnWeaponEquipped(WeaponType weaponType, int ammoCount)
     {
         ammo.Text = ammoCount.ToString();
         weapon.Text = weaponType.ToString();

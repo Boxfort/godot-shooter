@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/zombiedog_hit.wav-5683a7ad3f48f4dbaeac1c0e35a4e997.sample"
+
+[deps]
+
+source_file="res://Assets/Sounds/zombiedog_hit.wav"
+dest_files=[ "res://.import/zombiedog_hit.wav-5683a7ad3f48f4dbaeac1c0e35a4e997.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

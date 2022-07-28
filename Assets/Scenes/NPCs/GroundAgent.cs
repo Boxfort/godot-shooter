@@ -121,6 +121,23 @@ public abstract class GroundAgent : KinematicBody
         }
     }
 
+    protected void LookAt(Vector3 target, float delta, bool lockZ = true)
+    {
+        Vector3 globalPosition = GlobalTransform.origin;
+        Vector3 originalRotation = RotationDegrees;
+
+        Transform desiredTransform = GlobalTransform.LookingAt(new Vector3(target.x, globalPosition.y, target.z), Vector3.Up).Rotated(Vector3.Up, Mathf.Deg2Rad(180));
+        var desiredRotation = new Quat(desiredTransform.basis).Normalized();
+        GlobalTransform = new Transform(new Basis(desiredRotation), GlobalTransform.origin);
+
+        if (lockZ)
+        {
+            originalRotation.x = RotationDegrees.x;
+            originalRotation.y = RotationDegrees.y;
+            RotationDegrees = originalRotation;
+        }
+    }
+
     protected void HandleGravity(float delta)
     {
         if (IsOnFloor())

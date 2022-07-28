@@ -5,6 +5,9 @@ using System;
 public class Shotgun : WeaponRaycast
 {
     AnimationPlayer animationPlayer;
+    AudioStreamPlayer fireAudio;
+    AudioStreamPlayer equipAudio;
+    MuzzleFlash muzzleFlash;
 
     bool canFire = true;
     int damage = 2;
@@ -24,6 +27,7 @@ public class Shotgun : WeaponRaycast
     public override void Equip()
     {
         animationPlayer.Play("Equip");
+        equipAudio.Play();
         Show();
     }
 
@@ -32,6 +36,8 @@ public class Shotgun : WeaponRaycast
         canFire = false;
         animationPlayer.Stop(true);
         animationPlayer.Play("Fire");
+        fireAudio.Play();
+        muzzleFlash.Flash();
 
         for (int i = 0; i < pellets; i++)
         {
@@ -43,7 +49,11 @@ public class Shotgun : WeaponRaycast
     {
         base._Ready();
 
-        animationPlayer = GetNode<AnimationPlayer>("Model/AnimationPlayer");
+        animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+        fireAudio = GetNode<AudioStreamPlayer>("AudioFire");
+        equipAudio = GetNode<AudioStreamPlayer>("AudioEquip");
+        muzzleFlash = GetNode<MuzzleFlash>("Spas/MuzzleFlashHolder/MuzzleFlash");
+
         Hide();
     }
 

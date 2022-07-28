@@ -2,10 +2,8 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public class CharacterController : KinematicBody
+public class CharacterController : KinematicBody, Damageable
 {
-    Random rng = new Random();
-
     Spatial head;
     Spatial hand;
     PlayerLeg leg;
@@ -13,12 +11,12 @@ public class CharacterController : KinematicBody
     Camera gunCamera;
     CollisionShape collisionShape;
     CollisionShape areaCollisionShape;
-    PlayerAreaCollider areaCollider;
+    Area areaCollider;
+    PlayerManager playerManager;
     RayCast canStand;
 
     AudioStreamPlayer jumpAudio;
     AudioStreamPlayer stepAudioPlayer;
-    List<AudioStream> stepSounds = new List<AudioStream>();
 
     const float footstepTime = 0.5f;
     float footstepTimer = 0;
@@ -68,24 +66,15 @@ public class CharacterController : KinematicBody
         head = GetNode<Spatial>("Head");
         hand = GetNode<Spatial>("Head/Hand");
         collisionShape = GetNode<CollisionShape>("CollisionShape");
-        areaCollider = collisionShape.GetNode<PlayerAreaCollider>("AreaCollider");
+        areaCollider = collisionShape.GetNode<Area>("AreaCollider");
         areaCollisionShape = areaCollider.GetNode<CollisionShape>("CollisionShape");
         canStand = collisionShape.GetNode<RayCast>("CanStand");
         camera = head.GetNode<ShakeableCamera>("ShakeableCamera");
         gunCamera = hand.GetNode<Camera>("ViewportContainer/Viewport/GunCamera");
+        playerManager = GetNode<PlayerManager>("PlayerManager");
 
         jumpAudio = GetNode<AudioStreamPlayer>("JumpSound");
         stepAudioPlayer = GetNode<AudioStreamPlayer>("StepSound");
-
-        // TODO: Don't hardcode sounds somehow?
-        stepSounds.Add(GD.Load<AudioStream>("res://Assets/Sounds/footstep01.wav"));
-        stepSounds.Add(GD.Load<AudioStream>("res://Assets/Sounds/footstep02.wav"));
-        stepSounds.Add(GD.Load<AudioStream>("res://Assets/Sounds/footstep03.wav"));
-        stepSounds.Add(GD.Load<AudioStream>("res://Assets/Sounds/footstep04.wav"));
-        stepSounds.Add(GD.Load<AudioStream>("res://Assets/Sounds/footstep05.wav"));
-        stepSounds.Add(GD.Load<AudioStream>("res://Assets/Sounds/footstep06.wav"));
-
-        areaCollider.Connect("OnKnockback", this, nameof(Knockback));
 
         // TODO: an actual solution for setting world environment
         var environment = GetNode<WorldEnvironment>("../WorldEnvironment");
@@ -163,17 +152,10 @@ public class CharacterController : KinematicBody
             footstepTimer -= delta;
             if (footstepTimer <= 0)
             {
-                stepAudioPlayer.Stream = stepSounds[rng.Next(0, stepSounds.Count)];
                 stepAudioPlayer.Play();
                 footstepTimer = footstepTime;
             }
         }
-    }
-
-    public void Knockback(float knockback, Vector3 fromPosition)
-    {
-        knockbackDirection = -GlobalTransform.origin.DirectionTo(fromPosition);
-        currentKnockback += knockback;
     }
 
     private void HandleKnockback(float delta)
@@ -341,4 +323,10 @@ public class CharacterController : KinematicBody
         return (newMax - newMin) * (number - oldMin) / (oldMax - oldMin) + newMin;
     }
 
+    public void TakeDamage(int damage, float knockback, Vector3 fromPosition)
+    {
+        playerManager.TakeDamage(damage);
+        knockbackDirection = -GlobalTransform.origin.DirectionTo(fromPosition);
+        currentKnockback += knockback;
+    }
 }

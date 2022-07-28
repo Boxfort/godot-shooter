@@ -11,8 +11,8 @@ public class MuzzleFlash : Spatial
 
     public void Flash()
     {
-        RotateZ(rng.Next(0, 6));
-        var scale = (float)(0.02 * (rng.NextDouble() + 0.5));
+        RotateX(rng.Next(0, 6));
+        var scale = (float)(0.4 * (rng.NextDouble() + 0.8));
         Scale = new Vector3(scale, scale, scale);
         Show();
     }

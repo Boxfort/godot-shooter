@@ -41,10 +41,9 @@ public class PlayerManager : Node
         weaponManager = GetNode<WeaponManager>("../Head/Hand");
         hurtSound = GetNode<AudioStreamPlayer>("HurtSound");
         areaCollider = GetNode<Area>("../CollisionShape/AreaCollider");
-        areaCollider.Connect("OnDamageTaken", this, nameof(TakeDamage));
     }
 
-    private void TakeDamage(int damage)
+    public void TakeDamage(int damage)
     {
         GD.Print("Player took damage: " + damage);
         Health = Health - damage;

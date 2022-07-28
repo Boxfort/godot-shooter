@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/zombie_death.wav-4c5b167ca4b3652e2e7bd5fdfca0cef5.sample"
+
+[deps]
+
+source_file="res://Assets/Sounds/zombie_death.wav"
+dest_files=[ "res://.import/zombie_death.wav-4c5b167ca4b3652e2e7bd5fdfca0cef5.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

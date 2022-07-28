@@ -6,8 +6,6 @@ public class PlayerLeg : Spatial
 {
     AnimationPlayer animationPlayer;
     AudioStreamPlayer kickAudioPlayer;
-    List<AudioStream> kickSounds = new List<AudioStream>();
-    Random rng = new Random();
 
     float kickTime = 0.5f;
     float kickImpactTime = 0.15f;
@@ -22,11 +20,6 @@ public class PlayerLeg : Spatial
     {
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         kickAudioPlayer = GetNode<AudioStreamPlayer>("AudioStreamPlayer");
-
-        // TODO: Don't hardcode sounds somehow?
-        kickSounds.Add(GD.Load<AudioStream>("res://Assets/Sounds/swing01.wav"));
-        kickSounds.Add(GD.Load<AudioStream>("res://Assets/Sounds/swing02.wav"));
-        kickSounds.Add(GD.Load<AudioStream>("res://Assets/Sounds/swing03.wav"));
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -57,7 +50,6 @@ public class PlayerLeg : Spatial
         animationPlayer.Stop();
         animationPlayer.Play("Kick");
 
-        kickAudioPlayer.Stream = kickSounds[rng.Next(0, kickSounds.Count)];
         kickAudioPlayer.Play();
     }
 

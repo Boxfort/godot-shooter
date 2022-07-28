@@ -1,8 +1,12 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Assets/Models/BaseballBat/BaseballBat_Raw_Grime.material" type="Material" id=1]
 [ext_resource path="res://Assets/Scenes/Weapons/BaseballBat/BaseballBat.cs" type="Script" id=2]
 [ext_resource path="res://Assets/Sounds/bat_impact.wav" type="AudioStream" id=3]
+[ext_resource path="res://Assets/Sounds/swing03.wav" type="AudioStream" id=4]
+[ext_resource path="res://Assets/Sounds/swing01.wav" type="AudioStream" id=5]
+[ext_resource path="res://Assets/Sounds/swing02.wav" type="AudioStream" id=6]
+[ext_resource path="res://Assets/Scripts/ImprovedAudioStreamPlayer.cs" type="Script" id=7]
 
 [sub_resource type="ArrayMesh" id=1]
 blend_shape_mode = 0
@@ -117,6 +121,8 @@ layers = 2
 mesh = SubResource( 1 )
 
 [node name="Hitbox" type="Area" parent="."]
+collision_layer = 2
+collision_mask = 4
 
 [node name="CollisionShape" type="CollisionShape" parent="Hitbox"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.8255 )
@@ -128,6 +134,9 @@ anims/Equip = SubResource( 5 )
 anims/Idle = SubResource( 4 )
 
 [node name="SwingAudio" type="AudioStreamPlayer" parent="."]
+script = ExtResource( 7 )
+randomSound = true
+sounds = [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 4 ) ]
 
 [node name="HitAudio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )

@@ -4,7 +4,7 @@ using System;
 
 public class Pistols : WeaponRaycast
 {
-    PolyphonicAudioStreamPlayer fireAudio;
+    ImprovedAudioStreamPlayer fireAudio;
     AudioStreamPlayer equipAudio;
     AnimationPlayer animationPlayerLeft;
     AnimationPlayer animationPlayerRight;
@@ -62,14 +62,14 @@ public class Pistols : WeaponRaycast
         base._Ready();
 
         Hide();
-        fireAudio = GetNode<PolyphonicAudioStreamPlayer>("FireAudio");
+        fireAudio = GetNode<ImprovedAudioStreamPlayer>("FireAudio");
         equipAudio = GetNode<AudioStreamPlayer>("EquipAudio");
 
         animationPlayerLeft = GetNode<AnimationPlayer>("Pistol/AnimationPlayer");
         animationPlayerRight = GetNode<AnimationPlayer>("Pistol2/AnimationPlayer");
 
-        muzzleFlashLeft = GetNode<MuzzleFlash>("Pistol/RootNode/MuzzleFlash");
-        muzzleFlashRight = GetNode<MuzzleFlash>("Pistol2/RootNode/MuzzleFlash");
+        muzzleFlashLeft = GetNode<MuzzleFlash>("Pistol/RootNode/FlashContainer/MuzzleFlash");
+        muzzleFlashRight = GetNode<MuzzleFlash>("Pistol2/RootNode/FlashContainer/MuzzleFlash");
 
         animationPlayerLeft.Connect("animation_finished", this, nameof(OnAnimationFinished));
         animationPlayerRight.Connect("animation_finished", this, nameof(OnAnimationFinished));

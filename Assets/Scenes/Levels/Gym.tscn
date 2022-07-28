@@ -42,7 +42,7 @@
 [ext_resource path="res://Assets/Scenes/Player/Player.tscn" type="PackedScene" id=41]
 [ext_resource path="res://Assets/Scenes/Pickups/ShotgunPickup.tscn" type="PackedScene" id=42]
 [ext_resource path="res://Assets/Scenes/Pickups/PistolsPickup.tscn" type="PackedScene" id=44]
-[ext_resource path="res://Assets/Models/HandCannon/Bullet/Bullet.fbx" type="PackedScene" id=45]
+[ext_resource path="res://Assets/Models/barrel/barrel.glb" type="PackedScene" id=45]
 [ext_resource path="res://Assets/Scenes/Props/ExplosiveBarrel/ExplosiveBarrel.tscn" type="PackedScene" id=46]
 
 [sub_resource type="NavigationMesh" id=20]
@@ -497,7 +497,7 @@ transform = Transform( 10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0 )
 billboard = 2
 frames = SubResource( 5 )
 animation = "Explode"
-frame = 3
+frame = 27
 playing = true
 
 [node name="CollisionShape" type="CollisionShape" parent="TestExplosion"]
