@@ -81,7 +81,7 @@ public class TestZombie : GroundAgent, Damageable
 
     protected override void OnBodyEnteredDectection(PhysicsBody body)
     {
-        if (body is CharacterController)
+        if (body is CharacterController && !isDead)
         {
             SetTarget(body as Spatial);
             moanAudio.Play();
@@ -90,7 +90,7 @@ public class TestZombie : GroundAgent, Damageable
 
     protected override void OnBodyExitedDectection(PhysicsBody body)
     {
-        if (body == target)
+        if (body == target && !isDead)
         {
             SetTarget(target = null);
         }
@@ -98,7 +98,7 @@ public class TestZombie : GroundAgent, Damageable
 
     public override void _Process(float delta)
     {
-        if (target != null)
+        if (target != null && !isDead)
         {
             if (updatePathTimer >= updatePathTime)
             {
@@ -157,6 +157,7 @@ public class TestZombie : GroundAgent, Damageable
             gravityVec = Vector3.Up * 15;
             snap = Vector3.Zero;
             deathVelocity = 15;
+            navigationAgent.QueueFree();
         }
 
         currentVelocity = MoveAndSlideWithSnap((knockbackDirection * deathVelocity) + gravityVec, snap, Vector3.Up);

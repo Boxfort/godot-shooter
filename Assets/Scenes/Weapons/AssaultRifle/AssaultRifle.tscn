@@ -9,7 +9,7 @@
 
 [sub_resource type="Animation" id=9]
 resource_name = "Equip"
-length = 0.4
+length = 0.3
 tracks/0/type = "value"
 tracks/0/path = NodePath("Model/Obokan:translation")
 tracks/0/interp = 1
@@ -17,7 +17,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.4 ),
+"times": PoolRealArray( 0, 0.3 ),
 "transitions": PoolRealArray( 0.366022, 1 ),
 "update": 0,
 "values": [ Vector3( 0, -1.318, -1 ), Vector3( 0, -0.318, -1 ) ]
@@ -29,7 +29,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.3 ),
+"times": PoolRealArray( 0, 0.2 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Vector3( -45, 0, 0 ), Vector3( 0, 0, 0 ) ]
@@ -71,7 +71,7 @@ script = ExtResource( 2 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.238332, -0.0337752, -0.132063 )
 
 [node name="Obokan" parent="Model" instance=ExtResource( 1 )]
-transform = Transform( 0.15, 0, 0, 0, 0.149999, 0, 0, 0, 0.149999, 0, -0.318, -1 )
+transform = Transform( 0.15, 0, 0, 0, 0.106065, 0.106065, 0, -0.106065, 0.106065, 0, -1.318, -1 )
 
 [node name="FlashContainer" type="Spatial" parent="Model/Obokan"]
 transform = Transform( -2.18557e-08, 0, -0.5, 0, 0.5, 0, 0.5, 0, -2.18557e-08, 0.0350101, 1.29006, -6.15085 )
@@ -80,8 +80,7 @@ transform = Transform( -2.18557e-08, 0, -0.5, 0, 0.5, 0, 0.5, 0, -2.18557e-08, 0
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.13144, 0, -1.90735e-06 )
 visible = false
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Model"]
-root_node = NodePath("../..")
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Equip = SubResource( 9 )
 anims/Fire = SubResource( 8 )
 

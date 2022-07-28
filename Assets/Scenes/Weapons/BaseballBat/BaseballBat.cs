@@ -14,8 +14,7 @@ public class BaseballBat : WeaponMelee
     protected override float AttackHitEndTime => 0.2f;
 
     AudioStreamPlayer hitAudio;
-    AudioStreamPlayer swingAudio;
-    List<AudioStream> swingSounds = new List<AudioStream>();
+    ImprovedAudioStreamPlayer swingAudio;
     Random rng = new Random();
 
 
@@ -25,19 +24,12 @@ public class BaseballBat : WeaponMelee
         base._Ready();
 
         hitAudio = GetNode<AudioStreamPlayer>("HitAudio");
-        swingAudio = GetNode<AudioStreamPlayer>("SwingAudio");
-
-        // TODO: Don't hardcode sounds somehow?
-        swingSounds.Add(GD.Load<AudioStream>("res://Assets/Sounds/swing01.wav"));
-        swingSounds.Add(GD.Load<AudioStream>("res://Assets/Sounds/swing02.wav"));
-        swingSounds.Add(GD.Load<AudioStream>("res://Assets/Sounds/swing03.wav"));
+        swingAudio = GetNode<ImprovedAudioStreamPlayer>("SwingAudio");
     }
 
     public override void Fire()
     {
         base.Fire();
-
-        swingAudio.Stream = swingSounds[rng.Next(0, swingSounds.Count)];
         swingAudio.Play();
     }
 

@@ -12,6 +12,8 @@ public class InteractRayCast : RayCast
     [Signal]
     delegate void OnEndCarry();
 
+    const float throwForce = 20.0f;
+    const float dropForce = 0.0f;
     const float carryDistance = 5.0f;
     const float carryDropDistance = 8.0f;
 
@@ -73,7 +75,7 @@ public class InteractRayCast : RayCast
 
         SetCarryablePlayerCollision(carrying, true);
         isCarrying = false;
-        carrying.OnDrop(-GlobalTransform.basis.z.Normalized(), 0.0f);
+        carrying.OnDrop(-GlobalTransform.basis.z.Normalized(), dropForce);
         carrying = null;
         EmitSignal(nameof(OnEndCarry));
     }
@@ -85,7 +87,7 @@ public class InteractRayCast : RayCast
 
         SetCarryablePlayerCollision(carrying, true);
         isCarrying = false;
-        carrying.OnThrow(-GlobalTransform.basis.z.Normalized(), 10.0f);
+        carrying.OnThrow(-GlobalTransform.basis.z.Normalized(), throwForce);
         carrying = null;
         EmitSignal(nameof(OnEndCarry));
     }

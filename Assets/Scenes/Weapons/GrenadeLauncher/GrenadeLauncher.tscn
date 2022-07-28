@@ -1,9 +1,37 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Assets/Scenes/Weapons/GrenadeLauncher/GrenadeLauncher.cs" type="Script" id=1]
 [ext_resource path="res://Assets/Scenes/Weapons/GrenadeLauncher/GrenadeLauncherProjectile.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Assets/Scenes/Weapons/GrenadeLauncher/GrenadeLauncherModel.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Assets/Sounds/grenadeLauncher_fire.wav" type="AudioStream" id=4]
+
+[sub_resource type="Animation" id=2]
+resource_name = "Equip"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath("GrenadeLauncher:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 0.329877, 1 ),
+"update": 0,
+"values": [ Vector3( 0, -0.693538, -0.432578 ), Vector3( 0, -0.274021, -0.536515 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("GrenadeLauncher:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 0.329877, 1 ),
+"update": 0,
+"values": [ Vector3( 1.10555e-06, -90, 26.195 ), Vector3( 0, -90, 0 ) ]
+}
 
 [sub_resource type="Animation" id=1]
 resource_name = "Fire"
@@ -40,6 +68,7 @@ projectile = ExtResource( 2 )
 transform = Transform( -4.37114e-09, 0, -0.1, 0, 0.1, 0, 0.1, 0, -4.37114e-09, 0, -0.274021, -0.536515 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Equip = SubResource( 2 )
 anims/Fire = SubResource( 1 )
 
 [node name="RayCast" type="RayCast" parent="."]

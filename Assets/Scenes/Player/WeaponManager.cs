@@ -62,6 +62,7 @@ public class WeaponManager : Spatial
         weapons.Add(WeaponType.AssaultRifle, GD.Load<PackedScene>("res://Assets/Scenes/Weapons/AssaultRifle/AssaultRifle.tscn"));
     }
 
+
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(float delta)
     {
@@ -124,6 +125,7 @@ public class WeaponManager : Spatial
         if (equippedWeapon != null)
         {
             equippedWeapon.Hide();
+            equippedWeapon.Equipped = false;
         }
     }
 
@@ -131,8 +133,8 @@ public class WeaponManager : Spatial
     {
         if (equippedWeapon != null)
         {
-            equippedWeapon.Show();
             equippedWeapon.Equip();
+            equippedWeapon.Show();
         }
     }
 

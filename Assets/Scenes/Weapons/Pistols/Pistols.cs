@@ -12,18 +12,16 @@ public class Pistols : WeaponRaycast
     MuzzleFlash muzzleFlashRight;
 
     bool fireLeft = false;
-    bool canFire = true;
     int damage = 5;
     float inaccuracy = 1.0f;
     float range = 100f;
-    float fireSpeed = 0.2f;
-    float fireTimer = 0;
 
     public override bool CanFire => canFire;
     protected override float Inaccuracy => inaccuracy;
     protected override float Range => range;
     protected override int Damage => damage;
     protected override float Knockback => 0.0f;
+    public override float FireSpeed => 0.2f;
 
     public override void Equip()
     {
@@ -59,6 +57,7 @@ public class Pistols : WeaponRaycast
 
     public override void _Ready()
     {
+        customAnimationPlayer = true;
         base._Ready();
 
         Hide();
@@ -72,24 +71,5 @@ public class Pistols : WeaponRaycast
         muzzleFlashRight = GetNode<MuzzleFlash>("Pistol2/RootNode/FlashContainer/MuzzleFlash");
 
         animationPlayerLeft.Connect("animation_finished", this, nameof(OnAnimationFinished));
-        animationPlayerRight.Connect("animation_finished", this, nameof(OnAnimationFinished));
-    }
-
-    private void OnAnimationFinished(String animationName)
-    {
-        //GD.Print("Animation Finished: " + animationName);
-    }
-
-    public override void _Process(float delta)
-    {
-        if (!canFire)
-        {
-            fireTimer += delta;
-            if (fireTimer >= fireSpeed)
-            {
-                fireTimer = 0;
-                canFire = true;
-            }
-        }
     }
 }

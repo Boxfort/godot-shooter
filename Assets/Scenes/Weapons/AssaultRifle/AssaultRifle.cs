@@ -14,14 +14,10 @@ public class AssaultRifle : WeaponRaycast
 
     protected override float Range => 100f;
 
-    private bool canFire = true;
-
-    float fireSpeed = 0.15f;
-    float fireTimer = 0;
+    public override float FireSpeed => 0.15f;
 
     ImprovedAudioStreamPlayer fireAudio;
     AudioStreamPlayer equipAudio;
-    AnimationPlayer animationPlayer;
     MuzzleFlash muzzleFlash;
 
     public override void Equip()
@@ -53,20 +49,6 @@ public class AssaultRifle : WeaponRaycast
 
         fireAudio = GetNode<ImprovedAudioStreamPlayer>("FireAudio");
         equipAudio = GetNode<AudioStreamPlayer>("EquipAudio");
-        animationPlayer = GetNode<AnimationPlayer>("Model/AnimationPlayer");
         muzzleFlash = GetNode<MuzzleFlash>("Model/Obokan/FlashContainer/MuzzleFlash");
-    }
-
-    public override void _Process(float delta)
-    {
-        if (!canFire)
-        {
-            fireTimer += delta;
-            if (fireTimer >= fireSpeed)
-            {
-                fireTimer = 0;
-                canFire = true;
-            }
-        }
     }
 }

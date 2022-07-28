@@ -6,33 +6,14 @@ public class GrenadeLauncher : WeaponProjectile
     RayCast raycast;
     AudioStreamPlayer shootAudio;
 
-    float fireRate = 0.75f;
-    float fireTimer = 0.0f;
     float shotDistance = 3.0f;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
         base._Ready();
-        canFire = true;
         raycast = GetNode<RayCast>("RayCast");
         shootAudio = GetNode<AudioStreamPlayer>("AudioStreamPlayer");
-    }
-
-    public override void _Process(float delta)
-    {
-        if (!canFire)
-        {
-            if (fireTimer >= fireRate)
-            {
-                canFire = true;
-                fireTimer = 0;
-            }
-            else
-            {
-                fireTimer += delta;
-            }
-        }
     }
 
     public override void Fire()
@@ -59,10 +40,4 @@ public class GrenadeLauncher : WeaponProjectile
             instance.Explode();
         }
     }
-
-    //  // Called every frame. 'delta' is the elapsed time since the previous frame.
-    //  public override void _Process(float delta)
-    //  {
-    //      
-    //  }
 }

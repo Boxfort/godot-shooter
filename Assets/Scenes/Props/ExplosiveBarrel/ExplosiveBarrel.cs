@@ -46,7 +46,7 @@ public class ExplosiveBarrel : Carryable, Damageable
 
     public override void OnCarry()
     {
-        // no-op
+        base.OnCarry();
         GD.Print("I'm being carried!");
     }
 }

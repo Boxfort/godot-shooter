@@ -5,10 +5,14 @@ using Godot.Collections;
 public abstract class WeaponMelee : Weapon
 {
     Area hitbox;
-    AnimationPlayer animationPlayer;
-    bool canFire = true;
+    protected AnimationPlayer animationPlayer;
+
+    protected bool canFire = false;
+    protected bool equipped = false;
 
     public override bool CanFire => canFire;
+    public override bool Equipped { get => equipped; set { equipped = value; canFire = value; } }
+
     protected abstract int Damage { get; }
     protected abstract float Knockback { get; }
     protected abstract float AttackTime { get; }
@@ -44,12 +48,23 @@ public abstract class WeaponMelee : Weapon
         Hide();
         hitbox = GetNode<Area>("Hitbox");
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+
+        animationPlayer.Connect("animation_finished", this, nameof(OnAnimationFinished));
     }
 
     public override void _Process(float delta)
     {
         base._Process(delta);
         HandleAttack(delta);
+    }
+
+    private void OnAnimationFinished(string animationName)
+    {
+        if (animationName == "Equip")
+        {
+            canFire = true;
+            equipped = true;
+        }
     }
 
     private void HandleAttack(float delta)
