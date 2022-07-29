@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Assets/Models/Personajes terror/Material_011.material" type="Material" id=1]
 [ext_resource path="res://Assets/Scenes/NPCs/Zombie/TestZombie.cs" type="Script" id=2]
-[ext_resource path="res://Assets/Scenes/Debug/DebugCollision.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Assets/Scenes/NPCs/Gibs/Gibs.tscn" type="PackedScene" id=3]
 
 [sub_resource type="ArrayMesh" id=1]
 resource_name = "Cube.026Mesh"
@@ -250,8 +250,10 @@ radius = 0.753318
 height = 1.5
 
 [node name="TestZombie" type="KinematicBody" groups=["Enemy"]]
+collision_layer = 4
+collision_mask = 3
 script = ExtResource( 2 )
-debugPoint = ExtResource( 3 )
+gibs = ExtResource( 3 )
 
 [node name="Skeleton" type="Skeleton" parent="."]
 transform = Transform( 0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0 )

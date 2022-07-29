@@ -10,10 +10,13 @@ public class PlayerManager : Node
     [Signal]
     delegate void OnArmorChanged(int armor);
 
+    [Signal]
+    delegate void OnSecretFound();
+
     Area areaCollider;
     WeaponManager weaponManager;
-
     AudioStreamPlayer hurtSound;
+    AudioStreamPlayer secretSound;
 
     const int maxHealth = 100;
     const int maxArmor = 100;
@@ -38,9 +41,23 @@ public class PlayerManager : Node
 
     public override void _Ready()
     {
-        weaponManager = GetNode<WeaponManager>("../Head/Hand");
         hurtSound = GetNode<AudioStreamPlayer>("HurtSound");
+        secretSound = GetNode<AudioStreamPlayer>("SecretSound");
+
+        weaponManager = GetNode<WeaponManager>("../Head/Hand");
+
         areaCollider = GetNode<Area>("../CollisionShape/AreaCollider");
+        areaCollider.Connect("area_entered", this, nameof(OnAreaEntered));
+    }
+
+    private void OnAreaEntered(Area area)
+    {
+        if (area.IsInGroup("secret"))
+        {
+            EmitSignal(nameof(OnSecretFound));
+            secretSound.Play();
+            area.QueueFree();
+        }
     }
 
     public void TakeDamage(int damage)

@@ -8,7 +8,7 @@ public class Shotgun : WeaponRaycast
     AudioStreamPlayer equipAudio;
     MuzzleFlash muzzleFlash;
 
-    int damage = 2;
+    int damage = 3;
     float inaccuracy = 2.0f;
     float range = 60.0f;
     int pellets = 8;

@@ -96,6 +96,7 @@ public class GrenadeLauncherProjectile : KinematicBody
         Explosion instance = (Explosion)explosion.Instance();
 
         instance.Knockback = 40.0f;
+        instance.Damage = 20;
 
         var transform = GlobalTransform;
         transform.origin += Vector3.Up * 1.5f;

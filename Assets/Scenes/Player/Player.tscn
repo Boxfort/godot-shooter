@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://Assets/Scenes/Player/PlayerHUD.cs" type="Script" id=1]
 [ext_resource path="res://Assets/Scenes/Player/CharacterController.cs" type="Script" id=2]
@@ -21,6 +21,7 @@
 [ext_resource path="res://Assets/Sounds/footstep03.wav" type="AudioStream" id=19]
 [ext_resource path="res://Assets/Sounds/footstep06.wav" type="AudioStream" id=20]
 [ext_resource path="res://Assets/Scenes/Player/InteractRayCast.cs" type="Script" id=21]
+[ext_resource path="res://Assets/Sounds/secret_found.wav" type="AudioStream" id=22]
 
 [sub_resource type="SphereShape" id=4]
 
@@ -47,6 +48,10 @@ script = ExtResource( 5 )
 
 [node name="HurtSound" type="AudioStreamPlayer" parent="PlayerManager"]
 stream = ExtResource( 10 )
+
+[node name="SecretSound" type="AudioStreamPlayer" parent="PlayerManager"]
+stream = ExtResource( 22 )
+volume_db = -7.5
 
 [node name="Head" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
@@ -252,7 +257,7 @@ margin_right = -9.0
 margin_bottom = -8.0
 texture = ExtResource( 14 )
 
-[node name="NotificationMessage" type="Label" parent="CanvasLayer/UI"]
+[node name="Message" type="Label" parent="CanvasLayer/UI"]
 visible = false
 anchor_right = 1.0
 margin_bottom = 25.0

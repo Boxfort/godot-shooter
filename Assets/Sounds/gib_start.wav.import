@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/gib_start.wav-e90c0a18ca166b36e1576bd0e4c7760a.sample"
+
+[deps]
+
+source_file="res://Assets/Sounds/gib_start.wav"
+dest_files=[ "res://.import/gib_start.wav-e90c0a18ca166b36e1576bd0e4c7760a.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

@@ -8,6 +8,9 @@ public class ZombieDog : GroundAgent, Damageable
     AudioStreamPlayer3D attackAudio;
     AudioStreamPlayer3D deathAudio;
 
+    [Export]
+    PackedScene gibs;
+
     protected override float MoveSpeed => 10.0f;
 
     protected override float RotationSpeed => 7.5f;
@@ -18,7 +21,8 @@ public class ZombieDog : GroundAgent, Damageable
     float updatePathTimer = 1.0f;
     bool pausePathfinding = false;
 
-    int health = 15;
+    const int maxHealth = 15;
+    int health = maxHealth;
     public int Health => health;
 
     float currentKnockback = 0.0f;
@@ -41,19 +45,32 @@ public class ZombieDog : GroundAgent, Damageable
 
     bool isDead = false;
 
+    float accumulatedDamageTimer = 0;
+    const float accumulatedDamageTime = 0.05f;
+    int accumulatedDamage = 0;
+
     public void TakeDamage(int damage, float knockback, Vector3 fromPosition)
     {
         if (isDead)
             return;
 
-
         knockbackDirection = -GlobalTransform.origin.DirectionTo(fromPosition);
         currentKnockback += knockback;
 
         beingKnockedBack = true;
+        animationTree.Set("parameters/HitReaction/active", true);
 
         health -= damage;
-        animationTree.Set("parameters/HitReaction/active", true);
+
+        if (accumulatedDamageTimer < accumulatedDamageTime)
+        {
+            accumulatedDamage += damage;
+        }
+        else
+        {
+            accumulatedDamage = damage;
+            accumulatedDamageTimer = 0;
+        }
 
         if (health <= 0)
         {
@@ -117,6 +134,7 @@ public class ZombieDog : GroundAgent, Damageable
             return;
         }
 
+        HandleAccumulatedDamageCounter(delta);
         HandleGravity(delta);
         HandleAttacking(delta);
         HandleDamage(delta);
@@ -140,6 +158,14 @@ public class ZombieDog : GroundAgent, Damageable
         animationTree.Set("parameters/RunningBlend/blend_amount", Mathf.Abs(currentVelocity.x) + Mathf.Abs(currentVelocity.z) > 0);
     }
 
+    private void HandleAccumulatedDamageCounter(float delta)
+    {
+        if (accumulatedDamageTimer < accumulatedDamageTime)
+        {
+            accumulatedDamageTimer += delta;
+        }
+    }
+
     bool deathHandled = false;
     float deathVelocity = 0;
 
@@ -149,6 +175,15 @@ public class ZombieDog : GroundAgent, Damageable
 
         if (!deathHandled)
         {
+            if (accumulatedDamage >= (maxHealth / 2))
+            {
+                // GIB
+                Spatial instance = (Spatial)gibs.Instance();
+                GetTree().Root.AddChild(instance);
+                instance.GlobalTransform = GlobalTransform;
+                QueueFree();
+            }
+
             deathHandled = true;
 
             // Only collide with the level.

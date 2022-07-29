@@ -1,0 +1,66 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Assets/Scenes/NPCs/Gibs/Blood.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Scenes/NPCs/Gibs/gib.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Assets/Scenes/NPCs/Gibs/Gibs.cs" type="Script" id=3]
+[ext_resource path="res://Assets/Sounds/gib_start.wav" type="AudioStream" id=5]
+
+[sub_resource type="SpatialMaterial" id=1]
+flags_transparent = true
+params_billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+albedo_texture = ExtResource( 1 )
+
+[sub_resource type="Curve" id=2]
+_data = [ Vector2( 0.476596, 1 ), 0.0, -0.463203, 0, 0, Vector2( 1, 0 ), -6.20624, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=3]
+curve = SubResource( 2 )
+
+[sub_resource type="ParticlesMaterial" id=4]
+direction = Vector3( 0, -1, 0 )
+spread = 180.0
+gravity = Vector3( 0, -18, 0 )
+initial_velocity = 10.0
+initial_velocity_random = 1.0
+angle = 180.0
+angle_random = 1.0
+scale = 3.0
+scale_random = 0.5
+scale_curve = SubResource( 3 )
+
+[sub_resource type="QuadMesh" id=5]
+
+[node name="Gibs" type="Spatial"]
+script = ExtResource( 3 )
+
+[node name="gib" parent="." instance=ExtResource( 2 )]
+transform = Transform( 0.168873, 0.0481127, -0.0957448, 0, 0.178706, 0.0898014, 0.107154, -0.0758252, 0.150893, -0.053211, 0.0615439, -0.318851 )
+collision_layer = 8
+
+[node name="gib2" parent="." instance=ExtResource( 2 )]
+transform = Transform( 0.2, 0, 0, 0, 0.156395, -0.124661, 0, 0.124661, 0.156395, -0.0392196, 0.0101757, 0.346566 )
+collision_layer = 8
+
+[node name="gib3" parent="." instance=ExtResource( 2 )]
+transform = Transform( 0.125255, 0, -0.15592, 0, 0.2, 0, 0.15592, 0, 0.125255, -0.60511, 0.0143531, 0.0105107 )
+collision_layer = 8
+
+[node name="Particles" type="Particles" parent="."]
+material_override = SubResource( 1 )
+emitting = false
+amount = 16
+lifetime = 2.0
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+process_material = SubResource( 4 )
+draw_pass_1 = SubResource( 5 )
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 5 )
+unit_size = 10.0
+max_db = 1.0
+pitch_scale = 0.8
