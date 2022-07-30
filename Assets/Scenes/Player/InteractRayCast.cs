@@ -14,7 +14,7 @@ public class InteractRayCast : RayCast
 
     const float throwForce = 20.0f;
     const float dropForce = 0.0f;
-    const float carryDistance = 5.0f;
+    const float carryDistance = 3.0f;
     const float carryDropDistance = 8.0f;
 
     bool wasColliding = false;
@@ -50,6 +50,7 @@ public class InteractRayCast : RayCast
                 wasColliding = false;
                 wasCollidingWith = "";
                 SetCarryablePlayerCollision(carryable, false);
+                carryable.Connect("StopCarrying", this, nameof(AbandonCarryable));
                 EmitSignal(nameof(OnRaycastExit));
                 EmitSignal(nameof(OnBeginCarry));
             }
@@ -64,8 +65,16 @@ public class InteractRayCast : RayCast
     private void SetCarryablePlayerCollision(Carryable carryable, bool shouldCollide)
     {
         carryable.SetCollisionMaskBit(1, shouldCollide);
+        carryable.SetCollisionMaskBit(2, shouldCollide);
         carryable.SetCollisionLayerBit(0, shouldCollide);
         carryable.SetCollisionLayerBit(5, !shouldCollide);
+    }
+
+    private void AbandonCarryable()
+    {
+        isCarrying = false;
+        carrying = null;
+        EmitSignal(nameof(OnEndCarry));
     }
 
     public void DoDrop()

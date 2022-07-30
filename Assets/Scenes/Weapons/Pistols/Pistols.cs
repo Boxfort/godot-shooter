@@ -21,7 +21,7 @@ public class Pistols : WeaponRaycast
     protected override float Range => range;
     protected override int Damage => damage;
     protected override float Knockback => 0.0f;
-    public override float FireSpeed => 0.2f;
+    public override float FireSpeed => 0.3f;
 
     public override void Equip()
     {

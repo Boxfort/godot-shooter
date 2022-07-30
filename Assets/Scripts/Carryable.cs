@@ -2,6 +2,9 @@ using Godot;
 
 public abstract class Carryable : KinematicBody, Interactable
 {
+    [Signal]
+    public delegate void StopCarrying();
+
     const float terminalVelocity = 2f;
     protected const float gravity = 1.0f;
 

@@ -258,21 +258,38 @@ public class CharacterController : KinematicBody, Damageable
         currentVelocity = MoveAndSlideWithSnap(movement, snap, Vector3.Up);
     }
 
+
     private void CheckCollisions()
     {
-        inWater = false;
-
         var areas = areaCollider.GetOverlappingAreas();
+        bool touchedWater = false;
+
         foreach (Area area in areas)
         {
+            // TODO: remove effects after testing
             if (area.IsInGroup("water"))
             {
-                inWater = true;
+                touchedWater = true;
+                if (!inWater)
+                {
+                    GD.Print("Entered the water");
+                    inWater = true;
+                    AudioServer.AddBusEffect(0, new AudioEffectLowPassFilter(), 0);
+                }
             }
-            else if (area.IsInGroup("killbox"))
+
+
+            if (area.IsInGroup("killbox"))
             {
                 GD.Print("DEAD");
             }
+        }
+
+        if (!touchedWater && inWater)
+        {
+            GD.Print("Left the water");
+            inWater = false;
+            AudioServer.RemoveBusEffect(0, 0);
         }
     }
 

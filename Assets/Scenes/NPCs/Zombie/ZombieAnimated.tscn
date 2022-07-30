@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://Assets/Models/Zombie/Material_011.material" type="Material" id=1]
 [ext_resource path="res://Assets/Scenes/NPCs/Zombie/TestZombie.cs" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Assets/Scripts/ImprovedAudioStreamPlayer3D.cs" type="Script" id=4]
 [ext_resource path="res://Assets/Sounds/zombie_death.wav" type="AudioStream" id=5]
 [ext_resource path="res://Assets/Sounds/zombie_active.wav" type="AudioStream" id=6]
+[ext_resource path="res://Assets/Scenes/NPCs/Gibs/Gibs.tscn" type="PackedScene" id=7]
 
 [sub_resource type="ArrayMesh" id=60]
 resource_name = "zombie_Cube026"
@@ -234,7 +235,7 @@ nodes/TimeScale/position = Vector2( -100, 40 )
 "nodes/TimeScale 3/node" = SubResource( 74 )
 "nodes/TimeScale 3/position" = Vector2( 700, 200 )
 nodes/output/position = Vector2( 1300, 120 )
-node_connections = [ "output", 0, "IsDead", "HitReaction", 0, "DoAttack", "HitReaction", 1, "TimeScale 3", "DoAttack", 0, "IsRunning", "DoAttack", 1, "TimeScale 2", "IsDead", 0, "HitReaction", "IsDead", 1, "Animation 3", "IsRunning", 0, "Idle", "IsRunning", 1, "TimeScale", "TimeScale", 0, "Animation 2", "TimeScale 2", 0, "Animation", "TimeScale 3", 0, "Animation 4" ]
+node_connections = [ "output", 0, "IsDead", "IsRunning", 0, "Idle", "IsRunning", 1, "TimeScale", "IsDead", 0, "HitReaction", "IsDead", 1, "Animation 3", "TimeScale", 0, "Animation 2", "HitReaction", 0, "DoAttack", "HitReaction", 1, "TimeScale 3", "DoAttack", 0, "IsRunning", "DoAttack", 1, "TimeScale 2", "TimeScale 2", 0, "Animation", "TimeScale 3", 0, "Animation 4" ]
 
 [sub_resource type="Animation" id=68]
 resource_name = "Attack"
@@ -1175,6 +1176,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0115426, 0.00906825, 0.0010
 collision_layer = 4
 collision_mask = 3
 script = ExtResource( 2 )
+gibs = ExtResource( 7 )
 
 [node name="Model" type="Spatial" parent="."]
 transform = Transform( 0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0 )
@@ -1355,8 +1357,8 @@ anims/Run = SubResource( 72 )
 
 [node name="NavigationAgent" type="NavigationAgent" parent="."]
 agent_height_offset = 0.35
-max_speed = 7.5
 avoidance_enabled = true
+max_speed = 7.5
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1.5, -0.034 )
