@@ -82,10 +82,12 @@ public class InteractRayCast : RayCast
         if (!isCarrying)
             return;
 
+        carrying.Disconnect("StopCarrying", this, nameof(AbandonCarryable));
         SetCarryablePlayerCollision(carrying, true);
         isCarrying = false;
         carrying.OnDrop(-GlobalTransform.basis.z.Normalized(), dropForce);
         carrying = null;
+
         EmitSignal(nameof(OnEndCarry));
     }
 
@@ -94,6 +96,7 @@ public class InteractRayCast : RayCast
         if (!isCarrying)
             return;
 
+        carrying.Disconnect("StopCarrying", this, nameof(AbandonCarryable));
         SetCarryablePlayerCollision(carrying, true);
         isCarrying = false;
         carrying.OnThrow(-GlobalTransform.basis.z.Normalized(), throwForce);

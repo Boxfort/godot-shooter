@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/DoubleBarrel.png-80665e547bdeff7438b050d90dbe2bc8.s3tc.stex"
-path.etc2="res://.import/DoubleBarrel.png-80665e547bdeff7438b050d90dbe2bc8.etc2.stex"
+path.s3tc="res://.import/texture_ventcover.png-7656afd40dfb68c294257e601de223d9.s3tc.stex"
+path.etc2="res://.import/texture_ventcover.png-7656afd40dfb68c294257e601de223d9.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://Assets/Models/DoubleBarrelShotgun/DoubleBarrel.png"
-dest_files=[ "res://.import/DoubleBarrel.png-80665e547bdeff7438b050d90dbe2bc8.s3tc.stex", "res://.import/DoubleBarrel.png-80665e547bdeff7438b050d90dbe2bc8.etc2.stex" ]
+source_file="res://Assets/Models/ExampleLevel/Textures/texture_ventcover.png"
+dest_files=[ "res://.import/texture_ventcover.png-7656afd40dfb68c294257e601de223d9.s3tc.stex", "res://.import/texture_ventcover.png-7656afd40dfb68c294257e601de223d9.etc2.stex" ]
 
 [params]
 

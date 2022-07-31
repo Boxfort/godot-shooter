@@ -2,12 +2,12 @@
 
 importer="scene"
 type="PackedScene"
-path="res://.import/DoubleBarrelShotgun.fbx-74c18ecdb4c0c02d19e0a87825bec251.scn"
+path="res://.import/roundabout.glb-1a9a0c7664a82945356680eb4aec4825.scn"
 
 [deps]
 
-source_file="res://Assets/Models/DoubleBarrelShotgun/DoubleBarrelShotgun.fbx"
-dest_files=[ "res://.import/DoubleBarrelShotgun.fbx-74c18ecdb4c0c02d19e0a87825bec251.scn" ]
+source_file="res://Assets/Models/Roundabout/roundabout.glb"
+dest_files=[ "res://.import/roundabout.glb-1a9a0c7664a82945356680eb4aec4825.scn" ]
 
 [params]
 

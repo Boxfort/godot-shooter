@@ -128,7 +128,7 @@ filters = [ "Armature/Skeleton:Head", "Armature/Skeleton:Neck" ]
 [sub_resource type="AnimationNodeBlend2" id=12]
 
 [sub_resource type="AnimationNodeBlendTree" id=13]
-graph_offset = Vector2( 256.663, 56.2061 )
+graph_offset = Vector2( -154.737, 67.4756 )
 nodes/Animation/node = SubResource( 11 )
 nodes/Animation/position = Vector2( -260, 220 )
 "nodes/Animation 2/node" = SubResource( 9 )
@@ -141,14 +141,14 @@ nodes/Animation/position = Vector2( -260, 220 )
 "nodes/Animation 5/position" = Vector2( 840, 400 )
 nodes/AttackBlend/node = SubResource( 14 )
 nodes/AttackBlend/position = Vector2( 420, 160 )
-nodes/DeadBlend/node = SubResource( 20 )
-nodes/DeadBlend/position = Vector2( 1120, 140 )
+nodes/DeathBlend/node = SubResource( 20 )
+nodes/DeathBlend/position = Vector2( 1120, 140 )
 nodes/HitBlend/node = SubResource( 21 )
 nodes/HitBlend/position = Vector2( 740, 160 )
 nodes/RunningBlend/node = SubResource( 12 )
 nodes/RunningBlend/position = Vector2( 160, 80 )
 nodes/output/position = Vector2( 1360, 200 )
-node_connections = [ "output", 0, "DeadBlend", "AttackBlend", 0, "RunningBlend", "AttackBlend", 1, "Animation 2", "DeadBlend", 0, "HitBlend", "DeadBlend", 1, "Animation 5", "HitBlend", 0, "AttackBlend", "HitBlend", 1, "Animation 4", "RunningBlend", 0, "Animation 3", "RunningBlend", 1, "Animation" ]
+node_connections = [ "output", 0, "DeathBlend", "AttackBlend", 0, "RunningBlend", "AttackBlend", 1, "Animation 2", "HitBlend", 0, "AttackBlend", "HitBlend", 1, "Animation 4", "RunningBlend", 0, "Animation 3", "RunningBlend", 1, "Animation", "DeathBlend", 0, "HitBlend", "DeathBlend", 1, "Animation 5" ]
 
 [sub_resource type="Animation" id=22]
 resource_name = "Attack"
@@ -1205,7 +1205,7 @@ tree_root = SubResource( 13 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
 parameters/AttackBlend/blend_amount = 0.0
-parameters/DeadBlend/blend_amount = 0.0
+parameters/DeathBlend/blend_amount = 0.0
 parameters/HitBlend/active = false
 parameters/RunningBlend/blend_amount = 1.0
 

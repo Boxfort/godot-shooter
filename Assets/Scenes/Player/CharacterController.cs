@@ -14,6 +14,7 @@ public class CharacterController : KinematicBody, Damageable
     Area areaCollider;
     PlayerManager playerManager;
     RayCast canStand;
+    Area headInWater;
 
     AudioStreamPlayer jumpAudio;
     AudioStreamPlayer stepAudioPlayer;
@@ -44,6 +45,7 @@ public class CharacterController : KinematicBody, Damageable
     bool jumpQueued = false;
 
     bool inWater = false;
+    bool isHeadInWater = false;
 
     Vector3 snap;
     Vector3 inputDirection = Vector3.Zero;
@@ -69,6 +71,7 @@ public class CharacterController : KinematicBody, Damageable
         areaCollider = collisionShape.GetNode<Area>("AreaCollider");
         areaCollisionShape = areaCollider.GetNode<CollisionShape>("CollisionShape");
         canStand = collisionShape.GetNode<RayCast>("CanStand");
+        headInWater = collisionShape.GetNode<Area>("HeadInWater");
         camera = head.GetNode<ShakeableCamera>("ShakeableCamera");
         gunCamera = hand.GetNode<Camera>("ViewportContainer/Viewport/GunCamera");
         playerManager = GetNode<PlayerManager>("PlayerManager");
@@ -274,10 +277,8 @@ public class CharacterController : KinematicBody, Damageable
                 {
                     GD.Print("Entered the water");
                     inWater = true;
-                    AudioServer.AddBusEffect(0, new AudioEffectLowPassFilter(), 0);
                 }
             }
-
 
             if (area.IsInGroup("killbox"))
             {
@@ -287,10 +288,44 @@ public class CharacterController : KinematicBody, Damageable
 
         if (!touchedWater && inWater)
         {
-            GD.Print("Left the water");
             inWater = false;
-            AudioServer.RemoveBusEffect(0, 0);
         }
+
+        // Head in water collsion
+        if (inWater)
+        {
+            bool headTouchedWater = headInWater.GetOverlappingAreas().Count > 0;
+
+            if (!isHeadInWater && headTouchedWater)
+            {
+                OnHeadEnterWater();
+            }
+            else if (isHeadInWater && !headTouchedWater)
+            {
+                OnHeadExitWater();
+            }
+        }
+        else
+        {
+            if (isHeadInWater)
+            {
+                OnHeadExitWater();
+            }
+        }
+    }
+
+    private void OnHeadEnterWater()
+    {
+        isHeadInWater = true;
+        AudioServer.GetBusIndex("Master");
+        AudioServer.AddBusEffect(0, new AudioEffectLowPassFilter(), 0);
+    }
+
+    private void OnHeadExitWater()
+    {
+        isHeadInWater = false;
+        AudioServer.RemoveBusEffect(0, 0);
+        AudioServer.GetBusIndex("Master");
     }
 
     private void RollHead(float horizontalRotation, float delta)

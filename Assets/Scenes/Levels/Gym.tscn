@@ -384,11 +384,26 @@ transform = Transform( 11.7622, 0, 0, 0, 24.1981, 0, 0, 0, 1, -51.8565, 5.46237,
 
 [node name="Water" type="Area" parent="Pool" groups=["water"]]
 transform = Transform( 0.876133, 0, 0, 0, 1, 0, 0, 0, 11.293, 0, -0.04234, -11.7108 )
+collision_layer = 17
+collision_mask = 7
 
 [node name="CollisionShape" type="CollisionShape" parent="Pool/Water"]
 shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Pool/Water"]
+transform = Transform( 1.00001, 0, 0, 0, 0.999994, 0, 0, 0, 1.00007, 0, 0, 0 )
+mesh = SubResource( 7 )
+material/0 = SubResource( 8 )
+
+[node name="Water2" type="Area" parent="Pool" groups=["water"]]
+transform = Transform( 0.237643, 0, 0, 0, 0.27124, 0, 0, 0, 3.06312, 3.64759, -0.04234, -27.4939 )
+collision_layer = 16
+collision_mask = 7
+
+[node name="CollisionShape" type="CollisionShape" parent="Pool/Water2"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Pool/Water2"]
 transform = Transform( 1.00001, 0, 0, 0, 0.999994, 0, 0, 0, 1.00007, 0, 0, 0 )
 mesh = SubResource( 7 )
 material/0 = SubResource( 8 )
@@ -498,7 +513,7 @@ transform = Transform( 10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0 )
 billboard = 2
 frames = SubResource( 5 )
 animation = "Explode"
-frame = 22
+frame = 32
 playing = true
 
 [node name="CollisionShape" type="CollisionShape" parent="TestExplosion"]

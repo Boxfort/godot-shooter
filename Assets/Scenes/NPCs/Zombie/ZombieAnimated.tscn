@@ -189,6 +189,8 @@ animation = "HitReaction"
 [sub_resource type="AnimationNodeAnimation" id=29]
 animation = "Attack"
 
+[sub_resource type="AnimationNodeBlend2" id=50]
+
 [sub_resource type="AnimationNodeOneShot" id=41]
 
 [sub_resource type="AnimationNodeOneShot" id=73]
@@ -197,8 +199,6 @@ filters = [ "Armature/Skeleton:mixamorig_Head", "Armature/Skeleton:mixamorig_Hea
 
 [sub_resource type="AnimationNodeAnimation" id=13]
 animation = "Idle"
-
-[sub_resource type="AnimationNodeBlend2" id=50]
 
 [sub_resource type="AnimationNodeBlend2" id=14]
 
@@ -209,7 +209,7 @@ animation = "Idle"
 [sub_resource type="AnimationNodeTimeScale" id=18]
 
 [sub_resource type="AnimationNodeBlendTree" id=16]
-graph_offset = Vector2( 21.9274, -83.1635 )
+graph_offset = Vector2( 83.549, 34.2457 )
 nodes/Animation/node = SubResource( 29 )
 nodes/Animation/position = Vector2( 40, 200 )
 "nodes/Animation 2/node" = SubResource( 30 )
@@ -218,14 +218,14 @@ nodes/Animation/position = Vector2( 40, 200 )
 "nodes/Animation 3/position" = Vector2( 878.295, 332.405 )
 "nodes/Animation 4/node" = SubResource( 58 )
 "nodes/Animation 4/position" = Vector2( 440, 340 )
+nodes/DeathBlend/node = SubResource( 50 )
+nodes/DeathBlend/position = Vector2( 1120, 200 )
 nodes/DoAttack/node = SubResource( 41 )
 nodes/DoAttack/position = Vector2( 520, -20 )
 nodes/HitReaction/node = SubResource( 73 )
 nodes/HitReaction/position = Vector2( 940, 0 )
 nodes/Idle/node = SubResource( 13 )
 nodes/Idle/position = Vector2( -20, -160 )
-nodes/IsDead/node = SubResource( 50 )
-nodes/IsDead/position = Vector2( 1120, 200 )
 nodes/IsRunning/node = SubResource( 14 )
 nodes/IsRunning/position = Vector2( 241.35, -126.956 )
 nodes/TimeScale/node = SubResource( 18 )
@@ -235,7 +235,7 @@ nodes/TimeScale/position = Vector2( -100, 40 )
 "nodes/TimeScale 3/node" = SubResource( 74 )
 "nodes/TimeScale 3/position" = Vector2( 700, 200 )
 nodes/output/position = Vector2( 1300, 120 )
-node_connections = [ "output", 0, "IsDead", "IsRunning", 0, "Idle", "IsRunning", 1, "TimeScale", "IsDead", 0, "HitReaction", "IsDead", 1, "Animation 3", "TimeScale", 0, "Animation 2", "HitReaction", 0, "DoAttack", "HitReaction", 1, "TimeScale 3", "DoAttack", 0, "IsRunning", "DoAttack", 1, "TimeScale 2", "TimeScale 2", 0, "Animation", "TimeScale 3", 0, "Animation 4" ]
+node_connections = [ "output", 0, "DeathBlend", "HitReaction", 0, "DoAttack", "HitReaction", 1, "TimeScale 3", "DoAttack", 0, "IsRunning", "DoAttack", 1, "TimeScale 2", "IsRunning", 0, "Idle", "IsRunning", 1, "TimeScale", "TimeScale", 0, "Animation 2", "TimeScale 2", 0, "Animation", "TimeScale 3", 0, "Animation 4", "DeathBlend", 0, "HitReaction", "DeathBlend", 1, "Animation 3" ]
 
 [sub_resource type="Animation" id=68]
 resource_name = "Attack"
@@ -1182,7 +1182,7 @@ gibs = ExtResource( 7 )
 transform = Transform( 0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0 )
 
 [node name="Armature" type="Spatial" parent="Model"]
-transform = Transform( 0.01, 0, 0, 0, 0, -0.01, 0, 0.01, 0, 0, 0, 0 )
+transform = Transform( 0.01, 0, 0, 0, 5.96046e-10, -0.01, 0, 0.01, 5.96046e-10, 0, 0, 0 )
 
 [node name="Skeleton" type="Skeleton" parent="Model/Armature"]
 bones/0/name = "mixamorig_Hips"
@@ -1339,9 +1339,9 @@ skin = SubResource( 61 )
 tree_root = SubResource( 16 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
+parameters/DeathBlend/blend_amount = 0.0
 parameters/DoAttack/active = false
 parameters/HitReaction/active = false
-parameters/IsDead/blend_amount = 0.0
 parameters/IsRunning/blend_amount = 1.0
 parameters/TimeScale/scale = 1.0
 "parameters/TimeScale 2/scale" = 2.0
