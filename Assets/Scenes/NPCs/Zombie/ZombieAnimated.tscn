@@ -235,7 +235,7 @@ nodes/TimeScale/position = Vector2( -100, 40 )
 "nodes/TimeScale 3/node" = SubResource( 74 )
 "nodes/TimeScale 3/position" = Vector2( 700, 200 )
 nodes/output/position = Vector2( 1300, 120 )
-node_connections = [ "output", 0, "DeathBlend", "HitReaction", 0, "DoAttack", "HitReaction", 1, "TimeScale 3", "DoAttack", 0, "IsRunning", "DoAttack", 1, "TimeScale 2", "IsRunning", 0, "Idle", "IsRunning", 1, "TimeScale", "TimeScale", 0, "Animation 2", "TimeScale 2", 0, "Animation", "TimeScale 3", 0, "Animation 4", "DeathBlend", 0, "HitReaction", "DeathBlend", 1, "Animation 3" ]
+node_connections = [ "output", 0, "DeathBlend", "TimeScale 3", 0, "Animation 4", "IsRunning", 0, "Idle", "IsRunning", 1, "TimeScale", "TimeScale", 0, "Animation 2", "DeathBlend", 0, "HitReaction", "DeathBlend", 1, "Animation 3", "DoAttack", 0, "IsRunning", "DoAttack", 1, "TimeScale 2", "HitReaction", 0, "DoAttack", "HitReaction", 1, "TimeScale 3", "TimeScale 2", 0, "Animation" ]
 
 [sub_resource type="Animation" id=68]
 resource_name = "Attack"
@@ -1167,7 +1167,7 @@ radius = 0.753318
 height = 1.5
 
 [sub_resource type="SphereShape" id=19]
-radius = 30.0
+radius = 50.0
 
 [sub_resource type="BoxShape" id=21]
 
@@ -1182,7 +1182,7 @@ gibs = ExtResource( 7 )
 transform = Transform( 0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0 )
 
 [node name="Armature" type="Spatial" parent="Model"]
-transform = Transform( 0.01, 0, 0, 0, 5.96046e-10, -0.01, 0, 0.01, 5.96046e-10, 0, 0, 0 )
+transform = Transform( 0.01, 0, 0, 0, 0, -0.01, 0, 0.01, 0, 0, 0, 0 )
 
 [node name="Skeleton" type="Skeleton" parent="Model/Armature"]
 bones/0/name = "mixamorig_Hips"
@@ -1377,7 +1377,7 @@ collision_mask = 2
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.00952, 1.43217 )
 shape = SubResource( 21 )
 
-[node name="AudioMoan" type="AudioStreamPlayer3D" parent="."]
+[node name="AudioAlert" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource( 6 )
 unit_size = 3.0
 script = ExtResource( 4 )

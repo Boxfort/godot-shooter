@@ -33,7 +33,7 @@ public abstract class GroundAgent : KinematicBody
 
     protected abstract void OnBodyExitedDectection(PhysicsBody body);
 
-    protected void SetTarget(Spatial newTarget)
+    protected void SetPathfindingTarget(Spatial newTarget)
     {
         target = newTarget;
 

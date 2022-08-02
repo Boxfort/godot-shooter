@@ -9,12 +9,14 @@ public class ExplosiveBarrel : Carryable, Damageable
 
     public override string InteractString => "PICK UP BARREL";
 
+    [Export]
     PackedScene explosion;
 
-    public override void _Ready()
-    {
-        explosion = GD.Load("res://Assets/Scenes/Explosion.tscn") as PackedScene;
-    }
+    [Export]
+    float explosionRadius = 5.0f;
+
+    [Export]
+    int explosionDamage = 25;
 
     public void TakeDamage(int damage, float knockback, Vector3 fromPosition)
     {
@@ -40,6 +42,8 @@ public class ExplosiveBarrel : Carryable, Damageable
         var transform = GlobalTransform;
         transform.origin += new Vector3(0, 1.5f, 0);
         instance.GlobalTransform = transform;
+        instance.Radius = explosionRadius;
+        instance.Damage = explosionDamage;
         instance.Explode();
         QueueFree();
     }

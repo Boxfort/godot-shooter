@@ -31,7 +31,6 @@ public class TestZombie : GroundEnemy
     {
         base._Ready();
         attackHitbox = GetNode<Area>("AttackHitbox");
-        moanAudio = GetNode<ImprovedAudioStreamPlayer3D>("AudioMoan");
     }
 
     public override void _PhysicsProcess(float delta)

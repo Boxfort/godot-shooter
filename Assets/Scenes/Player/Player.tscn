@@ -384,6 +384,8 @@ stream = ExtResource( 9 )
 mix_target = 2
 
 [node name="StepSound" type="AudioStreamPlayer" parent="."]
+volume_db = -5.0
 script = ExtResource( 6 )
+randomPitch = true
 randomSound = true
 sounds = [ ExtResource( 17 ), ExtResource( 18 ), ExtResource( 19 ), ExtResource( 16 ), ExtResource( 15 ), ExtResource( 20 ) ]

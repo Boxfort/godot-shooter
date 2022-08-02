@@ -17,7 +17,7 @@ public class CharacterController : KinematicBody, Damageable
     Area headInWater;
 
     AudioStreamPlayer jumpAudio;
-    AudioStreamPlayer stepAudioPlayer;
+    ImprovedAudioStreamPlayer stepAudioPlayer;
 
     const float footstepTime = 0.5f;
     float footstepTimer = 0;
@@ -32,6 +32,9 @@ public class CharacterController : KinematicBody, Damageable
 
     float currentKnockback = 0.0f;
     Vector3 knockbackDirection = Vector3.Zero;
+
+    const float damageCooldown = 0.25f;
+    float damageCooldownTimer = 0;
 
     const float maxFallTraumaTime = 1.5f; // The time after which the camera trauma will be at its max when landing.
     float fallTime = 0.0f;
@@ -77,7 +80,7 @@ public class CharacterController : KinematicBody, Damageable
         playerManager = GetNode<PlayerManager>("PlayerManager");
 
         jumpAudio = GetNode<AudioStreamPlayer>("JumpSound");
-        stepAudioPlayer = GetNode<AudioStreamPlayer>("StepSound");
+        stepAudioPlayer = GetNode<ImprovedAudioStreamPlayer>("StepSound");
 
         // TODO: an actual solution for setting world environment
         var environment = GetNode<WorldEnvironment>("../WorldEnvironment");
@@ -120,6 +123,9 @@ public class CharacterController : KinematicBody, Damageable
         hand.Translation = hand.Translation.LinearInterpolate(swayOffset, delta * handSwaySmoothing);
         // Resets the mouse movement every frame so we can tell if it has stopped moving.
         mouseMovement = Vector2.Zero;
+
+        if (damageCooldownTimer < damageCooldown)
+            damageCooldownTimer += delta;
     }
 
     public override void _PhysicsProcess(float delta)
@@ -377,8 +383,13 @@ public class CharacterController : KinematicBody, Damageable
 
     public void TakeDamage(int damage, float knockback, Vector3 fromPosition)
     {
+        if (damageCooldownTimer < damageCooldown)
+            return;
+
         playerManager.TakeDamage(damage);
         knockbackDirection = -GlobalTransform.origin.DirectionTo(fromPosition);
         currentKnockback += knockback;
+        camera.AddTrauma(0.1f * damage);
+        damageCooldownTimer = 0;
     }
 }

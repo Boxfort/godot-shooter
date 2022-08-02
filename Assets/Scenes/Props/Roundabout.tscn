@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Assets/Models/Roundabout/roundabout.glb" type="PackedScene" id=1]
+[ext_resource path="res://Assets/Scenes/Levels/Roundabout.cs" type="Script" id=2]
+
+[sub_resource type="CylinderShape" id=23]
+height = 0.96
+radius = 4.88715
+
+[sub_resource type="BoxShape" id=24]
+extents = Vector3( 0.270862, 1.2905, 1.79199 )
+
+[node name="KinematicBody" type="KinematicBody"]
+transform = Transform( 0.5, 0.000226893, -6.60345e-15, -0.000226893, 0.5, 0.000235619, 1.06921e-07, -0.000235619, 0.5, -81.2107, 0.317561, -181.126 )
+script = ExtResource( 2 )
+
+[node name="roundabout" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 1.56449e-11, 0, -1.34589e-11, 1, 0, 0, 0, 1, 0, 0, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, -1.34586e-11, 0, -1.34589e-11, 1, 0, 2.84217e-14, -5.82077e-11, 1, 0.000137329, -0.3, -0.000152588 )
+shape = SubResource( 23 )
+
+[node name="CollisionShape2" type="CollisionShape" parent="."]
+transform = Transform( 0.999999, 3.64891e-10, 7.10543e-14, -1.34588e-11, 0.999999, -5.82077e-11, 2.84217e-14, 1.16415e-10, 0.999999, 4.13553, 1.58184, 0.000732422 )
+shape = SubResource( 24 )
+
+[node name="CollisionShape3" type="CollisionShape" parent="."]
+transform = Transform( 0.999999, 3.93995e-10, 2.84217e-14, -1.34587e-11, 0.999999, -5.82077e-11, -1.42109e-14, 1.16415e-10, 0.999999, -4.21561, 1.57805, 0.000732422 )
+shape = SubResource( 24 )
+
+[node name="CollisionShape4" type="CollisionShape" parent="."]
+transform = Transform( 1.6221e-07, 1.74532e-05, -0.999999, -0.000925023, 0.999998, 1.74533e-05, 0.999998, 0.000925023, 1.78354e-07, -0.0400696, 1.57798, 4.1763 )
+shape = SubResource( 24 )
+
+[node name="CollisionShape5" type="CollisionShape" parent="."]
+transform = Transform( 1.6221e-07, 1.74532e-05, -0.999999, -0.000925023, 0.999998, 1.74532e-05, 0.999998, 0.000925023, 1.78354e-07, -0.0400696, 1.58191, -4.17484 )
+shape = SubResource( 24 )

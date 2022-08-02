@@ -25,7 +25,7 @@ public class Gib : KinematicBody
     {
         impactAudio = GetNode<ImprovedAudioStreamPlayer3D>("AudioStreamPlayer3D");
 
-        direction = new Vector3(randomAxis(), 1.0f, randomAxis());
+        direction = new Vector3(randomAxis(), 1.5f, randomAxis());
         GD.Print(direction);
         velocity = 15.0f;
         Scale *= (float)rng.NextDouble() + 0.5f;

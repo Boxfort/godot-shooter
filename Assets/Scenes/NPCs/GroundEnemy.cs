@@ -8,6 +8,7 @@ public abstract class GroundEnemy : GroundAgent, Damageable
 
     protected AnimationTree animationTree;
     AudioStreamPlayer3D deathAudio;
+    ImprovedAudioStreamPlayer3D alertAudio;
     ImprovedAudioStreamPlayer3D hitAudio;
 
     public abstract int MaxHealth { get; }
@@ -16,6 +17,9 @@ public abstract class GroundEnemy : GroundAgent, Damageable
 
     float updatePathTime = 0.5f;
     float updatePathTimer = 1.0f;
+
+    bool playerInRadius = false;
+    protected Spatial sightTarget;
 
     float currentKnockback = 0.0f;
     Vector3 knockbackDirection = Vector3.Zero;
@@ -39,6 +43,7 @@ public abstract class GroundEnemy : GroundAgent, Damageable
         animationTree = GetNode<AnimationTree>("AnimationTree");
         hitAudio = GetNode<ImprovedAudioStreamPlayer3D>("AudioHit");
         deathAudio = GetNode<AudioStreamPlayer3D>("AudioDeath");
+        alertAudio = GetNode<ImprovedAudioStreamPlayer3D>("AudioAlert");
 
         Health = MaxHealth;
 
@@ -59,13 +64,53 @@ public abstract class GroundEnemy : GroundAgent, Damageable
                 updatePathTimer += delta;
             }
         }
+
+        // Check to see if the player is visible.
+        if (playerInRadius && target == null && CanSeePlayer())
+        {
+            GD.Print(Name + " spotted player");
+
+            if (alertAudio != null)
+                alertAudio.Play();
+            SetPathfindingTarget(sightTarget);
+        }
+    }
+
+    protected bool CanSeePlayer()
+    {
+        var directState = GetWorld().DirectSpaceState;
+        var collisionBody = directState.IntersectRay(GlobalTransform.origin + (Vector3.Up / 2), sightTarget.GlobalTransform.origin, collisionMask: 3);
+        var collisionHead = directState.IntersectRay(GlobalTransform.origin + (Vector3.Up), sightTarget.GlobalTransform.origin + Vector3.Up, collisionMask: 3);
+
+        if (collisionBody.Contains("collider"))
+        {
+            Node collider = (Node)collisionBody["collider"];
+
+            if (collider is CharacterController)
+            {
+                return true;
+            }
+        }
+
+        if (collisionHead.Contains("collider"))
+        {
+            Node collider = (Node)collisionHead["collider"];
+
+            if (collider is CharacterController)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     protected override void OnBodyEnteredDectection(PhysicsBody body)
     {
-        if (body is CharacterController && !isDead)
+        if (body is CharacterController player && !isDead)
         {
-            SetTarget(body as Spatial);
+            playerInRadius = true;
+            sightTarget = player;
         }
     }
 
@@ -73,11 +118,12 @@ public abstract class GroundEnemy : GroundAgent, Damageable
     {
         if (body == target && !isDead)
         {
-            SetTarget(target = null);
+            playerInRadius = false;
+            SetPathfindingTarget(null);
         }
     }
 
-    protected void OnVelocityComputed(Vector3 safeVelocity)
+    protected virtual void OnVelocityComputed(Vector3 safeVelocity)
     {
         if (CanMove)
         {
@@ -104,7 +150,6 @@ public abstract class GroundEnemy : GroundAgent, Damageable
         if (accumulatedDamageTimer < accumulatedDamageTime)
         {
             accumulatedDamage += damage;
-            GD.Print("multi damage" + accumulatedDamage);
         }
         else
         {
@@ -136,7 +181,6 @@ public abstract class GroundEnemy : GroundAgent, Damageable
 
         if (!deathHandled)
         {
-            GD.Print(accumulatedDamage);
             // If we do lots of damage to kill then gib
             if (accumulatedDamage >= (MaxHealth / 2))
             {
